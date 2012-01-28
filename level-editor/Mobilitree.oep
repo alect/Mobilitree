@@ -3,6 +3,8 @@
   <settings>
     <defaultWidth>600</defaultWidth>
     <defaultHeight>420</defaultHeight>
+    <maxWidth>800</maxWidth>
+    <maxHeight>600</maxHeight>
   </settings>
   <tilesets>
     <tileset name="Tiles" image="tiles.png" tileHeight="30" tileWidth="30" />
