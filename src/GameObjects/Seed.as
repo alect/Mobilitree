@@ -85,9 +85,13 @@ package GameObjects
 		{
 			if(_growing)
 				return "Growing";
-			else if(pathSpeed != 0)
+			else
 				return "Floating";
-			return "";
+
+		}
+		public override function isAvatar():Boolean
+		{
+			return true;
 		}
 		
 		public override function gameWon():Boolean

@@ -1,6 +1,7 @@
 package GameStates
 {
 	import GameObjects.CellObject;
+	import GameObjects.Seed;
 	import GameObjects.Soil;
 	import GameObjects.Tree;
 	
@@ -262,9 +263,11 @@ package GameStates
 			}
 			
 			if(!_gameWon) {
-				_uiGuideText.text = _controlCell.getArrowContext() + "\n" +
-					"Press R to Reset Level\n" +
+				var newUIText:String = _controlCell.getArrowContext() + "\r" +
+					"Press R to Reset Level\r" +
 					"Press Escape to Return to Menu";
+				if(newUIText != _uiGuideText.text)
+					_uiGuideText.text = newUIText;
 			}
 			
 			// If we're not currently advancing the turn, need to check if we should advance
@@ -305,6 +308,18 @@ package GameStates
 				}
 			}
 			
+		}
+		
+		public function getAvatar():CellObject
+		{
+			// Find a tree or seed in the cell objects
+			for each (var guy:CellObject in _cellObjects.members)
+			{
+				if (guy.isAvatar())
+					return guy;
+			}
+			
+			return null;
 		}
 	}
 }

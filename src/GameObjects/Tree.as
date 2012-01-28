@@ -103,11 +103,15 @@ package GameObjects
 			return this.pathSpeed == 0;
 		}
 		
+		public override function isAvatar():Boolean
+		{
+			return !_dead;
+		}
+
 		public override function gameWon():Boolean
 		{
 			return false;
 		}
-		
 		
 	}
 }
