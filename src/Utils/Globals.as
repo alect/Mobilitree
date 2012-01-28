@@ -21,6 +21,10 @@ package Utils
 		// The soil, which exists as both a tile and an object (I know, weird!)
 		public static const SOIL_TYPE:uint = enumVal++;
 		
+		// The dirt and mud that water turns into when drained
+		public static const DIRT_TYPE:uint = enumVal++;
+		public static const MUD_TYPE:uint = enumVal++;
+		
 		// Values for tree stuff
 		public static const TREE_TYPE:uint = enumVal++;
 		public static const SEED_TYPE:uint = enumVal++;

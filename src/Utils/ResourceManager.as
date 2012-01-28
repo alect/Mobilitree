@@ -4,16 +4,16 @@ package Utils
 	{
 		
 		// Art resources
-		[Embed(source="assets/art/placeholder-tree.png")]
+		[Embed(source="assets/art/tree.png")]
 		public static var treeArt:Class;
-		[Embed(source="assets/art/placeholder-deadtree.png")]
+		[Embed(source="assets/art/deadtree.png")]
 		public static var deadTreeArt:Class;
-		[Embed(source="assets/art/placeholder-seed.png")]
+		[Embed(source="assets/art/seed.png")]
 		public static var seedArt:Class;
 		[Embed(source="assets/art/placeholder-soil.png")]
 		public static var soilArt:Class;
 		
-		[Embed(source="assets/art/placeholder-tiles.png")]
+		[Embed(source="assets/art/tiles.png")]
 		public static var tileArt:Class;
 		
 		// Audio resources

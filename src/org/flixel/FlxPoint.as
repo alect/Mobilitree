@@ -98,5 +98,6 @@ package org.flixel
 			FlashPoint.y = y;
 			return FlashPoint;
 		}
+		
 	}
 }
