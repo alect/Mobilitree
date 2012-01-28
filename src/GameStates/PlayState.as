@@ -192,6 +192,23 @@ package GameStates
 			_cellObjects.add(newCell);
 		}
 		
+		public function isTimeToAdvanceTurn():Boolean
+		{
+			var please_advance:Boolean = false;
+			
+			
+			for each(var cell:CellObject in _cellObjects.members) 
+				please_advance = cell.timeToAdvanceTurn() || please_advance;  // call everyone's timeToAdvance turn.
+				
+			return please_advance;
+		}
+		
+		public function advanceTurn():void
+		{
+			for each(var cell:CellObject in _cellObjects.members) 
+			cell.advanceTurn();
+		}
+		
 		public override function update():void
 		{
 			super.update();
@@ -203,13 +220,12 @@ package GameStates
 			
 			// If we're not currently advancing the turn, need to check if we should advance
 			if(!_advancingTurn) {
-				for each(var cell:CellObject in _cellObjects.members) {
-					_advancingTurn = _advancingTurn ? true : cell.timeToAdvanceTurn();
-				}
+				
+				_advancingTurn = isTimeToAdvanceTurn();
+				
 				if(_advancingTurn)
 				{
-					for each(var cell:CellObject in _cellObjects.members) 
-						cell.advanceTurn();
+					advanceTurn();
 				}
 			}
 			// Otherwise, see if everything is done moving (indicating that the turn advance is done)
