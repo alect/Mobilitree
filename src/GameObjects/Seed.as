@@ -35,13 +35,13 @@ package GameObjects
 			
 			if(tile >= Globals.WATER_TYPE && tile <= Globals.WATER_END) 
 			{
-				if(tile == Globals.WATER_UP_TYPE && PlayState.Instance.getGridCellType(gridX, gridY-1) != Globals.ROCK_TYPE)
+				if(tile == Globals.WATER_UP_TYPE && cellSuitableForSeed(PlayState.Instance.getGridCellType(gridX, gridY-1)))
 					PlayState.Instance.moveCell(this, gridX, gridY-1);
-				else if(tile == Globals.WATER_RIGHT_TYPE && PlayState.Instance.getGridCellType(gridX+1, gridY) != Globals.ROCK_TYPE)
+				else if(tile == Globals.WATER_RIGHT_TYPE && cellSuitableForSeed(PlayState.Instance.getGridCellType(gridX+1, gridY)))
 					PlayState.Instance.moveCell(this, gridX+1, gridY);
-				else if(tile == Globals.WATER_DOWN_TYPE && PlayState.Instance.getGridCellType(gridX, gridY+1) != Globals.ROCK_TYPE)
+				else if(tile == Globals.WATER_DOWN_TYPE && cellSuitableForSeed(PlayState.Instance.getGridCellType(gridX, gridY+1)))
 					PlayState.Instance.moveCell(this, gridX, gridY+1);
-				else if(tile == Globals.WATER_LEFT_TYPE && PlayState.Instance.getGridCellType(gridX-1, gridY) != Globals.ROCK_TYPE)
+				else if(tile == Globals.WATER_LEFT_TYPE && cellSuitableForSeed(PlayState.Instance.getGridCellType(gridX-1, gridY)))
 					PlayState.Instance.moveCell(this, gridX-1, gridY);
 			}
 			else {
