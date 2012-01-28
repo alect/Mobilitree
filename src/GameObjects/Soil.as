@@ -16,5 +16,9 @@ package GameObjects
 			// Want to know if we currently house a tree
 			return PlayState.Instance.getGridCellType(gridX, gridY) == Globals.HAPPY_TREE_TYPE;
 		}
+		public override function draw():void
+		{
+			
+		}
 	}
 }

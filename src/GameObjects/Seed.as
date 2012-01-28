@@ -13,7 +13,7 @@ package GameObjects
 		{
 			super(x, y, null);
 			this.loadGraphic(ResourceManager.seedArt, true, false, Globals.TILE_SIZE);
-			this.addAnimation("grow", [0, 1, 2], 6, false);
+			this.addAnimation("grow", [0, 1, 2, 3, 4], 3, false);
 			this.addAnimation("idle", [0], 6, true);
 			
 			_type = Globals.SEED_TYPE;
@@ -65,7 +65,7 @@ package GameObjects
 		{
 			// if we're done growing, replace ourselves with a tree and return true
 			if(_growing) {
-				if(this.frame == 2) {
+				if(this.frame == 4) {
 					if(PlayState.Instance.Tilemap.getTile(gridX, gridY) == Globals.SOIL_TYPE)
 						PlayState.Instance.replaceCell(this, new HappyTree(this.x, this.y));
 					else
