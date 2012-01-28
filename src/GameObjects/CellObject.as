@@ -56,7 +56,7 @@ package GameObjects
 		
 		protected static function cellSuitableForSeed(cell:uint):Boolean
 		{
-			return (cell == Globals.EMPTY_TYPE || cell >= Globals.WATER_TYPE && cell <= Globals.WATER_LEFT_TYPE);
+			return (cell == Globals.EMPTY_TYPE || cell == Globals.SOIL_TYPE || cell >= Globals.WATER_TYPE && cell <= Globals.WATER_LEFT_TYPE);
 		}
 		
 		public override function update():void

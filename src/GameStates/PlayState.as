@@ -176,7 +176,16 @@ package GameStates
 			cell.advanceTurn();
 		}
 		
-		
+		public function doneAdvancingTurn():Boolean
+		{
+			var done:Boolean = true;
+			for each(var cell:CellObject in _cellObjects.members) {
+				if(!cell.doneAdvancingTurn())
+					done = false;
+			}
+			
+			return done;
+		}
 
 		public override function update():void
 		{
@@ -207,11 +216,7 @@ package GameStates
 			}
 			// Otherwise, see if everything is done moving (indicating that the turn advance is done)
 			else {
-				_advancingTurn = false;
-				for each(var cell:CellObject in _cellObjects.members) {
-					if(!cell.doneAdvancingTurn())
-						_advancingTurn = true;
-				}
+				_advancingTurn = !doneAdvancingTurn();
 			}
 			
 		}
