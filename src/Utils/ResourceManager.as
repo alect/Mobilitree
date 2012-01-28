@@ -10,6 +10,8 @@ package Utils
 		public static var deadTreeArt:Class;
 		[Embed(source="assets/art/placeholder-seed.png")]
 		public static var seedArt:Class;
+		[Embed(source="assets/art/placeholder-soil.png")]
+		public static var soilArt:Class;
 		
 		[Embed(source="assets/art/placeholder-tiles.png")]
 		public static var tileArt:Class;
@@ -21,7 +23,8 @@ package Utils
 		[Embed(source="assets/levels/testlevel.oel", mimeType="application/octet-stream")]
 		public static var testLevel:Class;
 		
-		
+		[Embed(source="assets/levels/testsoil.oel", mimeType="application/octet-stream")]
+		public static var testSoil:Class;
 		
 	}
 }

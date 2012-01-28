@@ -1,6 +1,7 @@
 package GameStates
 {
 	import GameObjects.CellObject;
+	import GameObjects.Soil;
 	import GameObjects.Tree;
 	
 	import Utils.*;
@@ -16,23 +17,6 @@ package GameStates
 	public class PlayState extends FlxState
 	{
 	
-		// Test the tilemap out a bit
-		private var _testCSV:String =  
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 4, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0";
-		
 		
 		// The currently loaded level
 		private var _currentLevel:Level;
@@ -75,35 +59,8 @@ package GameStates
 		{
 			_instance = this;
 			
-			_currentLevel = new Level(ResourceManager.testLevel);
+			_currentLevel = new Level(ResourceManager.testSoil);
 			loadFromLevel(_currentLevel);
-			
-			/*_tilemap = new FlxTilemap();
-			_tilemap.loadMap(_testCSV, ResourceManager.tileArt, Globals.TILE_SIZE, Globals.TILE_SIZE, FlxTilemap.OFF, 0, 0, 1);
-			_tilemap.x = 90;
-			_tilemap.y = 60;
-			this.add(_tilemap);
-			
-			// create our convenient grid
-			_gridValues = [];
-			for(var i:int = 0; i < _tilemap.widthInTiles; i++) {
-				var column:Array = [];
-				for(var j:int = 0; j < _tilemap.heightInTiles; j++) {
-					column.push(_tilemap.getTile(i, j));
-				}
-				_gridValues.push(column);
-			}
-			
-			
-			_cellObjects = new FlxGroup();
-			
-			
-			_currentTree = new Tree(90, 60, 3);
-			_gridValues[_currentTree.gridX][_currentTree.gridY] = _currentTree.type;
-			_cellObjects.add(_currentTree);
-			
-			this.add(_cellObjects);
-			*/
 			
 		}
 		
@@ -129,6 +86,10 @@ package GameStates
 					if(levelGrid[i][j] == Globals.TREE_TYPE) {
 						var tree:Tree = new Tree(_tilemap.x+i*Globals.TILE_SIZE, _tilemap.y+j*Globals.TILE_SIZE, 3);
 						_cellObjects.add(tree);
+					}
+					else if(levelGrid[i][j] == Globals.SOIL_TYPE) {
+						var soil:Soil = new Soil(_tilemap.x+i*Globals.TILE_SIZE, _tilemap.y+j*Globals.TILE_SIZE);
+						_cellObjects.add(soil);
 					}
 				}
 				_gridValues.push(column);
