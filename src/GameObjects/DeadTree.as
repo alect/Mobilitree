@@ -31,7 +31,7 @@ package GameObjects
 			super.draw();
 			
 			// Draw our seed highlight image over appropriate places if we haven't planted a seed yet
-			if(!_plantedSeed) {
+			if(!_plantedSeed && !PlayState.Instance.gameWon) {
 				var grid:Array = PlayState.Instance.typeGrid;
 				if(this.gridY > 0 && cellSuitableForSeed(grid[this.gridX][this.gridY-1])) {
 					_seedHighlight.x = this.x;
