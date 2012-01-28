@@ -112,7 +112,7 @@ package GameStates
 			// place the cell in its new location
 			_gridValues[x][y] = cell.type;
 			// remove the cell from its old location
-			_gridValues[oldX][oldY] = Globals.EMPTY_TYPE;
+			_gridValues[oldX][oldY] = _tilemap.getTile(oldX, oldY);
 			
 			// Move the cell to the relevant location on the grid
 			var movePoint:FlxPoint = new FlxPoint(_tilemap.x+x*Globals.TILE_SIZE+Globals.TILE_SIZE/2, _tilemap.y+y*Globals.TILE_SIZE+Globals.TILE_SIZE/2);
@@ -126,6 +126,12 @@ package GameStates
 			// Change the grid
 			_gridValues[originalCell.gridX][originalCell.gridY] = newCell.type;
 			_cellObjects.remove(originalCell);
+			_cellObjects.add(newCell);
+		}
+		
+		public function addCell(newCell:CellObject):void
+		{
+			_gridValues[newCell.gridX][newCell.gridY] = newCell.type;
 			_cellObjects.add(newCell);
 		}
 		

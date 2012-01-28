@@ -8,6 +8,8 @@ package Utils
 		public static var treeArt:Class;
 		[Embed(source="assets/art/placeholder-deadtree.png")]
 		public static var deadTreeArt:Class;
+		[Embed(source="assets/art/placeholder-seed.png")]
+		public static var seedArt:Class;
 		
 		[Embed(source="assets/art/placeholder-tiles.png")]
 		public static var tileArt:Class;

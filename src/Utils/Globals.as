@@ -4,17 +4,24 @@ package Utils
 	{
 		public static const TILE_SIZE:int = 30;
 		
+		// So we can ape normal enum behavior
+		private static var enumVal:uint = 0;
+		
 		// values to identify cell types
-		public static const EMPTY_TYPE:uint = 0;
-		public static const ROCK_TYPE:uint = 1;
-		public static const TREE_TYPE:uint = 2;
+		public static const EMPTY_TYPE:uint = enumVal++;
+		public static const ROCK_TYPE:uint = enumVal++;
+		public static const TREE_TYPE:uint = enumVal++;
+		public static const SEED_TYPE:uint = enumVal++;
 		
 		// values for water
-		public static const WATER_TYPE:uint = 3;
-		public static const WATER_UP_TYPE:uint = 3;
-		public static const WATER_RIGHT_TYPE:uint = 4;
-		public static const WATER_DOWN_TYPE:uint = 5;
-		public static const WATER_LEFT_TYPE:uint = 6;
+		public static const WATER_TYPE:uint = enumVal++;
+		public static const WATER_UP_TYPE:uint = WATER_TYPE;
+		public static const WATER_RIGHT_TYPE:uint = enumVal++;
+		public static const WATER_DOWN_TYPE:uint = enumVal++;
+		public static const WATER_LEFT_TYPE:uint = enumVal++;
+		
+		// 
+		
 		
 		
 	}
