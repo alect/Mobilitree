@@ -30,12 +30,28 @@ package GameObjects
 				return;
 			}
 			
+			// If we're on top of water
+			var tile:uint = PlayState.Instance.Tilemap.getTile(gridX, gridY);
+			
+			if(tile >= Globals.WATER_TYPE && tile <= Globals.WATER_END) 
+			{
+				if(tile == Globals.WATER_UP_TYPE && PlayState.Instance.getGridCellType(gridX, gridY-1) != Globals.ROCK_TYPE)
+					PlayState.Instance.moveCell(this, gridX, gridY-1);
+				else if(tile == Globals.WATER_RIGHT_TYPE && PlayState.Instance.getGridCellType(gridX+1, gridY) != Globals.ROCK_TYPE)
+					PlayState.Instance.moveCell(this, gridX+1, gridY);
+				else if(tile == Globals.WATER_DOWN_TYPE && PlayState.Instance.getGridCellType(gridX, gridY+1) != Globals.ROCK_TYPE)
+					PlayState.Instance.moveCell(this, gridX, gridY+1);
+				else if(tile == Globals.WATER_LEFT_TYPE && PlayState.Instance.getGridCellType(gridX-1, gridY) != Globals.ROCK_TYPE)
+					PlayState.Instance.moveCell(this, gridX-1, gridY);
+			}
+			else {
 			// TODO: the actual code for a seed's turn
 			// Need to check if we're on solid ground before doing this but...
-			// The moment we begin growing, become a tree
-			_type = Globals.TREE_TYPE;
-			this.play("grow");	
-			_growing = true;
+				// The moment we begin growing, become a tree in essence
+				_type = Globals.TREE_TYPE;
+				this.play("grow");	
+				_growing = true;
+			}
 		}
 		
 		public override function timeToAdvanceTurn():Boolean
@@ -54,6 +70,9 @@ package GameObjects
 				}
 				return false;
 			}
+			// don't end if we're moving
+			if(pathSpeed != 0) 
+				return false;
 			
 			return true;
 		}

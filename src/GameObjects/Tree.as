@@ -98,13 +98,6 @@ package GameObjects
 			return this.pathSpeed == 0;
 		}
 		
-		public override function update():void
-		{
-			if(pathSpeed == 0)
-				this.velocity = new FlxPoint();
-			
-			super.update();
-		}
 		
 	}
 }

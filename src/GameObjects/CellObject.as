@@ -4,6 +4,7 @@ package GameObjects
 	
 	import Utils.*;
 	
+	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 	
 	/**
@@ -55,6 +56,8 @@ package GameObjects
 		
 		public override function update():void
 		{
+			if(pathSpeed == 0)
+				this.velocity = new FlxPoint();
 			super.update();
 		}
 	}

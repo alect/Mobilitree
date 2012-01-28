@@ -19,12 +19,12 @@ package GameStates
 		// Test the tilemap out a bit
 		private var _testCSV:String =  
 			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
+			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 4, 0, 0, 0, 0, 0\n" +
+			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0, 0, 0\n" +
+			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0, 0, 0\n" +
+			"0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0, 0, 0\n" +
+			"0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0, 0, 0\n" +
+			"0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0\n" +
 			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
 			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
 			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
@@ -100,6 +100,16 @@ package GameStates
 			
 		}
 		
+		/**
+		 * Nice utility function that handles bounds checking for finding the value of a 
+		 * particular tile
+		 */
+		public function getGridCellType(gridX:int, gridY:int):uint
+		{
+			if(gridX < 0 || gridX >= _gridValues.length || gridY < 0 || gridY >= (_gridValues[0] as Array).length)
+				return Globals.ROCK_TYPE; // substitute for invalid location
+			return _gridValues[gridX][gridY];
+		}
 		
 		/**
 		 * Function called by advanceTurn that moves a cell in the grid to another location 
