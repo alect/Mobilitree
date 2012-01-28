@@ -20,6 +20,8 @@ package Utils
 		private static const WATER_LEFT_Y:uint = 90;
 		
 		private static const TREE_X:uint = 90;
+		private static const TREE_Y:uint = 0;
+		private static const SOIL_Y:uint = 30;
 		
 		
 		// Levels can be really simple, they basically only need to consist of a tilemap csv
@@ -98,9 +100,13 @@ package Utils
 					tilemapArray[tileX][tileY] = Globals.WATER_LEFT_TYPE;
 					_typeArray[tileX][tileY] = Globals.WATER_LEFT_TYPE;
 				}
+				if (dataElement.@tx == TREE_X && dataElement.@ty == SOIL_Y) {
+					tilemapArray[tileX][tileY] = Globals.SOIL_TYPE;
+					_typeArray[tileX][tileY] = Globals.SOIL_TYPE;
+				}
 				
 				// Now look for non-tilemap objects
-				if (dataElement.@tx == TREE_X) {
+				if (dataElement.@tx == TREE_X && dataElement.@ty == TREE_Y) {
 					_typeArray[tileX][tileY] = Globals.TREE_TYPE;
 				}
 			}

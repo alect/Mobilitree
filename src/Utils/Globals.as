@@ -18,6 +18,9 @@ package Utils
 		public static const WATER_LEFT_TYPE:uint = enumVal++;
 		public static const WATER_END:uint = WATER_LEFT_TYPE;
 		
+		// The soil, which exists as both a tile and an object (I know, weird!)
+		public static const SOIL_TYPE:uint = enumVal++;
+		
 		// Values for tree stuff
 		public static const TREE_TYPE:uint = enumVal++;
 		public static const SEED_TYPE:uint = enumVal++;
