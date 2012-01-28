@@ -120,7 +120,7 @@ package GameObjects
 			if(tile == Globals.WATER_LEFT_TYPE)
 				dirt = new Dirt(dirtX, dirtY, LEFT);
 			tilemap.setTile(waterX, waterY, Globals.DIRT_TYPE);
-			PlayState.Instance.addCell(dirt);
+			PlayState.Instance.addCell(dirt, dirt.gridX, dirt.gridY);
 			
 			
 		}
