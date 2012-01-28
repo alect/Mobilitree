@@ -65,5 +65,10 @@ package GameObjects
 				this.velocity = new FlxPoint();
 			super.update();
 		}
+		
+		public function isAvatar():Boolean
+		{
+			return false;
+		}
 	}
 }

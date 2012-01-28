@@ -1,6 +1,7 @@
 package GameStates
 {
 	import GameObjects.CellObject;
+	import GameObjects.Seed;
 	import GameObjects.Soil;
 	import GameObjects.Tree;
 	
@@ -219,6 +220,18 @@ package GameStates
 				_advancingTurn = !doneAdvancingTurn();
 			}
 			
+		}
+		
+		public function getAvatar():CellObject
+		{
+			// Find a tree or seed in the cell objects
+			for each (var guy:CellObject in _cellObjects.members)
+			{
+				if (guy.isAvatar())
+					return guy;
+			}
+			
+			return null;
 		}
 	}
 }

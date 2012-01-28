@@ -77,5 +77,10 @@ package GameObjects
 			
 			return true;
 		}
+		
+		public override function isAvatar():Boolean
+		{
+			return true;
+		}
 	}
 }
