@@ -109,10 +109,6 @@ package GameObjects
 			return !_dead;
 		}
 
-		public override function gameWon():Boolean
-		{
-			return false;
-		}
 		
 	}
 }

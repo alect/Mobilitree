@@ -94,9 +94,5 @@ package GameObjects
 			return true;
 		}
 		
-		public override function gameWon():Boolean
-		{
-			return false;
-		}
 	}
 }
