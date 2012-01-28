@@ -18,7 +18,8 @@ package Utils
 		
 		
 		// Level resources
-		
+		[Embed(source="assets/levels/testlevel.oel", mimeType="application/octet-stream")]
+		public static var testLevel:Class;
 		
 		
 		
