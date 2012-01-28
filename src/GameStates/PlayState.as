@@ -65,7 +65,7 @@ package GameStates
 		{
 			_instance = this;
 			
-			_currentLevel = new Level(ResourceManager.level3);
+			_currentLevel = new Level(ResourceManager.level4);
 			loadFromLevel(_currentLevel);
 			
 		}
