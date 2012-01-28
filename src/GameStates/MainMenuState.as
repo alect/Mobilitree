@@ -1,8 +1,8 @@
 package GameStates
 {
+	import org.flixel.FlxG;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
-	import org.flixel.FlxG;
 	
 	public class MainMenuState extends FlxState
 	{
@@ -12,6 +12,12 @@ package GameStates
 			text.size = 16;
 			text.alignment = "center";
 			this.add(text);
+		}
+		
+		public override function update():void
+		{
+			if (FlxG.mouse.justPressed()) 
+				FlxG.switchState(new PlayState());
 		}
 	}
 }
