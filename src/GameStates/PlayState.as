@@ -145,7 +145,7 @@ package GameStates
 			_cellObjects.add(newCell);
 		}
 		
-		public function isTimeToAdvanceTurn()
+		public function isTimeToAdvanceTurn():Boolean
 		{
 			var please_advance:Boolean = false;
 			
@@ -156,7 +156,7 @@ package GameStates
 			return please_advance;
 		}
 		
-		public function advanceTurn()
+		public function advanceTurn():void
 		{
 			for each(var cell:CellObject in _cellObjects.members) 
 			cell.advanceTurn();
