@@ -61,7 +61,8 @@ package GameObjects
 					return true;
 				}
 			}
-			
+			// :P
+			_moveDirection = 22;
 			return false;
 		}
 		
