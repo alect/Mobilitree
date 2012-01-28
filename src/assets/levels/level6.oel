@@ -1,0 +1,12 @@
+<level>
+  <width>270</width>
+  <height>270</height>
+  <grid set="Tiles">
+    <tile tx="90" ty="0" x="90" y="120"/>
+    <tile tx="90" ty="30" x="120" y="120"/>
+    <tile tx="90" ty="30" x="150" y="120"/>
+    <tile tx="0" ty="0" x="60" y="60"/>
+    <tile tx="90" ty="0" x="210" y="120"/>
+    <tile tx="0" ty="0" x="210" y="30"/>
+  </grid>
+</level>
