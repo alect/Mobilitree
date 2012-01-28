@@ -13,6 +13,11 @@ package Utils
 		[Embed(source="assets/art/placeholder-soil.png")]
 		public static var soilArt:Class;
 		
+		[Embed(source="assets/art/placeholder-dirt.png")]
+		public static var dirtArt:Class;
+		[Embed(source="assets/art/placeholder-mud.png")]
+		public static var mudArt:Class;
+		
 		[Embed(source="assets/art/tiles.png")]
 		public static var tileArt:Class;
 		

@@ -3,6 +3,9 @@ package GameObjects
 	import GameStates.PlayState;
 	
 	import Utils.*;
+	
+	import org.flixel.FlxTilemap;
+
 	public class Seed extends CellObject
 	{
 		// We don't want the seed to have a turn the moment it's spawned, so we use this flag
@@ -66,10 +69,6 @@ package GameObjects
 			// if we're done growing, replace ourselves with a tree and return true
 			if(_growing) {
 				if(this.frame == 4) {
-					if(PlayState.Instance.Tilemap.getTile(gridX, gridY) == Globals.SOIL_TYPE)
-						PlayState.Instance.replaceCell(this, new HappyTree(this.x, this.y));
-					else
-						PlayState.Instance.replaceCell(this, new Tree(this.x, this.y, 3));
 					return true;
 				}
 				return false;
@@ -79,6 +78,51 @@ package GameObjects
 				return false;
 			
 			return true;
+		}
+		
+		public override function postTurn():void
+		{
+			if(_growing) {
+				// See if we want to transform any neighboring water cells into dirt
+				maybeDrainWater(gridX-1, gridY);
+				maybeDrainWater(gridX+1, gridY);
+				maybeDrainWater(gridX, gridY-1);
+				maybeDrainWater(gridX, gridY+1);
+				
+				if(PlayState.Instance.Tilemap.getTile(gridX, gridY) == Globals.SOIL_TYPE)
+					PlayState.Instance.replaceCell(this, new HappyTree(this.x, this.y));
+				else
+					PlayState.Instance.replaceCell(this, new Tree(this.x, this.y, 3));
+			}
+		}
+		
+		private function maybeDrainWater(waterX:int, waterY:int):void
+		{
+			var tilemap:FlxTilemap = PlayState.Instance.Tilemap;
+			// First check if the given tile is even a water tile or on the tilemap
+			if (waterX <= 0 || waterX >= tilemap.widthInTiles ||
+				waterY <= 0 || waterY >= tilemap.heightInTiles )
+				return;
+			var tile:uint = tilemap.getTile(waterX, waterY);
+			if(tile < Globals.WATER_TYPE || tile > Globals.WATER_END)
+				return;
+			
+			// Okay, we have a hit, let's figure out what it is
+			var dirt:Dirt;
+			var dirtX:Number = tilemap.x+waterX*Globals.TILE_SIZE;
+			var dirtY:Number = tilemap.y+waterY*Globals.TILE_SIZE;
+			if(tile == Globals.WATER_UP_TYPE)
+				dirt = new Dirt(dirtX, dirtY, UP);
+			if(tile == Globals.WATER_RIGHT_TYPE)
+				dirt = new Dirt(dirtX, dirtY, RIGHT);
+			if(tile == Globals.WATER_DOWN_TYPE)
+				dirt = new Dirt(dirtX, dirtY, DOWN);
+			if(tile == Globals.WATER_LEFT_TYPE)
+				dirt = new Dirt(dirtX, dirtY, LEFT);
+			tilemap.setTile(waterX, waterY, Globals.DIRT_TYPE);
+			PlayState.Instance.addCell(dirt, dirt.gridX, dirt.gridY);
+			
+			
 		}
 		
 		public override function getArrowContext():String

@@ -35,6 +35,8 @@ package GameStates
 		
 		// A group representing the movable cell objects
 		private var _cellObjects:FlxGroup;
+		// Cells to remove at the end of the turn
+		private var _cellsToRemove:Array;
 		
 		// Tree representing the current cell that has control
 		private var _controlCell:CellObject;
@@ -232,7 +234,15 @@ package GameStates
 			setFlixelCoords(newCell);
 			
 			_cellObjects.add(newCell);
-			_controlCell = newCell;
+			if(newCell is Seed)
+				_controlCell = newCell;
+		}
+		
+		public function removeCell(cellToRemove:CellObject):void
+		{
+			if(_gridValues[cellToRemove.gridX][cellToRemove.gridY] == cellToRemove.type)
+				_gridValues[cellToRemove.gridX][cellToRemove.gridY] = _tilemap.getTile(cellToRemove.gridX, cellToRemove.gridY);
+			_cellsToRemove.push(cellToRemove);
 		}
 		
 		public function isTimeToAdvanceTurn():Boolean
@@ -266,6 +276,7 @@ package GameStates
 		public override function update():void
 		{
 			super.update();
+			_cellsToRemove = [];
 			
 			if(FlxG.keys.justPressed("R")) {
 				this.resetLevel();
@@ -314,6 +325,10 @@ package GameStates
 				
 				_advancingTurn = !doneAdvancingTurn();
 				if(!_advancingTurn) {
+					// first, perform the postTurn
+					for each(var cell:CellObject in _cellObjects.members)
+						cell.postTurn();
+					
 					// If we are actually done advancing the turn, see if we have won
 					_gameWon = true;
 					for each(var cell:CellObject in _cellObjects.members) {
@@ -329,6 +344,9 @@ package GameStates
 				}
 			}
 			
+			for each(var cell:CellObject in _cellsToRemove) {
+				this.remove(cell, true);
+			}
 		}
 		
 		public function getAvatar():CellObject
