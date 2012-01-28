@@ -5,6 +5,8 @@
     <defaultHeight>420</defaultHeight>
     <maxWidth>800</maxWidth>
     <maxHeight>600</maxHeight>
+    <minWidth>30</minWidth>
+    <minHeight>30</minHeight>
   </settings>
   <tilesets>
     <tileset name="Tiles" image="tiles.png" tileHeight="30" tileWidth="30" />
