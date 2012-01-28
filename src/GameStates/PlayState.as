@@ -4,10 +4,13 @@ package GameStates
 	import GameObjects.Soil;
 	import GameObjects.Tree;
 	
+	import Procedural.RandomWalk;
+	
 	import Utils.*;
 	
 	import org.flixel.FlxG;
 	import org.flixel.FlxGroup;
+	import org.flixel.FlxObject;
 	import org.flixel.FlxPath;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxState;
@@ -38,6 +41,9 @@ package GameStates
 		
 		// Used for a poor-man's singleton pattern
 		private static var _instance:PlayState;
+
+		protected var _walkDemo:RandomWalk = new RandomWalk();
+
 		
 		public static function get Instance():PlayState
 		{
@@ -59,7 +65,7 @@ package GameStates
 		{
 			_instance = this;
 			
-			_currentLevel = new Level(ResourceManager.testSoil);
+			_currentLevel = new Level(ResourceManager.level3);
 			loadFromLevel(_currentLevel);
 			
 		}
@@ -170,6 +176,8 @@ package GameStates
 			cell.advanceTurn();
 		}
 		
+		
+
 		public override function update():void
 		{
 			super.update();
@@ -187,6 +195,14 @@ package GameStates
 				if(_advancingTurn)
 				{
 					advanceTurn();
+				}
+				else
+				{
+					if (FlxG.keys.SPACE)
+					{
+						_walkDemo.repeatInputProbability = 0;
+						_advancingTurn = _walkDemo.walk(1, this);
+					}
 				}
 			}
 			// Otherwise, see if everything is done moving (indicating that the turn advance is done)

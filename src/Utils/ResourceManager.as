@@ -23,8 +23,21 @@ package Utils
 		[Embed(source="assets/levels/testlevel.oel", mimeType="application/octet-stream")]
 		public static var testLevel:Class;
 		
+		[Embed(source="assets/levels/testlevel2.oel", mimeType="application/octet-stream")]
+		public static var testLevel2:Class;
+		
 		[Embed(source="assets/levels/testsoil.oel", mimeType="application/octet-stream")]
 		public static var testSoil:Class;
+		
+		
+		[Embed(source="assets/levels/level1.oel", mimeType="application/octet-stream")]
+		public static var level1:Class;
+		
+		[Embed(source="assets/levels/level2.oel", mimeType="application/octet-stream")]
+		public static var level2:Class;
+		
+		[Embed(source="assets/levels/level3.oel", mimeType="application/octet-stream")]
+		public static var level3:Class;
 		
 	}
 }
