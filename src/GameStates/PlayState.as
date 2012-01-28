@@ -65,7 +65,7 @@ package GameStates
 		{
 			_instance = this;
 			
-			_currentLevel = new Level(ResourceManager.level3);
+			_currentLevel = new Level(ResourceManager.testSoil);
 			loadFromLevel(_currentLevel);
 			
 		}
@@ -212,6 +212,16 @@ package GameStates
 					if(!cell.doneAdvancingTurn())
 						_advancingTurn = true;
 				}
+				var gameWon:Boolean = true;
+				// If we are actually done advancing the turn, see if we have won
+				for each(var cell:CellObject in _cellObjects.members) {
+					if(!cell.gameWon())
+						gameWon = false;
+				}
+				
+				if(gameWon)
+					trace("Game won!!");
+				
 			}
 			
 		}

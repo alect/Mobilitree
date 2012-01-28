@@ -98,6 +98,11 @@ package GameObjects
 			return this.pathSpeed == 0;
 		}
 		
+		public override function gameWon():Boolean
+		{
+			return false;
+		}
+		
 		
 	}
 }

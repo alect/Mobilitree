@@ -66,7 +66,10 @@ package GameObjects
 			// if we're done growing, replace ourselves with a tree and return true
 			if(_growing) {
 				if(this.frame == 2) {
-					PlayState.Instance.replaceCell(this, new Tree(this.x, this.y, 3));
+					if(PlayState.Instance.Tilemap.getTile(gridX, gridY) == Globals.SOIL_TYPE)
+						PlayState.Instance.replaceCell(this, new HappyTree(this.x, this.y));
+					else
+						PlayState.Instance.replaceCell(this, new Tree(this.x, this.y, 3));
 					return true;
 				}
 				return false;
@@ -76,6 +79,11 @@ package GameObjects
 				return false;
 			
 			return true;
+		}
+		
+		public override function gameWon():Boolean
+		{
+			return false;
 		}
 	}
 }
