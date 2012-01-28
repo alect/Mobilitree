@@ -100,8 +100,8 @@ package GameObjects
 		{
 			var tilemap:FlxTilemap = PlayState.Instance.Tilemap;
 			// First check if the given tile is even a water tile or on the tilemap
-			if (waterX <= 0 || waterX >= tilemap.widthInTiles ||
-				waterY <= 0 || waterY >= tilemap.heightInTiles )
+			if (waterX < 0 || waterX >= tilemap.widthInTiles ||
+				waterY < 0 || waterY >= tilemap.heightInTiles )
 				return;
 			var tile:uint = tilemap.getTile(waterX, waterY);
 			if(tile < Globals.WATER_TYPE || tile > Globals.WATER_END)
