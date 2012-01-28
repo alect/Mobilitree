@@ -54,6 +54,11 @@ package GameObjects
 			return false;
 		}
 		
+		public function gameWon():Boolean
+		{
+			return true;
+		}
+		
 		protected static function cellSuitableForSeed(cell:uint):Boolean
 		{
 			return (cell == Globals.EMPTY_TYPE || cell == Globals.SOIL_TYPE || cell >= Globals.WATER_TYPE && cell <= Globals.WATER_LEFT_TYPE);

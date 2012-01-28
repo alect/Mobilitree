@@ -1,6 +1,7 @@
 package GameObjects
 {
 	import Utils.*;
+	import GameStates.PlayState;
 	
 	public class Soil extends CellObject
 	{
@@ -8,6 +9,12 @@ package GameObjects
 		{
 			super(x, y, ResourceManager.soilArt);
 			_type = Globals.SOIL_TYPE;
+		}
+		
+		public override function gameWon():Boolean
+		{
+			// Want to know if we currently house a tree
+			return PlayState.Instance.getGridCellType(gridX, gridY) == Globals.HAPPY_TREE_TYPE;
 		}
 	}
 }
