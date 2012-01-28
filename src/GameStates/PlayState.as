@@ -75,7 +75,7 @@ package GameStates
 		{
 			_instance = this;
 			
-			_currentLevel = new Level(ResourceManager.testLevel);
+			_currentLevel = new Level(ResourceManager.testLevel2);
 			loadFromLevel(_currentLevel);
 			
 			/*_tilemap = new FlxTilemap();
