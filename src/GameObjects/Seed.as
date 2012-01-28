@@ -49,6 +49,7 @@ package GameObjects
 			// Need to check if we're on solid ground before doing this but...
 				// The moment we begin growing, become a tree in essence
 				_type = Globals.TREE_TYPE;
+				PlayState.Instance.replaceCell(this, this);
 				this.play("grow");	
 				_growing = true;
 			}
