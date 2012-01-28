@@ -1,0 +1,15 @@
+<project>
+  <name>Mobilitree</name>
+  <settings>
+    <defaultWidth>600</defaultWidth>
+    <defaultHeight>400</defaultHeight>
+  </settings>
+  <tilesets>
+    <tileset name="Tiles" image="tiles.png" tileHeight="30" tileWidth="30" />
+  </tilesets>
+
+  <layers>
+    <tiles name="grid" gridSize="30"/>
+  </layers>
+
+</project>
