@@ -21,6 +21,8 @@ package GameStates
 	public class PlayState extends FlxState
 	{
 	
+		// The index into the level list of our current level
+		private var _currentLevelIndex:int = 0;
 		
 		// The currently loaded level
 		private var _currentLevel:Level;
@@ -39,6 +41,12 @@ package GameStates
 		
 		// Boolean representing whether we're currently advancing the turn (moving the objects)
 		private var _advancingTurn:Boolean = false;
+		
+		// Whether we've won the level or not
+		private var _gameWon:Boolean = false;
+		
+		// To display to the player
+		private var _gameWonText:FlxText;
 		
 		// Used for a poor-man's singleton pattern
 		private static var _instance:PlayState;
@@ -61,13 +69,23 @@ package GameStates
 			return _gridValues;
 		}
 		
+		public function get gameWon():Boolean
+		{
+			return _gameWon;
+		}
+		
 		
 		public override function create():void 
 		{
 			_instance = this;
 			
-			_currentLevel = new Level(ResourceManager.level3);
+
+			_currentLevel = new Level(ResourceManager.levelList[_currentLevelIndex]);
 			loadFromLevel(_currentLevel);
+			
+			_gameWonText = new FlxText(0, 0, FlxG.width, "Level Complete!");
+			_gameWonText.alignment = "center";
+			_gameWonText.size = 32;
 			
 		}
 		
@@ -111,6 +129,8 @@ package GameStates
 		private function resetLevel():void
 		{
 			this.clear();
+			_advancingTurn = false;
+			_gameWon = false;
 			this.loadFromLevel(_currentLevel);
 		}
 		
@@ -197,8 +217,19 @@ package GameStates
 				return;
 			}
 			
+			if(_gameWon && FlxG.keys.justPressed("ENTER")) {
+				if(_currentLevelIndex+1 < ResourceManager.levelList.length) {
+					_currentLevelIndex++;
+					_currentLevel = new Level(ResourceManager.levelList[_currentLevelIndex]);
+					this.resetLevel();
+					return;
+				}
+				else
+					trace("OUT OF LEVELS!");
+			}
+			
 			// If we're not currently advancing the turn, need to check if we should advance
-			if(!_advancingTurn) {
+			if(!_advancingTurn && !_gameWon) {
 				
 				_advancingTurn = isTimeToAdvanceTurn();
 				
@@ -216,8 +247,22 @@ package GameStates
 				}
 			}
 			// Otherwise, see if everything is done moving (indicating that the turn advance is done)
-			else {
+			else if (!_gameWon) {
+				
 				_advancingTurn = !doneAdvancingTurn();
+				if(!_advancingTurn) {
+					// If we are actually done advancing the turn, see if we have won
+					_gameWon = true;
+					for each(var cell:CellObject in _cellObjects.members) {
+						if(!cell.gameWon())
+							_gameWon = false;
+					}
+					
+					if(_gameWon) {
+						trace("Game won!!");
+						this.add(_gameWonText);
+					}
+				}
 			}
 			
 		}

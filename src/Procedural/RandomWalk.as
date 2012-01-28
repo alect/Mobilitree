@@ -62,11 +62,11 @@ package Procedural
 				var avatar:CellObject = playstate.getAvatar();
 				if (null == avatar)
 				{
-					trace("Could not find avatar");
+					//trace("Could not find avatar");
 				}
 				else
 				{
-					trace("Player at " + avatar.gridX + "," + avatar.gridY + " is " + getQualifiedClassName(avatar));
+					//trace("Player at " + avatar.gridX + "," + avatar.gridY + " is " + getQualifiedClassName(avatar));
 				}
 				return true;
 			}

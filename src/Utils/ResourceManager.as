@@ -20,6 +20,8 @@ package Utils
 		
 		
 		// Level resources
+		
+		
 		[Embed(source="assets/levels/testlevel.oel", mimeType="application/octet-stream")]
 		public static var testLevel:Class;
 		
@@ -38,6 +40,11 @@ package Utils
 		
 		[Embed(source="assets/levels/level3.oel", mimeType="application/octet-stream")]
 		public static var level3:Class;
+		
+		[Embed(source="assets/levels/level4.oel", mimeType="application/octet-stream")]
+		public static var level4:Class;
+		
+		public static var levelList:Array = [level1, level2, level3, level4];
 		
 	}
 }
