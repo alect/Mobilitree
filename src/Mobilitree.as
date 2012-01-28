@@ -12,7 +12,6 @@ package
 		public function Mobilitree()
 		{
 			super(400, 300, MainMenuState, 2);
-			trace("test");
 		}
 	}
 }
