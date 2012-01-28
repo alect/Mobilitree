@@ -65,7 +65,7 @@ package GameStates
 		{
 			_instance = this;
 			
-			_currentLevel = new Level(ResourceManager.testSoil);
+			_currentLevel = new Level(ResourceManager.level3);
 			loadFromLevel(_currentLevel);
 			
 		}
