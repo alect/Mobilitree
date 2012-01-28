@@ -100,6 +100,7 @@ package Procedural
 			{
 				playstate.advanceTurn();
 				playstate.doneAdvancingTurn();  // this probably does nothing, but we'll call it just in case.
+				playstate.postTurn();
 				FlxG.keys.reset();
 				
 				// Where is the tree?

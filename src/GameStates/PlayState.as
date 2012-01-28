@@ -272,6 +272,20 @@ package GameStates
 			
 			return done;
 		}
+		
+		public function postTurn():void
+		{
+			// first, perform the postTurn
+			for each(var cell:CellObject in _cellObjects.members)
+			cell.postTurn();
+			
+			// If we are actually done advancing the turn, see if we have won
+			_gameWon = true;
+			for each(var cell:CellObject in _cellObjects.members) {
+				if(!cell.gameWon())
+					_gameWon = false;
+			}
+		}
 
 		public override function update():void
 		{
@@ -316,7 +330,7 @@ package GameStates
 					if (FlxG.keys.SPACE)
 					{
 						_walkDemo.repeatInputProbability = 0;
-						_advancingTurn = _walkDemo.walk(1, this);
+						_advancingTurn = _walkDemo.walk(100, this);
 					}
 				}
 			}
@@ -325,16 +339,7 @@ package GameStates
 				
 				_advancingTurn = !doneAdvancingTurn();
 				if(!_advancingTurn) {
-					// first, perform the postTurn
-					for each(var cell:CellObject in _cellObjects.members)
-						cell.postTurn();
-					
-					// If we are actually done advancing the turn, see if we have won
-					_gameWon = true;
-					for each(var cell:CellObject in _cellObjects.members) {
-						if(!cell.gameWon())
-							_gameWon = false;
-					}
+					postTurn();
 					
 					if(_gameWon) {
 						trace("Game won!!");
