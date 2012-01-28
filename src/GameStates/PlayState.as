@@ -3,10 +3,13 @@ package GameStates
 	import GameObjects.CellObject;
 	import GameObjects.Tree;
 	
+	import Procedural.RandomWalk;
+	
 	import Utils.*;
 	
 	import org.flixel.FlxG;
 	import org.flixel.FlxGroup;
+	import org.flixel.FlxObject;
 	import org.flixel.FlxPath;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxState;
@@ -51,6 +54,9 @@ package GameStates
 		
 		// Used for a poor-man's singleton pattern
 		private static var _instance:PlayState;
+
+		protected var _walkDemo:RandomWalk = new RandomWalk();
+
 		
 		public static function get Instance():PlayState
 		{
@@ -91,7 +97,7 @@ package GameStates
 			_cellObjects = new FlxGroup();
 			
 			
-			_currentTree = new Tree(90, 60, 3);
+			_currentTree = new Tree(90, 120, 3);
 			_gridValues[_currentTree.gridX][_currentTree.gridY] = _currentTree.type;
 			_cellObjects.add(_currentTree);
 			
@@ -162,6 +168,8 @@ package GameStates
 			cell.advanceTurn();
 		}
 		
+		
+
 		public override function update():void
 		{
 			super.update();
@@ -174,6 +182,14 @@ package GameStates
 				if(_advancingTurn)
 				{
 					advanceTurn();
+				}
+				else
+				{
+					if (FlxG.keys.SPACE)
+					{
+						_walkDemo.repeatInputProbability = 0;
+						_advancingTurn = _walkDemo.walk(1, this);
+					}
 				}
 			}
 			// Otherwise, see if everything is done moving (indicating that the turn advance is done)
