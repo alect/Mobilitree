@@ -121,15 +121,25 @@ package GameStates
 			
 		}
 		
+		public function replaceCell(originalCell:CellObject, newCell:CellObject):void
+		{
+			// Change the grid
+			_gridValues[originalCell.gridX][originalCell.gridY] = newCell.type;
+			_cellObjects.remove(originalCell);
+			_cellObjects.add(newCell);
+		}
+		
 		public override function update():void
 		{
 			super.update();
 			
 			// If we're not currently advancing the turn, need to check if we should advance
 			if(!_advancingTurn) {
-				if(_currentTree.timeToAdvanceTurn())
+				for each(var cell:CellObject in _cellObjects.members) {
+					_advancingTurn = _advancingTurn ? true : cell.timeToAdvanceTurn();
+				}
+				if(_advancingTurn)
 				{
-					_advancingTurn = true;
 					for each(var cell:CellObject in _cellObjects.members) 
 						cell.advanceTurn();
 				}
@@ -138,7 +148,7 @@ package GameStates
 			else {
 				_advancingTurn = false;
 				for each(var cell:CellObject in _cellObjects.members) {
-					if(cell.pathSpeed != 0)
+					if(!cell.doneAdvancingTurn())
 						_advancingTurn = true;
 				}
 			}

@@ -48,6 +48,11 @@ package GameObjects
 			return (uint)((this.y-PlayState.Instance.Tilemap.y)/Globals.TILE_SIZE);
 		}
 		
+		public function timeToAdvanceTurn():Boolean
+		{
+			return false;
+		}
+		
 		public override function update():void
 		{
 			super.update();

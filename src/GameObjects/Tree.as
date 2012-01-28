@@ -13,7 +13,7 @@ package GameObjects
 		private var _turnsLeft:int;
 		private var _totalTurns:int;
 		
-		private var _dead:Boolean;
+		private var _dead:Boolean = false;
 		
 		private var _moveDirection:uint;
 		
@@ -26,8 +26,15 @@ package GameObjects
 			
 		}
 		
-		public function timeToAdvanceTurn():Boolean
+		public override function timeToAdvanceTurn():Boolean
 		{
+			// first, if we're dead, take care of some business. 
+			if(_dead) {
+				var deadSelf:DeadTree = new DeadTree(this.x, this.y);
+				PlayState.Instance.replaceCell(this, deadSelf);
+				return false;
+			}
+			
 			var grid:Array = PlayState.Instance.typeGrid;
 			if(FlxG.keys.UP) {
 				// now check if the value above us is empty
@@ -60,20 +67,30 @@ package GameObjects
 		
 		public override function advanceTurn():void
 		{
-			switch(_moveDirection) 
-			{
-				case UP:
-					PlayState.Instance.moveCell(this, this.gridX, this.gridY-1);
-					break;
-				case RIGHT:
-					PlayState.Instance.moveCell(this, this.gridX+1, this.gridY);
-					break;
-				case DOWN:
-					PlayState.Instance.moveCell(this, this.gridX, this.gridY+1);
-					break;
-				case LEFT:
-					PlayState.Instance.moveCell(this, this.gridX-1, this.gridY);
+			if(_dead) {
+				
 			}
+			else {
+				switch(_moveDirection) 
+				{
+					case UP:
+						PlayState.Instance.moveCell(this, this.gridX, this.gridY-1);
+						break;
+					case RIGHT:
+						PlayState.Instance.moveCell(this, this.gridX+1, this.gridY);
+						break;
+					case DOWN:
+						PlayState.Instance.moveCell(this, this.gridX, this.gridY+1);
+						break;
+					case LEFT:
+						PlayState.Instance.moveCell(this, this.gridX-1, this.gridY);
+				}
+				
+				_turnsLeft--;
+				if(_turnsLeft == 0)
+					_dead = true;
+			}
+			
 		}
 		
 		public override function doneAdvancingTurn():Boolean
