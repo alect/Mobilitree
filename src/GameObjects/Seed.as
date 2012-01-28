@@ -81,6 +81,15 @@ package GameObjects
 			return true;
 		}
 		
+		public override function getArrowContext():String
+		{
+			if(_growing)
+				return "Growing";
+			else if(pathSpeed != 0)
+				return "Floating";
+			return "";
+		}
+		
 		public override function gameWon():Boolean
 		{
 			return false;

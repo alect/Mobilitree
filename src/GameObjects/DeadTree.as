@@ -103,5 +103,13 @@ package GameObjects
 			return false;
 		}
 		
+		public override function getArrowContext():String
+		{
+			if(!_plantedSeed) 
+				return "Use Arrow Keys to Plant Seed";
+			else
+				return "";
+		}
+		
 	}
 }
