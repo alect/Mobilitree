@@ -73,28 +73,28 @@ package GameObjects
 			var grid:Array = PlayState.Instance.typeGrid;
 			if(FlxG.keys.UP) { 
 				if(this.gridY > 0 && cellSuitableForSeed(grid[this.gridX][this.gridY-1])) {
-					PlayState.Instance.addCell(new Seed(this.x, this.y-Globals.TILE_SIZE));
+					PlayState.Instance.addCell( new Seed(0,0), gridX, gridY-1);
 					_plantedSeed = true;
 					return true;
 				}
 			}
 			if(FlxG.keys.RIGHT) {	
 				if(this.gridX < grid.length-1 && cellSuitableForSeed(grid[this.gridX+1][this.gridY])) {
-					PlayState.Instance.addCell(new Seed(this.x+Globals.TILE_SIZE, this.y));
+					PlayState.Instance.addCell(new Seed(0,0), this.gridX+1, this.gridY);
 					_plantedSeed = true;
 					return true;
 				}
 			}
 			if(FlxG.keys.DOWN) {
 				if(this.gridY < (grid[0] as Array).length-1 && cellSuitableForSeed(grid[this.gridX][this.gridY+1])) {
-					PlayState.Instance.addCell(new Seed(this.x, this.y+Globals.TILE_SIZE));
+					PlayState.Instance.addCell(new Seed(0,0), this.gridX, this.gridY+1);
 					_plantedSeed = true;
 					return true;
 				}
 			}
 			if(FlxG.keys.LEFT) {
 				if(this.gridX > 0 && cellSuitableForSeed(grid[this.gridX-1][this.gridY])) {
-					PlayState.Instance.addCell(new Seed(this.x-Globals.TILE_SIZE, this.y));
+					PlayState.Instance.addCell(new Seed(0,0), this.gridX-1, this.gridY);
 					_plantedSeed = true;
 					return true;
 				}
