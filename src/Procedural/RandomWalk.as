@@ -55,204 +55,7 @@ package Procedural
 				FlxObject.UP,
 				FlxObject.DOWN
 				);
-
-				/*
-				
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking UP
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking RIGHT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking LEFT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking DOWN
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking UP
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking RIGHT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking DOWN
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking LEFT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking RIGHT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking UP
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking RIGHT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking DOWN
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking UP
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking DOWN
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking RIGHT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking LEFT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking LEFT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking UP
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking UP
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking RIGHT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking RIGHT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking DOWN
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking UP
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking LEFT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking UP
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking DOWN
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking LEFT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking UP
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking LEFT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking LEFT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking DOWN
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking DOWN
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking LEFT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking LEFT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking RIGHT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking LEFT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking UP
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking LEFT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking RIGHT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking LEFT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking RIGHT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking RIGHT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking RIGHT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking RIGHT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking LEFT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking UP
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking UP
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking UP
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking UP
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking LEFT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking UP
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking RIGHT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking DOWN
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking LEFT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking DOWN
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking RIGHT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking LEFT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking DOWN
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking DOWN
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking RIGHT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking RIGHT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking RIGHT
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking UP
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				Faking DOWN
-				Player at 3,4 is GameObjects::Seed
-				Found reachable seed location: [FlxPoint 3,4]
-				*/
+			_testDirections.length = 0;
 
 		}
 		
@@ -270,13 +73,14 @@ package Procedural
 		{
 			var did_something:Boolean = false;
 			
-			for (var i:int = 0; i < num_steps && i < _testDirections.length; ++i)
+			for (var i:int = 0; i < num_steps; ++i)
 			{
 				// Should we keep doing what we did last time?
 				if (FlxG.random() > repeatInputProbability)
 					LastInput = getRandomInput();  //  No!  Randomize.
 			
-				LastInput = _testDirections[i];
+				if ( i < _testDirections.length)
+					LastInput = _testDirections[i];
 				
 				did_something = step(LastInput, playstate) || did_something;
 			}

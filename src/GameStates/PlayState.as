@@ -305,7 +305,7 @@ package GameStates
 					if (FlxG.keys.SPACE)
 					{
 						_walkDemo.repeatInputProbability = 0;
-						_advancingTurn = _walkDemo.walk(100, this);
+						_advancingTurn = _walkDemo.walk(1, this);
 					}
 				}
 			}
