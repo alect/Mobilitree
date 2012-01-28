@@ -2,7 +2,7 @@
   <name>Mobilitree</name>
   <settings>
     <defaultWidth>600</defaultWidth>
-    <defaultHeight>400</defaultHeight>
+    <defaultHeight>420</defaultHeight>
   </settings>
   <tilesets>
     <tileset name="Tiles" image="tiles.png" tileHeight="30" tileWidth="30" />

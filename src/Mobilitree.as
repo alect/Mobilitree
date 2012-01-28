@@ -11,7 +11,7 @@ package
 	{
 		public function Mobilitree()
 		{
-			super(400, 300, MainMenuState, 2);
+			super(800, 600, MainMenuState, 1);
 		}
 	}
 }
