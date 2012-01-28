@@ -93,6 +93,11 @@ package GameObjects
 			
 		}
 		
+		public override function getArrowContext():String
+		{
+			return "Use Arrow Keys to Move. Moves until death: " + _turnsLeft;
+		}
+		
 		public override function doneAdvancingTurn():Boolean
 		{
 			return this.pathSpeed == 0;

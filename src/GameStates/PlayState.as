@@ -36,8 +36,8 @@ package GameStates
 		// A group representing the movable cell objects
 		private var _cellObjects:FlxGroup;
 		
-		// Tree representing the current tree that has control
-		private var _currentTree:Tree;
+		// Tree representing the current cell that has control
+		private var _controlCell:CellObject;
 		
 		// Boolean representing whether we're currently advancing the turn (moving the objects)
 		private var _advancingTurn:Boolean = false;
@@ -45,8 +45,12 @@ package GameStates
 		// Whether we've won the level or not
 		private var _gameWon:Boolean = false;
 		
-		// To display to the player
+		// To display to the player when the level is complete
 		private var _gameWonText:FlxText;
+		private var _pressEnterText:FlxText;
+		
+		// Used as a guide for the player and the controls
+		private var _uiGuideText:FlxText;
 		
 		// Used for a poor-man's singleton pattern
 		private static var _instance:PlayState;
@@ -74,18 +78,41 @@ package GameStates
 			return _gameWon;
 		}
 		
+		public function get controlCell():CellObject
+		{
+			return _controlCell;
+		}
+		
+		public function set controlCell(value:CellObject):void
+		{
+			_controlCell = value;
+		}
 		
 		public override function create():void 
 		{
 			_instance = this;
 			
-
+			var _uiGuideString:String = "Use Arrow Keys to *Context Dependent*\n" +
+				"Press R to Reset Level\n" +
+				"Press Escape to Return to Menu";
+			
+			_uiGuideText = new FlxText(0, 0, FlxG.width, _uiGuideString);
+			_uiGuideText.size = 16;
+			_uiGuideText.alignment = "center";
+			_uiGuideText.y = FlxG.height-_uiGuideText.height-50;
+			
 			_currentLevel = new Level(ResourceManager.levelList[_currentLevelIndex]);
 			loadFromLevel(_currentLevel);
 			
 			_gameWonText = new FlxText(0, 0, FlxG.width, "Level Complete!");
 			_gameWonText.alignment = "center";
 			_gameWonText.size = 32;
+			_pressEnterText = new FlxText(0, _gameWonText.height, FlxG.width, "press enter for next level");
+			_pressEnterText.alignment = "center";
+			_pressEnterText.size = 16;
+			
+			
+	
 			
 		}
 		
@@ -96,8 +123,8 @@ package GameStates
 		{
 			_tilemap = new FlxTilemap();
 			_tilemap.loadMap(level.tilemapCSV, ResourceManager.tileArt, Globals.TILE_SIZE, Globals.TILE_SIZE, FlxTilemap.OFF, 0, 0, 1);
-			_tilemap.x = 90;
-			_tilemap.y = 60;
+			_tilemap.x = FlxG.width/2-_tilemap.width/2;
+			_tilemap.y = FlxG.height/2-_tilemap.height/2;
 			this.add(_tilemap);
 			
 			
@@ -111,6 +138,7 @@ package GameStates
 					if(levelGrid[i][j] == Globals.TREE_TYPE) {
 						var tree:Tree = new Tree(_tilemap.x+i*Globals.TILE_SIZE, _tilemap.y+j*Globals.TILE_SIZE, 3);
 						_cellObjects.add(tree);
+						_controlCell = tree;
 					}
 					else if(levelGrid[i][j] == Globals.SOIL_TYPE) {
 						var soil:Soil = new Soil(_tilemap.x+i*Globals.TILE_SIZE, _tilemap.y+j*Globals.TILE_SIZE);
@@ -121,6 +149,8 @@ package GameStates
 			}
 			
 			this.add(_cellObjects);
+			
+			this.add(_uiGuideText);
 		}
 		
 		/**
@@ -172,12 +202,16 @@ package GameStates
 			_gridValues[originalCell.gridX][originalCell.gridY] = newCell.type;
 			_cellObjects.remove(originalCell);
 			_cellObjects.add(newCell);
+			
+			if(originalCell == _controlCell)
+				_controlCell = newCell;
 		}
 		
 		public function addCell(newCell:CellObject):void
 		{
 			_gridValues[newCell.gridX][newCell.gridY] = newCell.type;
 			_cellObjects.add(newCell);
+			_controlCell = newCell;
 		}
 		
 		public function isTimeToAdvanceTurn():Boolean
@@ -228,6 +262,14 @@ package GameStates
 					trace("OUT OF LEVELS!");
 			}
 			
+			if(!_gameWon) {
+				var newUIText:String = _controlCell.getArrowContext() + "\r" +
+					"Press R to Reset Level\r" +
+					"Press Escape to Return to Menu";
+				if(newUIText != _uiGuideText.text)
+					_uiGuideText.text = newUIText;
+			}
+			
 			// If we're not currently advancing the turn, need to check if we should advance
 			if(!_advancingTurn && !_gameWon) {
 				
@@ -261,6 +303,7 @@ package GameStates
 					if(_gameWon) {
 						trace("Game won!!");
 						this.add(_gameWonText);
+						this.add(_pressEnterText);
 					}
 				}
 			}

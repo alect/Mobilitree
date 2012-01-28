@@ -81,7 +81,14 @@ package GameObjects
 			return true;
 		}
 		
+		public override function getArrowContext():String
+		{
+			if(_growing)
+				return "Growing";
+			else
+				return "Floating";
 
+		}
 		public override function isAvatar():Boolean
 		{
 			return true;
