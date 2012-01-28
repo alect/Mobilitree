@@ -103,5 +103,11 @@ package GameObjects
 			return false;
 		}
 		
+		public override function isAvatar():Boolean
+		{
+			return !_plantedSeed;
+		}
+
+		
 	}
 }

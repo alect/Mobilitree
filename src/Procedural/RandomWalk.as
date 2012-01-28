@@ -1,7 +1,11 @@
 package Procedural
 {
 
+	import GameObjects.CellObject;
+	
 	import GameStates.PlayState;
+	
+	import flash.utils.getQualifiedClassName;
 	
 	import org.flixel.FlxG;
 	import org.flixel.FlxObject;
@@ -53,6 +57,17 @@ package Procedural
 				playstate.advanceTurn();
 				playstate.doneAdvancingTurn();  // this probably does nothing, but we'll call it just in case.
 				FlxG.keys.reset();
+				
+				// Where is the tree?
+				var avatar:CellObject = playstate.getAvatar();
+				if (null == avatar)
+				{
+					//trace("Could not find avatar");
+				}
+				else
+				{
+					//trace("Player at " + avatar.gridX + "," + avatar.gridY + " is " + getQualifiedClassName(avatar));
+				}
 				return true;
 			}
 			
