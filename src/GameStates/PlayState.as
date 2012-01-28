@@ -1,6 +1,7 @@
 package GameStates
 {
 	import GameObjects.CellObject;
+	import GameObjects.Soil;
 	import GameObjects.Tree;
 	
 	import Procedural.RandomWalk;
@@ -19,23 +20,9 @@ package GameStates
 	public class PlayState extends FlxState
 	{
 	
-		// Test the tilemap out a bit
-		private var _testCSV:String =  
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 4, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n" +
-			"0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0";
 		
+		// The currently loaded level
+		private var _currentLevel:Level;
 		
 		// A two dimensional array of cell object type values used by the advance turn functions for convenient access to what's on the board
 		private var _gridValues:Array;
@@ -77,34 +64,55 @@ package GameStates
 		public override function create():void 
 		{
 			_instance = this;
+			
+			_currentLevel = new Level(ResourceManager.testSoil);
+			loadFromLevel(_currentLevel);
+			
+		}
+		
+		/**
+		 * Function that initializes the state based on a loaded level. 
+		 */
+		private function loadFromLevel(level:Level):void
+		{
 			_tilemap = new FlxTilemap();
-			_tilemap.loadMap(_testCSV, ResourceManager.tileArt, Globals.TILE_SIZE, Globals.TILE_SIZE, FlxTilemap.OFF, 0, 0, 1);
+			_tilemap.loadMap(level.tilemapCSV, ResourceManager.tileArt, Globals.TILE_SIZE, Globals.TILE_SIZE, FlxTilemap.OFF, 0, 0, 1);
 			_tilemap.x = 90;
 			_tilemap.y = 60;
 			this.add(_tilemap);
 			
-			// create our convenient grid
+			
+			_cellObjects = new FlxGroup();
 			_gridValues = [];
-			for(var i:int = 0; i < _tilemap.widthInTiles; i++) {
+			var levelGrid:Array = level.typeArray;
+			for(var i:int = 0; i < levelGrid.length; i++) {
 				var column:Array = [];
-				for(var j:int = 0; j < _tilemap.heightInTiles; j++) {
-					column.push(_tilemap.getTile(i, j));
+				for (var j:int = 0; j < (levelGrid[0] as Array).length; j++) {
+					column.push(levelGrid[i][j]);
+					if(levelGrid[i][j] == Globals.TREE_TYPE) {
+						var tree:Tree = new Tree(_tilemap.x+i*Globals.TILE_SIZE, _tilemap.y+j*Globals.TILE_SIZE, 3);
+						_cellObjects.add(tree);
+					}
+					else if(levelGrid[i][j] == Globals.SOIL_TYPE) {
+						var soil:Soil = new Soil(_tilemap.x+i*Globals.TILE_SIZE, _tilemap.y+j*Globals.TILE_SIZE);
+						_cellObjects.add(soil);
+					}
 				}
 				_gridValues.push(column);
 			}
 			
-			
-			_cellObjects = new FlxGroup();
-			
-			
-			_currentTree = new Tree(90, 120, 3);
-			_gridValues[_currentTree.gridX][_currentTree.gridY] = _currentTree.type;
-			_cellObjects.add(_currentTree);
-			
 			this.add(_cellObjects);
-			
-			
 		}
+		
+		/**
+		 * In case we get stuck, might want to reset the level
+		 */
+		private function resetLevel():void
+		{
+			this.clear();
+			this.loadFromLevel(_currentLevel);
+		}
+		
 		
 		/**
 		 * Nice utility function that handles bounds checking for finding the value of a 
@@ -173,6 +181,11 @@ package GameStates
 		public override function update():void
 		{
 			super.update();
+			
+			if(FlxG.keys.justPressed("R")) {
+				this.resetLevel();
+				return;
+			}
 			
 			// If we're not currently advancing the turn, need to check if we should advance
 			if(!_advancingTurn) {
