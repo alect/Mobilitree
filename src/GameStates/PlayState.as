@@ -186,8 +186,12 @@ package GameStates
 		{
 			var oldX:uint = cell.gridX;
 			var oldY:uint = cell.gridY;
+			
 			// place the cell in its new location
 			_gridValues[x][y] = cell.type;
+			cell.gridX = x;
+			cell.gridY = y;
+			
 			// remove the cell from its old location
 			_gridValues[oldX][oldY] = _tilemap.getTile(oldX, oldY);
 			
@@ -198,20 +202,37 @@ package GameStates
 			
 		}
 		
+		public function toFlixelCoordsFromGridCoords(x:int, y:int):FlxPoint
+		{
+			var point:FlxPoint = new FlxPoint(_tilemap.x+x*Globals.TILE_SIZE, _tilemap.y+y*Globals.TILE_SIZE);
+			return point;
+		}
+		
+		public function setFlixelCoords(cell:CellObject):void
+		{
+			var point:FlxPoint = toFlixelCoordsFromGridCoords(cell.gridX, cell.gridY);
+			cell.x = point.x;
+			cell.y = point.y;
+		}
+		
 		public function replaceCell(originalCell:CellObject, newCell:CellObject):void
 		{
 			// Change the grid
-			_gridValues[originalCell.gridX][originalCell.gridY] = newCell.type;
 			_cellObjects.remove(originalCell);
-			_cellObjects.add(newCell);
 			
+			addCell(newCell, originalCell.gridX, originalCell.gridY);
+
 			if(originalCell == _controlCell)
 				_controlCell = newCell;
 		}
 		
-		public function addCell(newCell:CellObject):void
+		public function addCell(newCell:CellObject, grid_x:int, grid_y:int):void
 		{
+			newCell.gridX = grid_x;
+			newCell.gridY = grid_y;
 			_gridValues[newCell.gridX][newCell.gridY] = newCell.type;
+			setFlixelCoords(newCell);
+			
 			_cellObjects.add(newCell);
 			if(newCell is Seed)
 				_controlCell = newCell;

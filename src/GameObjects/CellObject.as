@@ -18,6 +18,8 @@ package GameObjects
 		
 		// The value identifying the type of cell object
 		protected var _type:uint;
+		public  var gridX:uint;
+		public  var gridY:uint;
 		
 		public function get type():uint
 		{
@@ -27,6 +29,9 @@ package GameObjects
 		public function CellObject(x:Number, y:Number, graphic:Class) 
 		{
 			super(x, y, graphic);
+			
+			gridX = (uint)((this.x-PlayState.Instance.Tilemap.x)/Globals.TILE_SIZE);
+			gridY =  (uint)((this.y-PlayState.Instance.Tilemap.y)/Globals.TILE_SIZE);
 		}
 
 		public function advanceTurn():void
@@ -37,16 +42,6 @@ package GameObjects
 		public function doneAdvancingTurn():Boolean
 		{
 			return true;
-		}
-		
-		public function get gridX():uint
-		{
-			return (uint)((this.x-PlayState.Instance.Tilemap.x)/Globals.TILE_SIZE);
-		}
-		
-		public function get gridY():uint
-		{
-			return (uint)((this.y-PlayState.Instance.Tilemap.y)/Globals.TILE_SIZE);
 		}
 		
 		public function timeToAdvanceTurn():Boolean
