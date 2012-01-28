@@ -67,6 +67,12 @@ package GameObjects
 			return "";
 		}
 		
+		// Called once at the end of the turn
+		public function postTurn():void
+		{
+			
+		}
+		
 		protected static function cellSuitableForSeed(cell:uint):Boolean
 		{
 			return (cell == Globals.EMPTY_TYPE || cell == Globals.SOIL_TYPE || cell >= Globals.WATER_TYPE && cell <= Globals.WATER_LEFT_TYPE);

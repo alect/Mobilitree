@@ -38,25 +38,25 @@ package GameObjects
 			var grid:Array = PlayState.Instance.typeGrid;
 			if(FlxG.keys.UP) {
 				// now check if the value above us is empty
-				if(this.gridY > 0 && grid[this.gridX][this.gridY-1] == Globals.EMPTY_TYPE) {
+				if(this.gridY > 0 && treeCanWalkOn(grid[this.gridX][this.gridY-1])) {
 					_moveDirection = UP;
 					return true;
 				}
 			}
 			if(FlxG.keys.RIGHT) {
-				if(this.gridX < grid.length-1 && grid[this.gridX+1][this.gridY] == Globals.EMPTY_TYPE) {
+				if(this.gridX < grid.length-1 && treeCanWalkOn(grid[this.gridX+1][this.gridY])) {
 					_moveDirection = RIGHT;
 					return true;
 				}
 			}
 			if(FlxG.keys.DOWN) {
-				if(this.gridY < (grid[0] as Array).length-1 && grid[this.gridX][this.gridY+1] == Globals.EMPTY_TYPE) {
+				if(this.gridY < (grid[0] as Array).length-1 && treeCanWalkOn(grid[this.gridX][this.gridY+1])) {
 					_moveDirection = DOWN;
 					return true;
 				}
 			}
 			if(FlxG.keys.LEFT) {
-				if(this.gridX > 0 && grid[this.gridX-1][this.gridY] == Globals.EMPTY_TYPE) {
+				if(this.gridX > 0 && treeCanWalkOn(grid[this.gridX-1][this.gridY])) {
 					_moveDirection = LEFT;
 					return true;
 				}
@@ -92,6 +92,11 @@ package GameObjects
 					_dead = true;
 			}
 			
+		}
+		
+		private function treeCanWalkOn(cell:uint):Boolean
+		{
+			return (cell == Globals.EMPTY_TYPE || cell == Globals.DIRT_TYPE || cell == Globals.MUD_TYPE);
 		}
 		
 		public override function getArrowContext():String
