@@ -51,6 +51,7 @@ package Procedural
 			if (playstate.isTimeToAdvanceTurn())
 			{
 				playstate.advanceTurn();
+				playstate.doneAdvancingTurn();  // this probably does nothing, but we'll call it just in case.
 				FlxG.keys.reset();
 				return true;
 			}

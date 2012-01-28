@@ -39,5 +39,8 @@ package Utils
 		[Embed(source="assets/levels/level3.oel", mimeType="application/octet-stream")]
 		public static var level3:Class;
 		
+		[Embed(source="assets/levels/level4.oel", mimeType="application/octet-stream")]
+		public static var level4:Class;
+		
 	}
 }

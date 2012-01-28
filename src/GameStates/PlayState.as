@@ -65,7 +65,8 @@ package GameStates
 		{
 			_instance = this;
 			
-			_currentLevel = new Level(ResourceManager.testSoil);
+
+			_currentLevel = new Level(ResourceManager.level4);
 			loadFromLevel(_currentLevel);
 			
 		}
@@ -176,7 +177,16 @@ package GameStates
 			cell.advanceTurn();
 		}
 		
-		
+		public function doneAdvancingTurn():Boolean
+		{
+			var done:Boolean = true;
+			for each(var cell:CellObject in _cellObjects.members) {
+				if(!cell.doneAdvancingTurn())
+					done = false;
+			}
+			
+			return done;
+		}
 
 		public override function update():void
 		{
@@ -207,21 +217,19 @@ package GameStates
 			}
 			// Otherwise, see if everything is done moving (indicating that the turn advance is done)
 			else {
-				_advancingTurn = false;
-				for each(var cell:CellObject in _cellObjects.members) {
-					if(!cell.doneAdvancingTurn())
-						_advancingTurn = true;
-				}
-				var gameWon:Boolean = true;
-				// If we are actually done advancing the turn, see if we have won
-				for each(var cell:CellObject in _cellObjects.members) {
-					if(!cell.gameWon())
-						gameWon = false;
-				}
 				
-				if(gameWon)
-					trace("Game won!!");
-				
+				_advancingTurn = !doneAdvancingTurn();
+				if(!_advancingTurn) {
+					// If we are actually done advancing the turn, see if we have won
+					var gameWon:Boolean = true;
+					for each(var cell:CellObject in _cellObjects.members) {
+						if(!cell.gameWon())
+							gameWon = false;
+					}
+					
+					if(gameWon)
+						trace("Game won!!");
+				}
 			}
 			
 		}
