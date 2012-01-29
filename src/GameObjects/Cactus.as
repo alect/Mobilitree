@@ -13,7 +13,7 @@ package GameObjects
 		
 		protected override function killSelf():void
 		{
-			var deadSelf:DeadCactus = new DeadCactus(this.x, this.y,  _id);
+			var deadSelf:DeadCactus = new DeadCactus(this.x, this.y,  _id, _moveDirection);
 			PlayState.Instance.replaceCell(this, deadSelf);
 		}
 		
