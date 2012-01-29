@@ -98,6 +98,12 @@ package Utils
 		[Embed(source="assets/levels/level16.oel", mimeType="application/octet-stream")]
 		public static var level16:Class;
 		
-		public static var levelList:Array = [level14, level15, level16, testSoil, testSand, level7, level8, level9, level13, level10, level11, level12, level1, level2, level3, level5, level4, level6];		
+		[Embed(source="assets/levels/level17.oel", mimeType="application/octet-stream")]
+		public static var level17:Class;
+		
+		[Embed(source="assets/levels/level18.oel", mimeType="application/octet-stream")]
+		public static var level18:Class;
+		
+		public static var levelList:Array = [level14, level15, level16, level17, level18, testSoil, testSand, level7, level8, level9, level13, level10, level11, level12, level1, level2, level3, level5, level4, level6];		
 	}
 }
