@@ -11,27 +11,31 @@ package GameObjects
 	public class Tree extends CellObject
 	{
 		
-		private var _turnsLeft:int;
-		private var _totalTurns:int;
+		protected var _turnsLeft:int;
+		protected var _totalTurns:int;
 		
 		private var _dead:Boolean = false;
 		
 		private var _moveDirection:uint;
 		
+		protected var _id:uint = 0;
+		
+		
 		// for overlaying a transparency 
 		protected var _deadTransparency:FlxSprite;
 		
-		public function Tree(x:Number, y:Number, totalTurns:int)
+		public function Tree(x:Number, y:Number, totalTurns:int, id:uint)
 		{
 			super(x, y, ResourceManager.treeArt);
 			_type = Globals.TREE_TYPE;
 			_totalTurns = _turnsLeft = totalTurns;
 			_deadTransparency = new FlxSprite(0, 0, ResourceManager.deadTreeArt);	
+			_id = id;
 		}
 		
 		protected function killSelf():void
 		{
-			var deadSelf:DeadTree = new DeadTree(this.x, this.y);
+			var deadSelf:DeadTree = new DeadTree(this.x, this.y, _id);
 			PlayState.Instance.replaceCell(this, deadSelf);
 		}
 		
@@ -74,6 +78,15 @@ package GameObjects
 			return false;
 		}
 		
+		public override function canMove():Boolean
+		{
+			var grid:Array = PlayState.Instance.typeGrid;
+			return ( (this.gridY > 0 && treeCanWalkOn(grid[gridX][gridY-1])) ||
+					(this.gridX < grid.length-1 && treeCanWalkOn(grid[gridX+1][gridY])) ||
+					(this.gridY < (grid[0] as Array).length-1 && treeCanWalkOn(grid[gridX][gridY+1])) ||
+					(this.gridX > 0 && treeCanWalkOn(grid[gridX-1][gridY])) );
+		}
+		
 		public override function advanceTurn():void
 		{
 			if(_dead) {
@@ -109,7 +122,10 @@ package GameObjects
 		
 		public override function getArrowContext():String
 		{
-			return "Use Arrow Keys to Move. Moves until death: " + _turnsLeft;
+			if(!canMove())
+				return _id + "Tree " + _id + ": Stuck. Turns until death: " + _turnsLeft;
+			else
+				return _id + "Tree " + _id + ": Use Arrow Keys to Move. Moves until death: " + _turnsLeft;
 		}
 		
 		public override function doneAdvancingTurn():Boolean

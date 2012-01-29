@@ -14,9 +14,10 @@ package GameObjects
 		private var _seedHighlight:FlxSprite;
 		
 		// Whether or not we've planted our seed yet (affects the turn system)
-		private var _plantedSeed:Boolean;
+		protected var _plantedSeed:Boolean;
+		protected var _id:uint = 0;
 		
-		public function DeadTree(x:Number, y:Number)
+		public function DeadTree(x:Number, y:Number, id:uint)
 		{
 			super(x, y, ResourceManager.deadTreeArt);
 			// For all intents and purposes, other objects should treat us like a tree
@@ -25,6 +26,7 @@ package GameObjects
 			_seedHighlight = new FlxSprite();
 			_seedHighlight.loadGraphic(ResourceManager.seedArt, true);
 			_seedHighlight.alpha = 0.4;
+			_id = id;
 			//_seedHighlight.makeGraphic(Globals.TILE_SIZE, Globals.TILE_SIZE, 0x80f665f1);
 		}
 		
@@ -75,28 +77,28 @@ package GameObjects
 			var grid:Array = PlayState.Instance.typeGrid;
 			if(FlxG.keys.UP) { 
 				if(this.gridY > 0 && cellSuitableForSeed(grid[this.gridX][this.gridY-1])) {
-					PlayState.Instance.addCell( new Seed(0,0), gridX, gridY-1);
+					PlayState.Instance.addCell( new Seed(0,0, _id), gridX, gridY-1);
 					_plantedSeed = true;
 					return true;
 				}
 			}
 			if(FlxG.keys.RIGHT) {	
 				if(this.gridX < grid.length-1 && cellSuitableForSeed(grid[this.gridX+1][this.gridY])) {
-					PlayState.Instance.addCell(new Seed(0,0), this.gridX+1, this.gridY);
+					PlayState.Instance.addCell(new Seed(0,0, _id), this.gridX+1, this.gridY);
 					_plantedSeed = true;
 					return true;
 				}
 			}
 			if(FlxG.keys.DOWN) {
 				if(this.gridY < (grid[0] as Array).length-1 && cellSuitableForSeed(grid[this.gridX][this.gridY+1])) {
-					PlayState.Instance.addCell(new Seed(0,0), this.gridX, this.gridY+1);
+					PlayState.Instance.addCell(new Seed(0,0, _id), this.gridX, this.gridY+1);
 					_plantedSeed = true;
 					return true;
 				}
 			}
 			if(FlxG.keys.LEFT) {
 				if(this.gridX > 0 && cellSuitableForSeed(grid[this.gridX-1][this.gridY])) {
-					PlayState.Instance.addCell(new Seed(0,0), this.gridX-1, this.gridY);
+					PlayState.Instance.addCell(new Seed(0,0, _id), this.gridX-1, this.gridY);
 					_plantedSeed = true;
 					return true;
 				}
@@ -105,10 +107,23 @@ package GameObjects
 			return false;
 		}
 		
+		public override function canMove():Boolean
+		{
+			var grid:Array = PlayState.Instance.typeGrid;
+			return ( (this.gridY > 0 && cellSuitableForSeed(grid[gridX][gridY-1])) ||
+				(this.gridX < grid.length-1 && cellSuitableForSeed(grid[gridX+1][gridY])) ||
+				(this.gridY < (grid[0] as Array).length-1 && cellSuitableForSeed(grid[gridX][gridY+1])) ||
+				(this.gridX > 0 && cellSuitableForSeed(grid[gridX-1][gridY])) );
+		}
+		
 		public override function getArrowContext():String
 		{
-			if(!_plantedSeed) 
-				return "Use Arrow Keys to Plant Seed";
+			if(!_plantedSeed) {
+				if(!canMove())
+					return _id + "Dead Tree " + _id + ": Stuck";
+				else
+					return _id + "Dead Tree " + _id + ": Use Arrow Keys to Plant Seed";		
+			}
 			else
 				return "";
 		}
