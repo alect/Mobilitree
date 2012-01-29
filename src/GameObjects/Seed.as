@@ -21,6 +21,9 @@ package GameObjects
 		protected static var _happyTreeGrowSound:FlxSound = new FlxSound();
 		_happyTreeGrowSound.loadEmbedded(ResourceManager.happyTreeGrowingSound);
 		
+		protected static var _seedFloatSound:FlxSound = new FlxSound();
+		_seedFloatSound.loadEmbedded(ResourceManager.seedFloatingSound);
+		
 		public function Seed(x:Number, y:Number, id:uint)
 		{
 			super(x, y, null);
@@ -62,14 +65,22 @@ package GameObjects
 			
 			if(tile >= Globals.WATER_TYPE && tile <= Globals.WATER_END) 
 			{
-				if(tile == Globals.WATER_UP_TYPE && cellSuitableForSeed(PlayState.Instance.getGridCellType(gridX, gridY-1)))
+				if(tile == Globals.WATER_UP_TYPE && cellSuitableForSeed(PlayState.Instance.getGridCellType(gridX, gridY-1))) {
 					PlayState.Instance.moveCell(this, gridX, gridY-1);
-				else if(tile == Globals.WATER_RIGHT_TYPE && cellSuitableForSeed(PlayState.Instance.getGridCellType(gridX+1, gridY)))
+					_seedFloatSound.play(true);
+				}
+				else if(tile == Globals.WATER_RIGHT_TYPE && cellSuitableForSeed(PlayState.Instance.getGridCellType(gridX+1, gridY))) {
 					PlayState.Instance.moveCell(this, gridX+1, gridY);
-				else if(tile == Globals.WATER_DOWN_TYPE && cellSuitableForSeed(PlayState.Instance.getGridCellType(gridX, gridY+1)))
+					_seedFloatSound.play(true);
+				}
+				else if(tile == Globals.WATER_DOWN_TYPE && cellSuitableForSeed(PlayState.Instance.getGridCellType(gridX, gridY+1))) {
 					PlayState.Instance.moveCell(this, gridX, gridY+1);
-				else if(tile == Globals.WATER_LEFT_TYPE && cellSuitableForSeed(PlayState.Instance.getGridCellType(gridX-1, gridY)))
+					_seedFloatSound.play(true);
+				}
+				else if(tile == Globals.WATER_LEFT_TYPE && cellSuitableForSeed(PlayState.Instance.getGridCellType(gridX-1, gridY))) {
 					PlayState.Instance.moveCell(this, gridX-1, gridY);
+					_seedFloatSound.play(true);
+				}
 			}
 			else {
 			// TODO: the actual code for a seed's turn
@@ -83,11 +94,11 @@ package GameObjects
 				}
 				else if(PlayState.Instance.Tilemap.getTile(gridX, gridY) == Globals.SAND_TYPE) {
 					this.play("cactusGrow");
-					_seedGrowthSound.play();
+					//_seedGrowthSound.play();
 				}
 				else {
 					this.play("grow");
-					_seedGrowthSound.play();
+					//_seedGrowthSound.play();
 				}
 				
 				_growing = true;

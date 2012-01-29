@@ -5,10 +5,14 @@ package GameObjects
 	import Utils.*;
 	
 	import org.flixel.FlxG;
+	import org.flixel.FlxSound;
 	import org.flixel.FlxSprite;
 	
 	public class DeadTree extends CellObject
 	{
+		
+		protected static var _plantingSound:FlxSound = new FlxSound();
+		_plantingSound.loadEmbedded(ResourceManager.plantingSeedSound);
 		
 		// Used to highlight the spaces where a seed can be planted
 		private var _seedHighlight:FlxSprite;
@@ -79,6 +83,7 @@ package GameObjects
 				if(this.gridY > 0 && cellSuitableForSeed(grid[this.gridX][this.gridY-1])) {
 					PlayState.Instance.addCell( new Seed(0,0, _id), gridX, gridY-1);
 					_plantedSeed = true;
+					_plantingSound.play();
 					return true;
 				}
 			}
@@ -86,6 +91,7 @@ package GameObjects
 				if(this.gridX < grid.length-1 && cellSuitableForSeed(grid[this.gridX+1][this.gridY])) {
 					PlayState.Instance.addCell(new Seed(0,0, _id), this.gridX+1, this.gridY);
 					_plantedSeed = true;
+					_plantingSound.play();
 					return true;
 				}
 			}
@@ -93,6 +99,7 @@ package GameObjects
 				if(this.gridY < (grid[0] as Array).length-1 && cellSuitableForSeed(grid[this.gridX][this.gridY+1])) {
 					PlayState.Instance.addCell(new Seed(0,0, _id), this.gridX, this.gridY+1);
 					_plantedSeed = true;
+					_plantingSound.play();
 					return true;
 				}
 			}
@@ -100,6 +107,7 @@ package GameObjects
 				if(this.gridX > 0 && cellSuitableForSeed(grid[this.gridX-1][this.gridY])) {
 					PlayState.Instance.addCell(new Seed(0,0, _id), this.gridX-1, this.gridY);
 					_plantedSeed = true;
+					_plantingSound.play();
 					return true;
 				}
 			}

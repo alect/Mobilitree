@@ -41,8 +41,14 @@ package Utils
 		[Embed(source="assets/audio/Tree_drying_up.mp3")]
 		public static var treeDyingSound:Class;
 		
+		[Embed(source="assets/audio/UI_clunk_button.mp3")]
+		public static var plantingSeedSound:Class;
+		
 		[Embed(source="assets/audio/Seed_growth.mp3")]
 		public static var seedGrowingSound:Class;
+		
+		[Embed(source="assets/audio/Seed_through_water_2.mp3")]
+		public static var seedFloatingSound:Class;
 		
 		[Embed(source="assets/audio/Victory_sound_individual.mp3")]
 		public static var happyTreeGrowingSound:Class;
