@@ -1,5 +1,7 @@
 package GameStates
 {
+	import Procedural.GenerateLevel;
+	
 	import Utils.*;
 	
 	import org.flixel.FlxButton;
@@ -43,7 +45,7 @@ package GameStates
 			tryIt.size = 20;
 			add(tryIt);
 			
-			//this.add( new FlxButton(currentX, currentY, "GO!", fullProcedural) );
+			this.add( new FlxButton(currentX, currentY, "GO!", fullProcedural) );
 			
 			
 		}
@@ -60,16 +62,15 @@ package GameStates
 		
 		
 		
-		/*private function createButtonFunction(i:int):Function {
-			return function():void {FlxG.switchState(new PlayState(i));};
-		}
-		
 		public function fullProcedural():void
 		{
-			var playstate:PlayState = new PlayState(0);
+			var playstate:PlayState = new PlayState(0, 0);
+			
+			playstate._baseLevel = GenerateLevel.createLevel();
+			playstate.proceduralLevel = true;
 			
 			FlxG.switchState(playstate);
-		}*/
+		}
 		
 		public function backButton():void
 		{

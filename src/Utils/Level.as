@@ -31,8 +31,8 @@ package Utils
 		// and a two dimensional array of objects to go above the tilemap (such as trees)
 		
 		//private var _tilemapCSV:String;
-		private var _typeArray:Array;
-		private var _tilemapArray:Array;
+		public var _typeArray:Array;
+		public var _tilemapArray:Array;
 		
 		public function get tilemapCSV():String
 		{
@@ -44,9 +44,14 @@ package Utils
 			return _typeArray;
 		}
 		
+	
+		
 		// Loads a level from an oel xml file 
 		public function Level(xml:Class)
 		{
+			if (null == xml)
+				return;
+			
 			var rawData:ByteArray = new xml;
 			var dataString:String = rawData.readUTFBytes(rawData.length);
 			var xmlData:XML = new XML(dataString);
@@ -181,6 +186,37 @@ package Utils
 			
 			return did_something;
 			
+		}
+		
+		public function copy():Level
+		{
+			var level:Level = new Level(null);
+			
+			level._tilemapArray = copyArray2(_tilemapArray);
+			level._typeArray = copyArray2(_typeArray);
+			
+			return level;
+		}
+		
+		protected function copyArray2(array2:Array):Array
+		{
+			var height:uint = array2.length;
+			var width:uint = array2[0].length;
+			
+			var result:Array = new Array();
+			
+			for (var x:int = 0; x < height; ++x)
+			{
+				var col:Array = new Array();
+				result.push(col);
+				
+				for (var y:int = 0; y < width; ++y)
+				{
+					col.push(array2[x][y]);
+				}
+			}
+			
+			return result;
 		}
 
 	}
