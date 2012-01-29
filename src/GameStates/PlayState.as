@@ -334,7 +334,8 @@ package GameStates
 			// Try variation type 1
 			if (FlxG.keys.justPressed("ONE")) {
 				reloadLevel();
-				RandomWalk.rebuild(this, 1);
+				//RandomWalk.rebuild(this, 1);
+				RandomWalk.rebuildWithSkip(this, 0);
 				this.resetLevel();
 				return true;
 			}
@@ -342,7 +343,8 @@ package GameStates
 			// Try variation type 1
 			if (FlxG.keys.justPressed("TWO")) {
 				reloadLevel();
-				RandomWalk.rebuild(this, 0.8);
+				//RandomWalk.rebuild(this, 0.8);
+				RandomWalk.rebuildWithSkip(this, 1);
 				this.resetLevel();
 				return true;
 			}
@@ -350,7 +352,8 @@ package GameStates
 			// Try variation type 1
 			if (FlxG.keys.justPressed("THREE")) {
 				reloadLevel();
-				RandomWalk.rebuild(this, 0.6);
+				//RandomWalk.rebuild(this, 0.6);
+				RandomWalk.rebuildWithSkip(this, 2);
 				this.resetLevel();
 				return true;
 			}
@@ -358,7 +361,8 @@ package GameStates
 			// Try variation type 1
 			if (FlxG.keys.justPressed("FOUR")) {
 				reloadLevel();
-				RandomWalk.rebuild(this, 0.4);
+				//RandomWalk.rebuild(this, 0.4);
+				RandomWalk.rebuildWithSkip(this, 3);
 				this.resetLevel();
 				return true;
 			}
@@ -366,7 +370,8 @@ package GameStates
 			// Try variation type 1
 			if (FlxG.keys.justPressed("FIVE")) {
 				reloadLevel();
-				RandomWalk.rebuild(this, 0.2);
+				//RandomWalk.rebuild(this, 0.2);
+				RandomWalk.rebuildWithSkip(this, 4);
 				this.resetLevel();
 				return true;
 			}
