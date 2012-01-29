@@ -26,6 +26,7 @@ package GameStates
 			this.add(_levelSelectText);
 			
 			var _backButton:FlxButton = new FlxButton(5, FlxG.height-30, "Back", function():void {FlxG.switchState(new MainMenuState());});
+			LevelSelectState.prettifyButton(_backButton, "Back");
 			this.add(_backButton);
 			
 			
@@ -38,18 +39,21 @@ package GameStates
 			_variantText .size = 20;
 			add(_variantText);
 			
-			var tryIt:FlxText =  new FlxText(0, _variantText.y +  _variantText.height + 60, FlxG.width, "Or go full procedural:");
+			var fullproc:String = "Or go full procedural.\n\n" +
+				"Click the Go! below, and then hit 1,2,3,4 or 5.";  
+			
+			var tryIt:FlxText =  new FlxText(0, _variantText.y +  _variantText.height + 60, FlxG.width, fullproc);
 			var currentX:int = FlxG.width/2-30;
-			var currentY:int = tryIt.y +  tryIt.height + 40;
+			var currentY:int = tryIt.y +  tryIt.height + 60;
 			tryIt.alignment = "center";
 			tryIt.size = 20;
 			add(tryIt);
-			
-		//	_seedInput = new FlxText(currentX, currentY, FlxG.width, "Random Seed");
-//			add(_seedInput);
-			//currentY = _seedInput.y + _seedInput.height + 40;
-			
-			this.add( new FlxButton(currentX, currentY, "GO!", fullProcedural) );
+
+
+			var go_button:FlxButton =new FlxButton(currentX, currentY, "GO!", fullProcedural); 
+			this.add( go_button );
+			LevelSelectState.prettifyButton(go_button, "Go!");
+
 		}
 
 		public override function update():void

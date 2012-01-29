@@ -38,6 +38,8 @@ package GameStates
 			
 			
 			var _procButton:FlxButton = new FlxButton(FlxG.width - 80 - 5, FlxG.height-30, "Procedural", gotoProceduralState);
+			prettifyButton(_procButton, "Procedural");
+			_procButton.x = FlxG.width - 150;
 			this.add(_procButton);
 			
 			var allLevels:Array = [];
@@ -61,12 +63,10 @@ package GameStates
 			trace(levels);
 			var n:int = 0;
 			for each(var i:int in levels) {
+				
 				var iButton:FlxButton = new FlxButton(x, currentY, "Level " + (i+1).toString(), createButtonFunction(_groupIndex, n));
-				iButton.loadGraphic(ResourceManager.buttonArt, true, false, 96, 32);
-				var label:FlxText = new FlxText(0, 0, FlxG.width, "Level " + (i+1).toString());
-				label.size = 16;
-				iButton.label = label;
-				iButton.labelOffset = new FlxPoint(32, iButton.height/2-label.height/2);
+				prettifyButton(iButton, "Level " + (i+1).toString());
+
 				this.add(iButton);
 				currentY+=iButton.height+5;
 				n++;
@@ -95,6 +95,16 @@ package GameStates
 		private function createButtonFunction(groupIndex:int,  levelIndex:int):Function {
 			return function():void {FlxG.switchState(new PlayState(groupIndex, levelIndex));};
 		}
+		
+		public static function prettifyButton(button:FlxButton, text:String):void
+		{
+			button.loadGraphic(ResourceManager.buttonArt, true, false, 96, 32);
+			var label:FlxText = new FlxText(0, 0, FlxG.width, text);
+			label.size = 16;
+			button.label = label;
+			button.labelOffset = new FlxPoint(32, button.height/2-label.height/2);
+		}
+
 	}
 	
 	
