@@ -24,6 +24,13 @@ package Utils
 		[Embed(source="assets/art/tiles.png")]
 		public static var tileArt:Class;
 		
+		[Embed(source="assets/art/title.png")]
+		public static var titleArt:Class;
+		
+		[Embed(source="assets/art/button.png")]
+		public static var buttonArt:Class;
+		
+		
 		// Audio resources
 		
 		
