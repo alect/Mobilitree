@@ -64,6 +64,11 @@ package GameStates
 		{
 			return _instance;
 		}
+
+		public function get currentLevel():Level
+		{
+			return _currentLevel;
+		}
 		
 		public function get Tilemap():FlxTilemap
 		{
@@ -281,21 +286,49 @@ package GameStates
 			
 			// If we are actually done advancing the turn, see if we have won
 			_gameWon = true;
-			for each(var cell:CellObject in _cellObjects.members) {
+			for each(cell in _cellObjects.members) {
 				if(!cell.gameWon())
 					_gameWon = false;
 			}
 		}
 
+		// returns true if a reset happened
+		protected function checkForReset():Boolean
+		{
+			if(FlxG.keys.justPressed("R")) {
+				this.resetLevel();
+				return true;
+			}
+
+			// Go back to variation 0
+			if (FlxG.keys.justPressed("ZERO")) {
+				reloadLevel();
+				return true;
+			}
+			
+			// Try variation type 1
+			if (FlxG.keys.justPressed("ONE")) {
+				reloadLevel();
+				RandomWalk.rebuild(this, 1);
+				this.resetLevel();
+				return true;
+			}
+			
+			return false;
+		}
+		
+		// Reloads the current level from embedded data, discarding all variations
+		public function reloadLevel():void
+		{
+			_currentLevel = new Level(ResourceManager.levelList[_currentLevelIndex]);
+			this.resetLevel();
+		}
+		
 		public override function update():void
 		{
 			super.update();
 			_cellsToRemove = [];
 			
-			if(FlxG.keys.justPressed("R")) {
-				this.resetLevel();
-				return;
-			}
 			
 			if(_gameWon && FlxG.keys.justPressed("ENTER")) {
 				if(_currentLevelIndex+1 < ResourceManager.levelList.length) {
@@ -307,6 +340,10 @@ package GameStates
 				else
 					trace("OUT OF LEVELS!");
 			}
+			
+			// did the user request a reset/reload/variant?
+			if (checkForReset())
+				return;
 			
 			if(!_gameWon) {
 				var newUIText:String = _controlCell.getArrowContext() + "\r" +

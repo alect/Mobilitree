@@ -7,11 +7,13 @@ package Procedural
 	import GameStates.PlayState;
 	
 	import Utils.Globals;
+	import Utils.Level;
 	
 	import flash.utils.getQualifiedClassName;
 	
 	import org.flixel.FlxG;
 	import org.flixel.FlxObject;
+	import org.flixel.FlxParticle;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxU;
 
@@ -90,11 +92,14 @@ package Procedural
 
 		public function step( direction_from_flx_object:uint, playstate:PlayState):Boolean
 		{
+			var print:Boolean = false;
+			
 			fakeInput(direction_from_flx_object);
 			
 			if (!playstate.isTimeToAdvanceTurn())
 			{
-				trace("   no result");
+				if (print)
+					trace("   no result");
 			}
 			else
 			{
@@ -107,18 +112,21 @@ package Procedural
 				var avatar:CellObject = playstate.getAvatar();
 				if (null == avatar)
 				{
-					trace("   Could not find avatar");
+					if (print)
+						trace("   Could not find avatar");
 				}
 				else
 				{
-					trace("   Player at " + avatar.gridX + "," + avatar.gridY + " is " + getQualifiedClassName(avatar));
+					if (print)
+						trace("   Player at " + avatar.gridX + "," + avatar.gridY + " is " + getQualifiedClassName(avatar));
 					// Is it possible that we have a seed in a win-candidate position?>
 					if (avatar is Seed)
 					{
 						if (playstate.getGridCellType(avatar.gridX, avatar.gridY))
 						{
 							PossibleGoalLocations.push( new FlxPoint( avatar.gridX, avatar.gridY ) );
-							trace("     Found reachable seed location: " + toString(PossibleGoalLocations[ PossibleGoalLocations.length-1 ]));
+							if (print)
+								trace("     Found reachable seed location: " + toString(PossibleGoalLocations[ PossibleGoalLocations.length-1 ]));
 						}
 					}
 				}
@@ -136,7 +144,7 @@ package Procedural
 		
 		public static function fakeInput( direction_from_flx_object:uint):void
 		{
-			var print:Boolean = true;	
+			var print:Boolean = false;	
 		
 			FlxG.keys.reset();
 			
@@ -165,6 +173,41 @@ package Procedural
 						trace("Faking RIGHT"); 
 					break;
 			}
+		}
+		
+		public static function rebuild(playstate:PlayState, goal_percentage:Number):Boolean
+		{
+			// Snag the Level object
+			var level:Level = playstate.currentLevel;
+			
+			level.removeAllGoals();
+			
+			// Run the random walk.
+			var walk:RandomWalk = new RandomWalk();
+			walk.walk(1000, playstate);
+			
+			/*
+			// Try the possibilities....
+			var got_one:Boolean = false;
+			for each(var goal:FlxPoint in walk.PossibleGoalLocations)
+			{
+				if (FlxG.random() <= goal_percentage)
+				{
+					level.forceGoalTile(goal.x, goal.y);
+					got_one = true;
+				}
+			}
+			*/
+			
+		//	if (!got_one && walk._possibleInputs.length >0)
+			{
+				var point:FlxPoint = walk.PossibleGoalLocations[ walk.PossibleGoalLocations.length-1 ];
+				level.forceGoalTile(uint(point.x), uint(point.y));
+				return true;
+			}
+			
+			return got_one;
+			
 		}
 	}
 }
