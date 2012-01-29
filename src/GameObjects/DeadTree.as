@@ -23,7 +23,9 @@ package GameObjects
 			_type = Globals.TREE_TYPE;
 			
 			_seedHighlight = new FlxSprite();
-			_seedHighlight.makeGraphic(Globals.TILE_SIZE, Globals.TILE_SIZE, 0x80f665f1);
+			_seedHighlight.loadGraphic(ResourceManager.seedArt, true);
+			_seedHighlight.alpha = 0.8;
+			//_seedHighlight.makeGraphic(Globals.TILE_SIZE, Globals.TILE_SIZE, 0x80f665f1);
 		}
 		
 		public override function draw():void

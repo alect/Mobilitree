@@ -6,6 +6,7 @@ package GameObjects
 	
 	import org.flixel.FlxG;
 	import org.flixel.FlxPoint;
+	import org.flixel.FlxSprite;
 	
 	public class Tree extends CellObject
 	{
@@ -17,13 +18,15 @@ package GameObjects
 		
 		private var _moveDirection:uint;
 		
+		// for overlaying a transparency 
+		private var _deadTransparency:FlxSprite;
 		
 		public function Tree(x:Number, y:Number, totalTurns:int)
 		{
 			super(x, y, ResourceManager.treeArt);
 			_type = Globals.TREE_TYPE;
 			_totalTurns = _turnsLeft = totalTurns;
-			
+			_deadTransparency = new FlxSprite(0, 0, ResourceManager.deadTreeArt);	
 		}
 		
 		public override function timeToAdvanceTurn():Boolean
@@ -96,7 +99,7 @@ package GameObjects
 		
 		private function treeCanWalkOn(cell:uint):Boolean
 		{
-			return (cell == Globals.EMPTY_TYPE || cell == Globals.DIRT_TYPE || cell == Globals.MUD_TYPE);
+			return (cell == Globals.EMPTY_TYPE || cell == Globals.DIRT_TYPE || cell == Globals.MUD_TYPE || cell == Globals.SAND_TYPE);
 		}
 		
 		public override function getArrowContext():String
@@ -112,6 +115,16 @@ package GameObjects
 		public override function isAvatar():Boolean
 		{
 			return !_dead;
+		}
+		
+		public override function draw():void
+		{
+			super.draw();
+			var deathLevel:Number = 1 - _turnsLeft/Number(_totalTurns);
+			_deadTransparency.x = this.x;
+			_deadTransparency.y = this.y;
+			_deadTransparency.alpha = deathLevel;
+			_deadTransparency.draw();
 		}
 
 		

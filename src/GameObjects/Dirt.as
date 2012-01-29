@@ -60,13 +60,13 @@ package GameObjects
 			// If our original direction was a no go, just pick one
 			if(mud == null) {
 				if(upFlow) 
-					mud = new Mud(this.x, this.y, _dir);
+					mud = new Mud(this.x, this.y, UP);
 				else if(rightFlow)
-					mud = new Mud(this.x, this.y, _dir);
+					mud = new Mud(this.x, this.y, RIGHT);
 				else if(downFlow)
-					mud = new Mud(this.x, this.y, _dir);
+					mud = new Mud(this.x, this.y, DOWN);
 				else if(leftFlow)
-					mud = new Mud(this.x, this.y, _dir);
+					mud = new Mud(this.x, this.y, LEFT);
 			}
 			
 			// If we still don't have anything, stay dirt
