@@ -43,7 +43,7 @@ package GameStates
 			tryIt.size = 20;
 			add(tryIt);
 			
-			this.add( new FlxButton(currentX, currentY, "GO!", fullProcedural) );
+			//this.add( new FlxButton(currentX, currentY, "GO!", fullProcedural) );
 			
 			
 		}
@@ -60,7 +60,7 @@ package GameStates
 		
 		
 		
-		private function createButtonFunction(i:int):Function {
+		/*private function createButtonFunction(i:int):Function {
 			return function():void {FlxG.switchState(new PlayState(i));};
 		}
 		
@@ -69,7 +69,7 @@ package GameStates
 			var playstate:PlayState = new PlayState(0);
 			
 			FlxG.switchState(playstate);
-		}
+		}*/
 		
 		public function backButton():void
 		{

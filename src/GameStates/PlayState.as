@@ -24,6 +24,7 @@ package GameStates
 	
 		// The index into the level list of our current level
 		private var _currentLevelIndex:int = 0;
+		private var _currentGroupIndex:int = 0;
 		
 		// The currently loaded level
 		private var _currentLevel:Level;
@@ -102,8 +103,9 @@ package GameStates
 			_controlCell = value;
 		}
 		
-		public function PlayState(levelIndex:int)
+		public function PlayState(groupIndex:int, levelIndex:int)
 		{
+			_currentGroupIndex = groupIndex;
 			_currentLevelIndex = levelIndex;
 		}
 		
@@ -121,7 +123,13 @@ package GameStates
 			_uiGuideText.alignment = "center";
 			_uiGuideText.y = FlxG.height-_uiGuideText.height-30;
 			
-			_currentLevel = new Level(ResourceManager.levelList[_currentLevelIndex]);
+			var trueLevelIndex:int = LevelSelectState.getTrueLevelIndex(_currentGroupIndex, _currentLevelIndex);
+			if(trueLevelIndex != -1)
+				_currentLevel = new Level(ResourceManager.levelList[trueLevelIndex]);
+			else {
+				FlxG.switchState(new LevelSelectState());
+				return;
+			}
 			loadFromLevel(_currentLevel);
 			
 			_gameWonText = new FlxText(0, 0, FlxG.width, "Level Complete!");
@@ -406,14 +414,17 @@ package GameStates
 			
 			
 			if(_gameWon && FlxG.keys.justPressed("ENTER")) {
-				if(_currentLevelIndex+1 < ResourceManager.levelList.length) {
-					_currentLevelIndex++;
-					_currentLevel = new Level(ResourceManager.levelList[_currentLevelIndex]);
+				_currentLevelIndex++;
+				var trueLevelIndex:int = LevelSelectState.getTrueLevelIndex(_currentGroupIndex, _currentLevelIndex);
+				if(trueLevelIndex != -1) {
+					_currentLevel = new Level(ResourceManager.levelList[trueLevelIndex]);
 					this.resetLevel();
 					return;
 				}
-				else
-					trace("OUT OF LEVELS!");
+				else {
+					FlxG.switchState(new LevelSelectState());
+					return;
+				}
 			}
 			
 			// did the user request a reset/reload/variant?
