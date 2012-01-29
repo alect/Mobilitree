@@ -237,10 +237,16 @@ package GameStates
 		public function replaceCell(originalCell:CellObject, newCell:CellObject):void
 		{
 			// Change the grid
+			
+			if(_gridValues[originalCell.gridX][originalCell.gridY] == originalCell.type)
+				_gridValues[originalCell.gridX][originalCell.gridY] = _tilemap.getTile(originalCell.gridX, originalCell.gridY);
 			_cellObjects.remove(originalCell);
 			
 			addCell(newCell, originalCell.gridX, originalCell.gridY);
 
+			//if(newCell.type == Globals.TREE_TYPE)
+			//s	_gridValues[newCell.gridX][newCell.gridY] = Globals.TREE_TYPE;
+			
 			if(originalCell == _controlCell)
 				_controlCell = newCell;
 		}
@@ -249,7 +255,8 @@ package GameStates
 		{
 			newCell.gridX = grid_x;
 			newCell.gridY = grid_y;
-			_gridValues[newCell.gridX][newCell.gridY] = newCell.type;
+			if(_gridValues[newCell.gridX][newCell.gridY] != Globals.TREE_TYPE)
+				_gridValues[newCell.gridX][newCell.gridY] = newCell.type;
 			setFlixelCoords(newCell);
 			
 			_cellObjects.add(newCell);

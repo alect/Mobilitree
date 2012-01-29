@@ -21,6 +21,7 @@ package GameObjects
 		public override function postTurn():void
 		{
 			// don't change if we've got a tree on top of us
+			trace(PlayState.Instance.getGridCellType(gridX, gridY));
 			if(PlayState.Instance.getGridCellType(gridX, gridY) == Globals.TREE_TYPE)
 				return;
 			
