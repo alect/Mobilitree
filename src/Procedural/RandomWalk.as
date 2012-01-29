@@ -98,6 +98,17 @@ package Procedural
 		// Returns true if it did something
 		public function walkSkip(num_steps:int, playstate:PlayState, skip_count:int):void
 		{
+			var avatar:CellObject = playstate.getAvatar();
+			if (null != avatar)
+			{
+				if (!(avatar is Seed))
+				{
+					SpacesWeWalkedThrough.push( new FlxPoint( avatar.gridX, avatar.gridY ) );
+				}
+			}
+			
+			
+			
 			var did_something:Boolean = false;
 			var current_skip:int = skip_count;
 			
@@ -155,29 +166,55 @@ package Procedural
 					// Is it possible that we have a seed in a win-candidate position?>
 					if (avatar is Seed)
 					{
+						var location:FlxPoint =  new FlxPoint( avatar.gridX, avatar.gridY );
+						
 						if (Seed.couldGrowAt(avatar.gridX, avatar.gridY))
 						{
-							PossibleGoalLocations.push( new FlxPoint( avatar.gridX, avatar.gridY ) );
-							if (print)
+							if (walkedThereAlready(location))
 							{
-								trace("     Found reachable seed location: " + toString(PossibleGoalLocations[ PossibleGoalLocations.length-1 ]));
-								trace("    goal P = " + probability_of_creating_goal);
-							}
-							
-							// Hack it up!
-							if (probability_of_creating_goal > FlxG.random())
-							{
-								playstate.Tilemap.setTile(avatar.gridX, avatar.gridY, Globals.SOIL_TYPE);
 								if (print)
-									trace("    Made a new goal!");
+									trace("Discarding " + toString(location) + " because we already walked there");
+							}
+							else
+							{
+							
+								PossibleGoalLocations.push(location );
+								if (print)
+								{
+									trace("     Found reachable seed location: " + toString(PossibleGoalLocations[ PossibleGoalLocations.length-1 ]));
+									trace("    goal P = " + probability_of_creating_goal);
+								}
+								
+								// Hack it up!
+								if (probability_of_creating_goal > FlxG.random())
+								{
+									playstate.Tilemap.setTile(avatar.gridX, avatar.gridY, Globals.SOIL_TYPE);
+									if (print)
+										trace("    Made a new goal!");
+								}
 							}
 						}
+					}
+					else
+					{
+						SpacesWeWalkedThrough.push( new FlxPoint( avatar.gridX, avatar.gridY ) );
 					}
 				}
 				return true;
 			}
 			
 			FlxG.keys.reset();
+			return false;
+		}
+		
+		public function walkedThereAlready(location:FlxPoint):Boolean
+		{
+			for each (var trail:FlxPoint in SpacesWeWalkedThrough)
+			{
+				if (trail.x == location.x && trail.y == location.y)
+					return true;
+			}
+			
 			return false;
 		}
 		
