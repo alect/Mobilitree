@@ -12,7 +12,7 @@ package GameObjects
 		
 		public function Mud(x:Number, y:Number, dir:uint)
 		{
-			super(x, y, ResourceManager.mudArt);
+			super(x, y, null);
 			_type = Globals.MUD_TYPE;
 			_dir = dir;
 		}

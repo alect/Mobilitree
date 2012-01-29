@@ -5,13 +5,13 @@ package
 	import org.flixel.*;
 	import GameStates.MainMenuState;
 	
-	[SWF(width="800", height="600", backgroundColor="#808080")]
+	[SWF(width="1024", height="768", backgroundColor="#808080")]
 	
 	public class Mobilitree extends FlxGame
 	{
 		public function Mobilitree()
 		{
-			super(800, 600, MainMenuState, 1);
+			super(1024, 768, MainMenuState, 1);
 		}
 	}
 }

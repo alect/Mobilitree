@@ -113,7 +113,7 @@ package GameStates
 			_uiGuideText = new FlxText(0, 0, FlxG.width, _uiGuideString);
 			_uiGuideText.size = 16;
 			_uiGuideText.alignment = "center";
-			_uiGuideText.y = FlxG.height-_uiGuideText.height-50;
+			_uiGuideText.y = FlxG.height-_uiGuideText.height-30;
 			
 			_currentLevel = new Level(ResourceManager.levelList[_currentLevelIndex]);
 			loadFromLevel(_currentLevel);
@@ -217,7 +217,7 @@ package GameStates
 			// Move the cell to the relevant location on the grid
 			var movePoint:FlxPoint = new FlxPoint(_tilemap.x+x*Globals.TILE_SIZE+Globals.TILE_SIZE/2, _tilemap.y+y*Globals.TILE_SIZE+Globals.TILE_SIZE/2);
 			
-			cell.followPath(new FlxPath([movePoint]));
+			cell.followPath(new FlxPath([movePoint]), 200);
 			
 		}
 		

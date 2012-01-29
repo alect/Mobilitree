@@ -15,7 +15,7 @@ package GameObjects
 		
 		public function Dirt(x:Number, y:Number, dir:uint)
 		{
-			super(x, y, ResourceManager.dirtArt);
+			super(x, y, null);
 			_type = Globals.DIRT_TYPE;
 			_dir = dir;
 		}

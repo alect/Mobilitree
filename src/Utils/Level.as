@@ -57,8 +57,8 @@ package Utils
 			// first, grab the width and the height
 			var width:int = xmlData.width;
 			var height:int = xmlData.height;
-			var widthInTiles:int = Math.floor(width/Globals.TILE_SIZE);
-			var heightInTiles:int = Math.floor(height/Globals.TILE_SIZE);
+			var widthInTiles:int = Math.floor(width/Globals.OGMO_TILE_SIZE);
+			var heightInTiles:int = Math.floor(height/Globals.OGMO_TILE_SIZE);
 			
 			// first initialize two arrays, one for the tilemap (that'll be turned into a CSV in the last step)
 			// and one for the cell objects. Both are the same size so we can do this in one go
@@ -79,8 +79,8 @@ package Utils
 			
 			// Now iterate through the data list to fill out these two arrays
 			for each(dataElement in dataList) {
-				var tileX:int = dataElement.@x / Globals.TILE_SIZE;
-				var tileY:int = dataElement.@y / Globals.TILE_SIZE;
+				var tileX:int = dataElement.@x / Globals.OGMO_TILE_SIZE;
+				var tileY:int = dataElement.@y / Globals.OGMO_TILE_SIZE;
 				
 				// Look for tilemap elements first
 				if (dataElement.@tx == ROCK_X) {

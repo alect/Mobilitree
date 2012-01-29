@@ -10,8 +10,6 @@ package Utils
 		public static var deadTreeArt:Class;
 		[Embed(source="assets/art/seed.png")]
 		public static var seedArt:Class;
-		[Embed(source="assets/art/placeholder-soil.png")]
-		public static var soilArt:Class;
 		
 		[Embed(source="assets/art/cactus.png")]
 		public static var cactusArt:Class;
@@ -19,10 +17,6 @@ package Utils
 		[Embed(source="assets/art/deadcactus.png")]
 		public static var deadCactusArt:Class;
 		
-		[Embed(source="assets/art/placeholder-dirt.png")]
-		public static var dirtArt:Class;
-		[Embed(source="assets/art/placeholder-mud.png")]
-		public static var mudArt:Class;
 		
 		[Embed(source="assets/art/goldtree.png")]
 		public static var goldTreeArt:Class;

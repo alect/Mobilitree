@@ -2,7 +2,8 @@ package Utils
 {
 	public class Globals
 	{
-		public static const TILE_SIZE:int = 30;
+		public static const TILE_SIZE:int = 64;
+		public static const OGMO_TILE_SIZE:int = 30;
 		
 		// So we can ape normal enum behavior
 		private static var enumVal:uint = 0;

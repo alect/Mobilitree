@@ -7,7 +7,7 @@ package GameObjects
 	{
 		public function Soil(x:Number, y:Number)
 		{
-			super(x, y, ResourceManager.soilArt);
+			super(x, y, null);
 			_type = Globals.SOIL_TYPE;
 		}
 		

@@ -24,7 +24,7 @@ package GameObjects
 			
 			_seedHighlight = new FlxSprite();
 			_seedHighlight.loadGraphic(ResourceManager.seedArt, true);
-			_seedHighlight.alpha = 0.8;
+			_seedHighlight.alpha = 0.4;
 			//_seedHighlight.makeGraphic(Globals.TILE_SIZE, Globals.TILE_SIZE, 0x80f665f1);
 		}
 		
