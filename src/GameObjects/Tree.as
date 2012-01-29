@@ -19,7 +19,7 @@ package GameObjects
 		private var _moveDirection:uint;
 		
 		// for overlaying a transparency 
-		private var _deadTransparency:FlxSprite;
+		protected var _deadTransparency:FlxSprite;
 		
 		public function Tree(x:Number, y:Number, totalTurns:int)
 		{
@@ -29,12 +29,17 @@ package GameObjects
 			_deadTransparency = new FlxSprite(0, 0, ResourceManager.deadTreeArt);	
 		}
 		
+		protected function killSelf():void
+		{
+			var deadSelf:DeadTree = new DeadTree(this.x, this.y);
+			PlayState.Instance.replaceCell(this, deadSelf);
+		}
+		
 		public override function timeToAdvanceTurn():Boolean
 		{
 			// first, if we're dead, take care of some business. 
 			if(_dead) {
-				var deadSelf:DeadTree = new DeadTree(this.x, this.y);
-				PlayState.Instance.replaceCell(this, deadSelf);
+				killSelf();
 				return false;
 			}
 			

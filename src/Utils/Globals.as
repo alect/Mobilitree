@@ -31,6 +31,7 @@ package Utils
 		public static const TREE_TYPE:uint = enumVal++;
 		public static const SEED_TYPE:uint = enumVal++;
 		public static const HAPPY_TREE_TYPE:uint = enumVal++;
+		public static const CACTUS_TYPE:uint = enumVal++;
 		
 		
 		

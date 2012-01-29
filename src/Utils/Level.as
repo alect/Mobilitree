@@ -23,6 +23,7 @@ package Utils
 		private static const TREE_Y:uint = 0;
 		private static const SOIL_Y:uint = 30;
 		private static const SAND_Y:uint = 60;
+		private static const CACTUS_Y:uint = 90;
 		
 		
 		// Levels can be really simple, they basically only need to consist of a tilemap csv
@@ -109,6 +110,10 @@ package Utils
 				if (dataElement.@tx == TREE_X && dataElement.@ty == SAND_Y) {
 					_tilemapArray[tileX][tileY] = Globals.SAND_TYPE;
 					_typeArray[tileX][tileY] = Globals.SAND_TYPE;
+				}
+				if (dataElement.@tx == TREE_X && dataElement.@ty == CACTUS_Y) {
+					_tilemapArray[tileX][tileY] = Globals.SAND_TYPE;
+					_typeArray[tileX][tileY] = Globals.CACTUS_TYPE;
 				}
 				
 				// Now look for non-tilemap objects
