@@ -28,6 +28,9 @@ package GameStates
 		// The currently loaded level
 		private var _currentLevel:Level;
 		
+		// The base level.
+		public var _baseLevel:Level;
+		
 		// A two dimensional array of cell object type values used by the advance turn functions for convenient access to what's on the board
 		private var _gridValues:Array;
 		
@@ -59,6 +62,8 @@ package GameStates
 		private static var _instance:PlayState;
 
 		protected var _walkDemo:RandomWalk = new RandomWalk();
+		public var proceduralLevel:Boolean = false;
+		
 
 		
 		public static function get Instance():PlayState
@@ -121,7 +126,12 @@ package GameStates
 			_uiGuideText.alignment = "center";
 			_uiGuideText.y = FlxG.height-_uiGuideText.height-30;
 			
-			_currentLevel = new Level(ResourceManager.levelList[_currentLevelIndex]);
+			if (!proceduralLevel)
+			{
+				_baseLevel = new Level(ResourceManager.levelList[_currentLevelIndex]);
+				
+			}
+			_currentLevel = _baseLevel.copy();
 			loadFromLevel(_currentLevel);
 			
 			_gameWonText = new FlxText(0, 0, FlxG.width, "Level Complete!");
@@ -395,7 +405,10 @@ package GameStates
 		// Reloads the current level from embedded data, discarding all variations
 		public function reloadLevel():void
 		{
-			_currentLevel = new Level(ResourceManager.levelList[_currentLevelIndex]);
+			if (!proceduralLevel)
+				_currentLevel = new Level(ResourceManager.levelList[_currentLevelIndex]);
+			else
+				_currentLevel = _baseLevel.copy();
 			this.resetLevel();
 		}
 		
@@ -408,8 +421,15 @@ package GameStates
 			if(_gameWon && FlxG.keys.justPressed("ENTER")) {
 				if(_currentLevelIndex+1 < ResourceManager.levelList.length) {
 					_currentLevelIndex++;
-					_currentLevel = new Level(ResourceManager.levelList[_currentLevelIndex]);
-					this.resetLevel();
+					if (proceduralLevel)
+					{
+						FlxG.switchState( new ProceduralInstructionsState() );
+					}
+					else
+					{
+						_currentLevel = new Level(ResourceManager.levelList[_currentLevelIndex]);
+						this.resetLevel();
+					}
 					return;
 				}
 				else

@@ -16,6 +16,9 @@ package GameStates
 		
 		public override function update():void
 		{
+			FlxG.switchState(new ProceduralInstructionsState());
+			return;
+			
 			if (FlxG.mouse.justPressed()) 
 				FlxG.switchState(new LevelSelectState());
 		}

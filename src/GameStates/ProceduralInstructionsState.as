@@ -1,5 +1,7 @@
 package GameStates
 {
+	import Procedural.GenerateLevel;
+	
 	import Utils.*;
 	
 	import org.flixel.FlxButton;
@@ -67,6 +69,9 @@ package GameStates
 		public function fullProcedural():void
 		{
 			var playstate:PlayState = new PlayState(0);
+			
+			playstate._baseLevel = GenerateLevel.createLevel();
+			playstate.proceduralLevel = true;
 			
 			FlxG.switchState(playstate);
 		}
