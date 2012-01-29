@@ -15,6 +15,7 @@ package Procedural
 	import org.flixel.FlxObject;
 	import org.flixel.FlxParticle;
 	import org.flixel.FlxPoint;
+	import org.flixel.FlxTilemap;
 	import org.flixel.FlxU;
 	
 	public class RandomWalk
@@ -315,34 +316,44 @@ package Procedural
 			
 		}
 		
-		public static function rebuildWithSkip(playstate:PlayState, skip_between:int):Boolean
+		public static function rebuildWithSkip(playstate:PlayState, skip_between:int):void
 		{
-			// Snag the Level object
-			var level:Level = playstate.currentLevel;
-			
-			removeAllGoals(playstate);
-			removeAllGoals(playstate);
-			
-			// Run the random walk.
-			var walk:RandomWalk = new RandomWalk();
-			walk.walkSkip(1000, playstate, skip_between);
-			
-			// Did we find ANY goal locations?
-			if (walk.PossibleGoalLocations.length >0)
-			{
-				// Yes! Use the last one as a cap stone to our level.
-				var point:FlxPoint = walk.PossibleGoalLocations[ walk.PossibleGoalLocations.length-1 ];
-				level.forceGoalTile(uint(point.x), uint(point.y));
+			var best_walk:RandomWalk = null;
+			var best_level:Level = null;
 
-				// And then copy the goal tiles.
-				//  (We were creating some on the way) 
-				level.copyGoalTiles( playstate.Tilemap );
+			// create a new Level for each iteration so we can keep the data around
+			
+			for (var count:int = 0; count < 3; ++count)
+			{
+				playstate.reloadLevel();
+				removeAllGoals(playstate);
+				var my_level:Level = playstate.currentLevel;
 				
-				return true;
+				// Run the random walk.
+				var walk:RandomWalk = new RandomWalk();
+				//var temp_playstate:PlayState = new PlayState(playstate.currentLevel);
+				walk.walkSkip(1000, playstate, skip_between);
+				
+				if (walk.PossibleGoalLocations.length < 1)
+					continue;
+				
+				if (best_level == null   ||  walk.PossibleGoalLocations.length > best_walk.PossibleGoalLocations.length)
+				{
+					best_walk = walk;
+					best_level = my_level;
+					
+					var point:FlxPoint = best_walk.PossibleGoalLocations[ best_walk.PossibleGoalLocations.length-1 ];
+					best_level.forceGoalTile(uint(point.x), uint(point.y));
+					
+					// And then copy the goal tiles.
+					//  (We were creating some on the way) 
+					best_level.copyGoalTiles( playstate.Tilemap );
+				}
 			}
 			
-			return false;
 			
+			playstate.currentLevel = best_level;
+			playstate.resetLevel();
 		}
 
 	}

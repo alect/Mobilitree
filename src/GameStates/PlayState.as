@@ -70,6 +70,12 @@ package GameStates
 		{
 			return _currentLevel;
 		}
+
+		public function set currentLevel(level:Level):void
+		{
+			_currentLevel = level;
+		}
+
 		
 		public function get Tilemap():FlxTilemap
 		{
@@ -152,7 +158,7 @@ package GameStates
 					if(levelGrid[i][j] == Globals.TREE_TYPE) {
 						var tree:Tree = new Tree(_tilemap.x+i*Globals.TILE_SIZE, _tilemap.y+j*Globals.TILE_SIZE, 3, treeId++);
 						_cellObjects.add(tree);
-						trace(_tilemap.getTile(tree.gridX, tree.gridY));
+						//trace(_tilemap.getTile(tree.gridX, tree.gridY));
 						_controlCell = tree;
 					}
 					else if(levelGrid[i][j] == Globals.CACTUS_TYPE) {
@@ -177,7 +183,7 @@ package GameStates
 		/**
 		 * In case we get stuck, might want to reset the level
 		 */
-		private function resetLevel():void
+		public function resetLevel():void
 		{
 			this.clear();
 			_advancingTurn = false;
