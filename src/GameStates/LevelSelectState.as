@@ -47,7 +47,7 @@ package GameStates
 			
 			createLevelGroup(FlxG.width * 3/4 - 150, 25*5, "Tree", [0, 1, 2, 3, 4]);
 			createLevelGroup(FlxG.width * 3/4 - 150, 25*8 + 5*35, "DoubleTree", [5, 6, 7, 8, 9, 10, 11]);
-			createLevelGroup(FlxG.width * 3/4, 25*5, "Cacti", [12, 13, 14, 15, 16, 17]);
+			createLevelGroup(FlxG.width * 3/4, 25*5, "Cacti", [12, 13, 14, 15, 16, 17, 18]);
 		}
 		
 		private function createLevelGroup(x:Number, y:Number, name:String, levels:Array):void
