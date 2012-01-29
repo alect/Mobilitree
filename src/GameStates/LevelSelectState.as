@@ -55,6 +55,11 @@ package GameStates
 			}
 		}
 		
+		/*private function createLevelGroup(x:Number, y:Number, name:String, levels:Array) 
+		{
+			
+		}*/
+		
 		private function gotoProceduralState():void
 		{
 			FlxG.switchState(new ProceduralInstructionsState());

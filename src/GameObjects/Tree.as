@@ -16,7 +16,7 @@ package GameObjects
 		
 		private var _dead:Boolean = false;
 		
-		private var _moveDirection:uint;
+		protected var _moveDirection:uint;
 		
 		protected var _id:uint = 0;
 		
