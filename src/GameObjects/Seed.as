@@ -84,12 +84,16 @@ package GameObjects
 		{
 			if(_growing) {
 				// See if we want to transform any neighboring water cells into dirt
-				maybeDrainWater(gridX-1, gridY);
-				maybeDrainWater(gridX+1, gridY);
-				maybeDrainWater(gridX, gridY-1);
-				maybeDrainWater(gridX, gridY+1);
+				// If we're on sand anyways
+				if(PlayState.Instance.Tilemap.getTile(gridX, gridY) == Globals.SAND_TYPE) {
 				
-				if(PlayState.Instance.Tilemap.getTile(gridX, gridY) == Globals.SOIL_TYPE)
+					maybeDrainWater(gridX-1, gridY);
+					maybeDrainWater(gridX+1, gridY);
+					maybeDrainWater(gridX, gridY-1);
+					maybeDrainWater(gridX, gridY+1);
+					PlayState.Instance.replaceCell(this, new Cactus(this.x, this.y, 3));
+				}
+				else if(PlayState.Instance.Tilemap.getTile(gridX, gridY) == Globals.SOIL_TYPE)
 					PlayState.Instance.replaceCell(this, new HappyTree(this.x, this.y));
 				else
 					PlayState.Instance.replaceCell(this, new Tree(this.x, this.y, 3));

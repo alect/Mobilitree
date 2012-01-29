@@ -99,7 +99,7 @@ package GameObjects
 		
 		private function treeCanWalkOn(cell:uint):Boolean
 		{
-			return (cell == Globals.EMPTY_TYPE || cell == Globals.DIRT_TYPE || cell == Globals.MUD_TYPE);
+			return (cell == Globals.EMPTY_TYPE || cell == Globals.DIRT_TYPE || cell == Globals.MUD_TYPE || cell == Globals.SAND_TYPE);
 		}
 		
 		public override function getArrowContext():String
