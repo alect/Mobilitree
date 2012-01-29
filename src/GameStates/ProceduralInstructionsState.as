@@ -1,5 +1,7 @@
 package GameStates
 {
+	import Procedural.GenerateLevel;
+	
 	import Utils.*;
 	
 	import org.flixel.FlxButton;
@@ -10,6 +12,7 @@ package GameStates
 	
 	public class ProceduralInstructionsState extends FlxState
 	{
+		private var _seedInput:FlxText;
 		private var _levelSelectText:FlxText;
 		
 		
@@ -35,7 +38,6 @@ package GameStates
 			_variantText .size = 20;
 			add(_variantText);
 			
-			
 			var tryIt:FlxText =  new FlxText(0, _variantText.y +  _variantText.height + 60, FlxG.width, "Or go full procedural:");
 			var currentX:int = FlxG.width/2-30;
 			var currentY:int = tryIt.y +  tryIt.height + 40;
@@ -43,15 +45,28 @@ package GameStates
 			tryIt.size = 20;
 			add(tryIt);
 			
-			//this.add( new FlxButton(currentX, currentY, "GO!", fullProcedural) );
+			_seedInput = new FlxText(currentX, currentY, FlxG.width, "Random Seed");
+			add(_seedInput);
+			currentY = _seedInput.y + _seedInput.height + 40;
 			
-			
+			this.add( new FlxButton(currentX, currentY, "GO!", fullProcedural) );
 		}
-		
-		/*private function createLevelGroup(x:Number, y:Number, name:String, levels:Array) 
+
+		public override function update():void
 		{
+			super.update();
+			
+			if (FlxG.keys.justPressed("BACKSPACE") ||
+				FlxG.keys.justPressed("DELETE"))
+			{
+				if (_seedInput.text.length > 0)
+					_seedInput.text = _seedInput.text.substring(0, _seedInput.text.length-1);
+			}
+			
+			//var character:Str
+		}
+	
 		
-		}*/
 		
 		private function gotoProceduralState():void
 		{
@@ -60,16 +75,15 @@ package GameStates
 		
 		
 		
-		/*private function createButtonFunction(i:int):Function {
-			return function():void {FlxG.switchState(new PlayState(i));};
-		}
-		
 		public function fullProcedural():void
 		{
-			var playstate:PlayState = new PlayState(0);
+			var playstate:PlayState = new PlayState(0, 0);
+			
+			playstate._baseLevel = GenerateLevel.createLevel();
+			playstate.proceduralLevel = true;
 			
 			FlxG.switchState(playstate);
-		}*/
+		}
 		
 		public function backButton():void
 		{

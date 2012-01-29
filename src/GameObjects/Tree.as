@@ -6,6 +6,7 @@ package GameObjects
 	
 	import org.flixel.FlxG;
 	import org.flixel.FlxPoint;
+	import org.flixel.FlxSound;
 	import org.flixel.FlxSprite;
 	
 	public class Tree extends CellObject
@@ -20,6 +21,11 @@ package GameObjects
 		
 		protected var _id:uint = 0;
 		
+		protected static var _treeMovingSound:FlxSound = new FlxSound();
+		_treeMovingSound.loadEmbedded(ResourceManager.treeMovingSound);
+		
+		protected static var _treeDyingSound:FlxSound = new FlxSound();
+		_treeDyingSound.loadEmbedded(ResourceManager.treeDyingSound);
 		
 		// for overlaying a transparency 
 		protected var _deadTransparency:FlxSprite;
@@ -35,6 +41,7 @@ package GameObjects
 		
 		protected function killSelf():void
 		{
+			_treeDyingSound.play();
 			var deadSelf:DeadTree = new DeadTree(this.x, this.y, _id);
 			PlayState.Instance.replaceCell(this, deadSelf);
 		}
@@ -89,24 +96,32 @@ package GameObjects
 		
 		public override function advanceTurn():void
 		{
+			
 			if(_dead) {
 				
 			}
 			else {
+				var moved:Boolean = false;
 				switch(_moveDirection) 
 				{
 					case UP:
+						moved = true;
 						PlayState.Instance.moveCell(this, this.gridX, this.gridY-1);
 						break;
 					case RIGHT:
+						moved = true;
 						PlayState.Instance.moveCell(this, this.gridX+1, this.gridY);
 						break;
 					case DOWN:
+						moved = true;
 						PlayState.Instance.moveCell(this, this.gridX, this.gridY+1);
 						break;
 					case LEFT:
+						moved = true;
 						PlayState.Instance.moveCell(this, this.gridX-1, this.gridY);
 				}
+				if(moved)
+					_treeMovingSound.play(true);
 				
 				_turnsLeft--;
 				if(_turnsLeft == 0)

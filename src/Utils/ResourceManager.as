@@ -32,7 +32,23 @@ package Utils
 		
 		
 		// Audio resources
+		[Embed(source="assets/audio/Planty_Plants.mp3")]
+		public static var bgMusic:Class;
 		
+		[Embed(source="assets/audio/Tree_moving.mp3")]
+		public static var treeMovingSound:Class;
+		
+		[Embed(source="assets/audio/Tree_drying_up.mp3")]
+		public static var treeDyingSound:Class;
+		
+		[Embed(source="assets/audio/Seed_growth.mp3")]
+		public static var seedGrowingSound:Class;
+		
+		[Embed(source="assets/audio/Victory_sound_individual.mp3")]
+		public static var happyTreeGrowingSound:Class;
+		
+		[Embed(source="assets/audio/Victory_sound_level.mp3")]
+		public static var levelWinSound:Class;
 		
 		// Level resources
 		

@@ -16,6 +16,7 @@ package GameStates
 	import org.flixel.FlxObject;
 	import org.flixel.FlxPath;
 	import org.flixel.FlxPoint;
+	import org.flixel.FlxSound;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
 	import org.flixel.FlxTilemap;
@@ -23,12 +24,18 @@ package GameStates
 	public class PlayState extends FlxState
 	{
 	
+		private static var _levelWinSound:FlxSound = new FlxSound();
+		_levelWinSound.loadEmbedded(ResourceManager.levelWinSound);
+		
 		// The index into the level list of our current level
 		private var _currentLevelIndex:int = 0;
 		private var _currentGroupIndex:int = 0;
 		
 		// The currently loaded level
 		private var _currentLevel:Level;
+		
+		// The base level, when procedural
+		public var _baseLevel:Level;
 		
 		// A two dimensional array of cell object type values used by the advance turn functions for convenient access to what's on the board
 		private var _gridValues:Array;
@@ -61,6 +68,8 @@ package GameStates
 		private static var _instance:PlayState;
 
 		protected var _walkDemo:RandomWalk = new RandomWalk();
+		public var proceduralLevel:Boolean = false;
+		
 
 		
 		public static function get Instance():PlayState
@@ -124,14 +133,26 @@ package GameStates
 			_uiGuideText.alignment = "center";
 			_uiGuideText.y = FlxG.height-_uiGuideText.height-30;
 			
-			var trueLevelIndex:int = LevelSelectState.getTrueLevelIndex(_currentGroupIndex, _currentLevelIndex);
-			if(trueLevelIndex != -1)
-				_currentLevel = new Level(ResourceManager.levelList[trueLevelIndex]);
-			else {
+			if (proceduralLevel)
+			{
+				_currentLevel = _baseLevel.copy();
+			}
+			else
+			{
+				var trueLevelIndex:int = LevelSelectState.getTrueLevelIndex(_currentGroupIndex, _currentLevelIndex);
+				if(trueLevelIndex != -1)
+					_currentLevel = new Level(ResourceManager.levelList[trueLevelIndex]);
+				else {
 				FlxG.switchState(new LevelSelectState());
 				return;
+				}
 			}
+	
+	
+	
 			loadFromLevel(_currentLevel);
+			
+			FlxG.playMusic(ResourceManager.bgMusic);
 			
 			_gameWonText = new FlxText(0, 0, FlxG.width, "Level Complete!");
 			_gameWonText.alignment = "center";
@@ -341,7 +362,10 @@ package GameStates
 		protected function checkForReset():Boolean
 		{
 			if(FlxG.keys.justPressed("ESCAPE")) {
-				FlxG.switchState(new LevelSelectState());
+				if (proceduralLevel)
+					FlxG.switchState(new ProceduralInstructionsState());
+				else
+					FlxG.switchState(new LevelSelectState());
 			}
 			
 			if(FlxG.keys.justPressed("R")) {
@@ -408,7 +432,10 @@ package GameStates
 		// Reloads the current level from embedded data, discarding all variations
 		public function reloadLevel():void
 		{
-			_currentLevel = new Level(ResourceManager.levelList[_currentLevelIndex]);
+			if (!proceduralLevel)
+				_currentLevel = new Level(ResourceManager.levelList[_currentLevelIndex]);
+			else
+				_currentLevel = _baseLevel.copy();
 			this.resetLevel();
 		}
 		
@@ -419,11 +446,23 @@ package GameStates
 			
 			
 			if(_gameWon && FlxG.keys.justPressed("ENTER")) {
-				_currentLevelIndex++;
-				var trueLevelIndex:int = LevelSelectState.getTrueLevelIndex(_currentGroupIndex, _currentLevelIndex);
-				if(trueLevelIndex != -1) {
-					_currentLevel = new Level(ResourceManager.levelList[trueLevelIndex]);
-					this.resetLevel();
+
+				if(_currentLevelIndex+1 < ResourceManager.levelList.length) {
+					_currentLevelIndex++;
+					if (proceduralLevel)
+					{
+						FlxG.switchState( new ProceduralInstructionsState() );
+					}
+					else
+					{
+						_currentLevelIndex++;
+						var trueLevelIndex:int = LevelSelectState.getTrueLevelIndex(_currentGroupIndex, _currentLevelIndex);
+						if(trueLevelIndex != -1) {
+							_currentLevel = new Level(ResourceManager.levelList[trueLevelIndex]);
+							this.resetLevel();
+						}
+					}
+
 					return;
 				}
 				else {
@@ -481,6 +520,7 @@ package GameStates
 					
 					if(_gameWon) {
 						trace("Game won!!");
+						_levelWinSound.play();
 						this.add(_gameWonText);
 						this.add(_pressEnterText);
 					}
