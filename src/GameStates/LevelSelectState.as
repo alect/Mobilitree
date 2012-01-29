@@ -45,7 +45,10 @@ package GameStates
 				allLevels.push(i);
 			createLevelGroup(FlxG.width/2-30, _levelSelectText.y + _levelSelectText.height+50, "All Levels", allLevels);
 			
-			createLevelGroup(5, 25, "Test", [0, 1, 2, 10]);
+			createLevelGroup(5, 25*1, "Tree", [0, 1, 2, 3, 4]);
+			createLevelGroup(5, 25*2 + 5*25, "DoubleTree", [5, 6, 7, 8, 9, 10, 11]);
+			createLevelGroup(5, 25*3 + 12*25, "Cacti", [12, 13, 14, 15]);
+			createLevelGroup(5, 25*4 + 16*25, "Cactree", [16, 17]);
 		}
 		
 		private function createLevelGroup(x:Number, y:Number, name:String, levels:Array):void
