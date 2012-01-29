@@ -543,5 +543,11 @@ package GameStates
 			
 			return null;
 		}
+		
+		public override function destroy():void
+		{
+			FlxG.music.stop();
+		}
 	}
+	
 }

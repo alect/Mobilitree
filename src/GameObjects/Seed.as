@@ -16,6 +16,7 @@ package GameObjects
 		
 		protected static var _seedGrowthSound:FlxSound = new FlxSound();
 		_seedGrowthSound.loadEmbedded(ResourceManager.seedGrowingSound);
+		_seedGrowthSound.volume = 0.3;
 		
 		protected static var _happyTreeGrowSound:FlxSound = new FlxSound();
 		_happyTreeGrowSound.loadEmbedded(ResourceManager.happyTreeGrowingSound);
