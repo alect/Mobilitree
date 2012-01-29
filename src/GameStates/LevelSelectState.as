@@ -28,7 +28,12 @@ package GameStates
 			
 			this.add(_levelSelectText);
 			
-			var _backButton:FlxButton = new FlxButton(5, FlxG.height-30, "Back", function():void {FlxG.switchState(new MainMenuState());});
+			var _backButton:FlxButton = new FlxButton(5, FlxG.height-40, "Back", function():void {FlxG.switchState(new MainMenuState());});
+			_backButton.loadGraphic(ResourceManager.buttonArt, true, false, 96, 32);
+			var label:FlxText = new FlxText(0, 0, FlxG.width, "Back");
+			label.size = 16;
+			_backButton.label = label;
+			_backButton.labelOffset = new FlxPoint(32, _backButton.height/2-label.height/2);
 			this.add(_backButton);
 			
 			
@@ -38,7 +43,7 @@ package GameStates
 			var allLevels:Array = [];
 			for(var i:int = 0; i < ResourceManager.levelList.length; i++)
 				allLevels.push(i);
-			createLevelGroup(FlxG.width/2-200, _levelSelectText.y + _levelSelectText.height+50, "All Levels", allLevels);
+			createLevelGroup(FlxG.width/2-200, _levelSelectText.y + _levelSelectText.height, "All Levels", allLevels);
 			
 			createLevelGroup(FlxG.width * 3/4 - 150, 25*5, "Tree", [0, 1, 2, 3, 4]);
 			createLevelGroup(FlxG.width * 3/4 - 150, 25*8 + 5*35, "DoubleTree", [5, 6, 7, 8, 9, 10, 11]);
@@ -55,12 +60,12 @@ package GameStates
 			trace(levels);
 			var n:int = 0;
 			for each(var i:int in levels) {
-				var iButton:FlxButton = new FlxButton(x+5, currentY, "Level " + (i+1).toString(), createButtonFunction(_groupIndex, n));
-				iButton.loadGraphic(ResourceManager.buttonArt, true, false, 32, 32);
+				var iButton:FlxButton = new FlxButton(x, currentY, "Level " + (i+1).toString(), createButtonFunction(_groupIndex, n));
+				iButton.loadGraphic(ResourceManager.buttonArt, true, false, 96, 32);
 				var label:FlxText = new FlxText(0, 0, FlxG.width, "Level " + (i+1).toString());
 				label.size = 16;
 				iButton.label = label;
-				iButton.labelOffset = new FlxPoint(iButton.width, iButton.height/2-label.height/2);
+				iButton.labelOffset = new FlxPoint(32, iButton.height/2-label.height/2);
 				this.add(iButton);
 				currentY+=iButton.height+5;
 				n++;

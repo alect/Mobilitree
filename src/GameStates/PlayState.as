@@ -2,6 +2,7 @@ package GameStates
 {
 	import GameObjects.Cactus;
 	import GameObjects.CellObject;
+	import GameObjects.Dirt;
 	import GameObjects.Seed;
 	import GameObjects.Soil;
 	import GameObjects.Tree;
@@ -178,6 +179,10 @@ package GameStates
 					else if(levelGrid[i][j] == Globals.SOIL_TYPE) {
 						var soil:Soil = new Soil(_tilemap.x+i*Globals.TILE_SIZE, _tilemap.y+j*Globals.TILE_SIZE);
 						_cellObjects.add(soil);
+					}
+					else if(levelGrid[i][j] == Globals.DIRT_TYPE) {
+						var dirt:Dirt = new Dirt(_tilemap.x+i*Globals.TILE_SIZE, _tilemap.y+j*Globals.TILE_SIZE, FlxObject.UP);
+						_cellObjects.add(dirt);
 					}
 				}
 				_gridValues.push(column);
