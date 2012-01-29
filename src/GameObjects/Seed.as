@@ -16,7 +16,7 @@ package GameObjects
 		
 		protected static var _seedGrowthSound:FlxSound = new FlxSound();
 		_seedGrowthSound.loadEmbedded(ResourceManager.seedGrowingSound);
-		_seedGrowthSound.volume = 0.3;
+		_seedGrowthSound.volume = 3;
 		
 		protected static var _happyTreeGrowSound:FlxSound = new FlxSound();
 		_happyTreeGrowSound.loadEmbedded(ResourceManager.happyTreeGrowingSound);
@@ -94,11 +94,11 @@ package GameObjects
 				}
 				else if(PlayState.Instance.Tilemap.getTile(gridX, gridY) == Globals.SAND_TYPE) {
 					this.play("cactusGrow");
-					//_seedGrowthSound.play();
+					_seedGrowthSound.play();
 				}
 				else {
 					this.play("grow");
-					//_seedGrowthSound.play();
+					_seedGrowthSound.play();
 				}
 				
 				_growing = true;

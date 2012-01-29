@@ -44,16 +44,16 @@ package Utils
 		[Embed(source="assets/audio/UI_clunk_button.mp3")]
 		public static var plantingSeedSound:Class;
 		
-		[Embed(source="assets/audio/Seed_growth.mp3")]
+		[Embed(source="assets/audio/Plant_growing_more_organic.mp3")]
 		public static var seedGrowingSound:Class;
 		
 		[Embed(source="assets/audio/Seed_through_water_2.mp3")]
 		public static var seedFloatingSound:Class;
 		
-		[Embed(source="assets/audio/Victory_sound_individual.mp3")]
+		[Embed(source="assets/audio/Victory_sound_individual_correct_key.mp3")]
 		public static var happyTreeGrowingSound:Class;
 		
-		[Embed(source="assets/audio/Victory_sound_level.mp3")]
+		[Embed(source="assets/audio/Victory_sound_level_correct_key.mp3")]
 		public static var levelWinSound:Class;
 		
 		// Level resources
