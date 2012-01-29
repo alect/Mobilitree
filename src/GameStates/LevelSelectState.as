@@ -21,8 +21,8 @@ package GameStates
 			
 			this.add(_levelSelectText);
 			
-			var currentX:int = 5;
-			var currentY:int = _levelSelectText.y+_levelSelectText.height+5;
+			var currentX:int = FlxG.width/2-30;
+			var currentY:int = _levelSelectText.y+_levelSelectText.height+50;
 			
 			for(var i:int = 0; i < ResourceManager.levelList.length; i++) {
 				var buttonNormal:FlxSprite = new FlxSprite();
@@ -39,7 +39,6 @@ package GameStates
 				}
 				var levelIndex:int = i;
 				var iButton:FlxButton = new FlxButton(currentX, currentY, "Level " + (i+1).toString(), createButtonFunction(i));
-				
 				this.add(iButton);
 				
 				
