@@ -141,7 +141,7 @@ package GameStates
 			_tilemap.y = FlxG.height/2-_tilemap.height/2;
 			this.add(_tilemap);
 			
-			
+			var treeId:uint = 1;
 			_cellObjects = new FlxGroup();
 			_gridValues = [];
 			var levelGrid:Array = level.typeArray;
@@ -150,13 +150,13 @@ package GameStates
 				for (var j:int = 0; j < (levelGrid[0] as Array).length; j++) {
 					column.push(levelGrid[i][j]);
 					if(levelGrid[i][j] == Globals.TREE_TYPE) {
-						var tree:Tree = new Tree(_tilemap.x+i*Globals.TILE_SIZE, _tilemap.y+j*Globals.TILE_SIZE, 3);
+						var tree:Tree = new Tree(_tilemap.x+i*Globals.TILE_SIZE, _tilemap.y+j*Globals.TILE_SIZE, 3, treeId++);
 						_cellObjects.add(tree);
 						trace(_tilemap.getTile(tree.gridX, tree.gridY));
 						_controlCell = tree;
 					}
 					else if(levelGrid[i][j] == Globals.CACTUS_TYPE) {
-						var cactus:Cactus = new Cactus(_tilemap.x+i*Globals.TILE_SIZE, _tilemap.y+j*Globals.TILE_SIZE, 3);
+						var cactus:Cactus = new Cactus(_tilemap.x+i*Globals.TILE_SIZE, _tilemap.y+j*Globals.TILE_SIZE, 3, treeId++);
 						_cellObjects.add(cactus);
 						_controlCell = cactus;
 						column[column.length-1] = Globals.TREE_TYPE;
@@ -410,9 +410,19 @@ package GameStates
 				return;
 			
 			if(!_gameWon) {
-				var newUIText:String = _controlCell.getArrowContext() + "\r" +
-					"Press R to Reset Level\r" +
-					"Press Escape to Return to Menu";
+				// Iterate through all of the cell objects and collect a context from each of them.
+				var newUIText:String = "";
+				var stringArray:Array = []
+				for each (var cell:CellObject in _cellObjects.members) {
+					if(cell.getArrowContext() != "") 
+						stringArray.push(cell.getArrowContext());
+				}
+				stringArray.sort();
+				for each (var text:String in stringArray)
+					newUIText += text.substring(1) + "\r";
+				
+				newUIText += "Press R to Reset Level\r" +
+							 "Press Escape to Return to Menu";
 				if(newUIText != _uiGuideText.text)
 					_uiGuideText.text = newUIText;
 			}

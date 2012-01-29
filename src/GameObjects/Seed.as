@@ -11,8 +11,9 @@ package GameObjects
 		// We don't want the seed to have a turn the moment it's spawned, so we use this flag
 		private var _canHaveTurn:Boolean;
 		private var _growing:Boolean;
+		private var _id:uint;
 		
-		public function Seed(x:Number, y:Number)
+		public function Seed(x:Number, y:Number, id:uint)
 		{
 			super(x, y, null);
 			this.loadGraphic(ResourceManager.seedArt, true, false, Globals.TILE_SIZE);
@@ -24,7 +25,7 @@ package GameObjects
 			_type = Globals.SEED_TYPE;
 			_canHaveTurn = false;
 			_growing = false;
-			
+			_id = id;
 			this.play("idle");
 		}
 		
@@ -81,6 +82,11 @@ package GameObjects
 		public override function timeToAdvanceTurn():Boolean
 		{
 			// seeds advance the turn automatically if they can move
+			return canMove();
+		}
+		
+		public override function canMove():Boolean
+		{
 			var tile:uint = PlayState.Instance.Tilemap.getTile(gridX, gridY);
 			if(tile >= Globals.WATER_TYPE && tile <= Globals.WATER_END)
 			{
@@ -93,7 +99,6 @@ package GameObjects
 				else if(tile == Globals.WATER_LEFT_TYPE && !cellSuitableForSeed(PlayState.Instance.getGridCellType(gridX-1, gridY)))
 					return false;
 			}
-			
 			return true;
 		}
 		
@@ -124,12 +129,12 @@ package GameObjects
 					maybeDrainWater(gridX+1, gridY);
 					maybeDrainWater(gridX, gridY-1);
 					maybeDrainWater(gridX, gridY+1);
-					PlayState.Instance.replaceCell(this, new Cactus(this.x, this.y, 3));
+					PlayState.Instance.replaceCell(this, new Cactus(this.x, this.y, 3, _id));
 				}
 				else if(PlayState.Instance.Tilemap.getTile(gridX, gridY) == Globals.SOIL_TYPE)
-					PlayState.Instance.replaceCell(this, new HappyTree(this.x, this.y));
+					PlayState.Instance.replaceCell(this, new HappyTree(this.x, this.y, _id));
 				else
-					PlayState.Instance.replaceCell(this, new Tree(this.x, this.y, 3));
+					PlayState.Instance.replaceCell(this, new Tree(this.x, this.y, 3, _id));
 			}
 		}
 		
@@ -162,12 +167,16 @@ package GameObjects
 			
 		}
 		
+		
+		
 		public override function getArrowContext():String
 		{
 			if(_growing)
-				return "Growing";
-			else
-				return "Floating";
+				return _id + "Seed " + _id + ": Growing";
+			else if(canMove())
+				return _id + "Seed " + _id + ": Floating";
+			else 
+				return _id + "Seed " + _id + ": Stuck";
 
 		}
 		public override function isAvatar():Boolean
