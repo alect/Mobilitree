@@ -16,6 +16,7 @@ package GameStates
 	import org.flixel.FlxObject;
 	import org.flixel.FlxPath;
 	import org.flixel.FlxPoint;
+	import org.flixel.FlxSound;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
 	import org.flixel.FlxTilemap;
@@ -23,6 +24,9 @@ package GameStates
 	public class PlayState extends FlxState
 	{
 	
+		private static var _levelWinSound:FlxSound = new FlxSound();
+		_levelWinSound.loadEmbedded(ResourceManager.levelWinSound);
+		
 		// The index into the level list of our current level
 		private var _currentLevelIndex:int = 0;
 		private var _currentGroupIndex:int = 0;
@@ -147,6 +151,8 @@ package GameStates
 	
 	
 			loadFromLevel(_currentLevel);
+			
+			FlxG.playMusic(ResourceManager.bgMusic);
 			
 			_gameWonText = new FlxText(0, 0, FlxG.width, "Level Complete!");
 			_gameWonText.alignment = "center";
@@ -514,6 +520,7 @@ package GameStates
 					
 					if(_gameWon) {
 						trace("Game won!!");
+						_levelWinSound.play();
 						this.add(_gameWonText);
 						this.add(_pressEnterText);
 					}
