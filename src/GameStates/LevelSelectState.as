@@ -7,6 +7,7 @@ package GameStates
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
+	import org.flixel.FlxPoint;
 	
 	public class LevelSelectState extends FlxState
 	{
@@ -52,6 +53,11 @@ package GameStates
 			var n:int = 0;
 			for each(var i:int in levels) {
 				var iButton:FlxButton = new FlxButton(x+5, currentY, "Level " + (i+1).toString(), createButtonFunction(_groupIndex, n));
+				iButton.loadGraphic(ResourceManager.buttonArt, true, false, 32, 32);
+				var label:FlxText = new FlxText(0, 0, FlxG.width, "Level " + (i+1).toString());
+				label.size = 16;
+				iButton.label = label;
+				iButton.labelOffset = new FlxPoint(iButton.width, iButton.height/2-label.height/2);
 				this.add(iButton);
 				currentY+=iButton.height+5;
 				n++;
