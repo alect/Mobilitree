@@ -1,6 +1,6 @@
 package Procedural
 {
-
+	
 	import GameObjects.CellObject;
 	import GameObjects.Seed;
 	
@@ -16,7 +16,7 @@ package Procedural
 	import org.flixel.FlxParticle;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxU;
-
+	
 	public class RandomWalk
 	{
 		protected var _possibleInputs:Vector.<uint> = new Vector.<uint>();
@@ -29,6 +29,9 @@ package Procedural
 		public function RandomWalk()
 		{
 			_possibleInputs.push(FlxObject.UP, FlxObject.DOWN, FlxObject.RIGHT, FlxObject.LEFT);
+			
+			
+			
 			
 			_testDirections.push(
 				
@@ -56,9 +59,9 @@ package Procedural
 				FlxObject.DOWN,
 				FlxObject.UP,
 				FlxObject.DOWN
-				);
+			);
 			_testDirections.length = 0;
-
+			
 		}
 		
 		protected function getRandomInput():uint
@@ -71,7 +74,7 @@ package Procedural
 		}
 		
 		// Returns true if it did something
-		public function walk(num_steps:int, playstate:PlayState):Boolean
+		public function walk(num_steps:int, playstate:PlayState, probability_that_tree_is_goal:Number):Boolean
 		{
 			var did_something:Boolean = false;
 			
@@ -80,17 +83,17 @@ package Procedural
 				// Should we keep doing what we did last time?
 				if (FlxG.random() > repeatInputProbability)
 					LastInput = getRandomInput();  //  No!  Randomize.
-			
+				
 				if ( i < _testDirections.length)
 					LastInput = _testDirections[i];
 				
-				did_something = step(LastInput, playstate) || did_something;
+				did_something = step(LastInput, playstate, probability_that_tree_is_goal) || did_something;
 			}
 			
 			return did_something;
 		}
-
-		public function step( direction_from_flx_object:uint, playstate:PlayState):Boolean
+		
+		public function step( direction_from_flx_object:uint, playstate:PlayState, probability_of_creating_goal:Number):Boolean
 		{
 			var print:Boolean = false;
 			
@@ -98,7 +101,7 @@ package Procedural
 			
 			if (!playstate.isTimeToAdvanceTurn())
 			{
-				if (print)
+				if (print && false)
 					trace("   no result");
 			}
 			else
@@ -117,16 +120,23 @@ package Procedural
 				}
 				else
 				{
-					if (print)
+					if (print && false)
 						trace("   Player at " + avatar.gridX + "," + avatar.gridY + " is " + getQualifiedClassName(avatar));
 					// Is it possible that we have a seed in a win-candidate position?>
 					if (avatar is Seed)
 					{
-						if (playstate.getGridCellType(avatar.gridX, avatar.gridY))
+						if (Seed.couldGrowAt(avatar.gridX, avatar.gridY))
 						{
 							PossibleGoalLocations.push( new FlxPoint( avatar.gridX, avatar.gridY ) );
 							if (print)
 								trace("     Found reachable seed location: " + toString(PossibleGoalLocations[ PossibleGoalLocations.length-1 ]));
+							
+							// Hack it up!
+							if (probability_of_creating_goal > FlxG.random())
+							{
+								playstate.Tilemap.setTile(avatar.gridX, avatar.gridY, Globals.SOIL_TYPE);
+								trace("Made a new goal!");
+							}
 						}
 					}
 				}
@@ -137,6 +147,8 @@ package Procedural
 			return false;
 		}
 		
+		
+		
 		public static function toString(point:FlxPoint):String
 		{
 			return "[FlxPoint " + point.x + "," + point.y + "]";
@@ -145,7 +157,7 @@ package Procedural
 		public static function fakeInput( direction_from_flx_object:uint):void
 		{
 			var print:Boolean = false;	
-		
+			
 			FlxG.keys.reset();
 			
 			switch (direction_from_flx_object)
@@ -159,13 +171,13 @@ package Procedural
 					FlxG.keys.DOWN = true;
 					if (print)
 						trace("Faking DOWN"); 
-
+					
 					break;
 				case FlxObject.LEFT:
 					FlxG.keys.LEFT = true;
 					if (print)
 						trace("Faking LEFT"); 
-
+					
 					break;
 				case FlxObject.RIGHT:
 					FlxG.keys.RIGHT = true;
@@ -175,38 +187,60 @@ package Procedural
 			}
 		}
 		
+		public static function removeAllGoals(playstate:PlayState):void
+		{
+			playstate.currentLevel.removeAllGoals();
+			
+			// Remove all goal soils:
+			for (var x:uint = 0; x < playstate.Tilemap.widthInTiles; ++x)
+			{
+				for (var y:uint = 0; y < playstate.Tilemap.heightInTiles; ++y)
+				{
+					if (playstate.Tilemap.getTile(x,y) == Globals.SOIL_TYPE)
+						playstate.Tilemap.setTile(x,y, Globals.EMPTY_TYPE);
+				}
+			}
+		}
+		
 		public static function rebuild(playstate:PlayState, goal_percentage:Number):Boolean
 		{
 			// Snag the Level object
 			var level:Level = playstate.currentLevel;
 			
-			level.removeAllGoals();
+			removeAllGoals(playstate);
+			removeAllGoals(playstate);
 			
 			// Run the random walk.
 			var walk:RandomWalk = new RandomWalk();
-			walk.walk(1000, playstate);
+			walk.walk(1000, playstate, goal_percentage);
 			
 			/*
 			// Try the possibilities....
 			var got_one:Boolean = false;
 			for each(var goal:FlxPoint in walk.PossibleGoalLocations)
 			{
-				if (FlxG.random() <= goal_percentage)
-				{
-					level.forceGoalTile(goal.x, goal.y);
-					got_one = true;
-				}
+			if (FlxG.random() <= goal_percentage)
+			{
+			level.forceGoalTile(goal.x, goal.y);
+			got_one = true;
+			}
 			}
 			*/
 			
-		//	if (!got_one && walk._possibleInputs.length >0)
+			
+			if (walk.PossibleGoalLocations.length >0)
 			{
 				var point:FlxPoint = walk.PossibleGoalLocations[ walk.PossibleGoalLocations.length-1 ];
+				
+				
 				level.forceGoalTile(uint(point.x), uint(point.y));
+				
+				level.copyGoalTiles( playstate.Tilemap );
+				
 				return true;
 			}
 			
-			return got_one;
+			return false;
 			
 		}
 	}
