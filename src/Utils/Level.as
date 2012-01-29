@@ -138,6 +138,7 @@ package Utils
 		
 		public function forceGoalTile(x:int, y:int):void
 		{
+			_tilemapArray[x][y] = Globals.SOIL_TYPE;	
 			_typeArray[x][y] = Globals.SOIL_TYPE;	
 		}
 		
@@ -148,11 +149,35 @@ package Utils
 			{
 				for (var y:uint = 0; y < typeArray[x].length; ++y)
 				{
-					if (typeArray[x][y] == Globals.SOIL_TYPE)
-						typeArray[x][y] = Globals.EMPTY_TYPE;
+					if (_tilemapArray[x][y] == Globals.SOIL_TYPE)
+					{
+						_tilemapArray[x][y] = Globals.EMPTY_TYPE;
+						_typeArray[x][y] = Globals.EMPTY_TYPE;
+					}
 				}
 			}
 		}
+		
+		public function copyGoalTiles(flx_tiles:FlxTilemap):Boolean
+		{
+			var did_something:Boolean = false;
+			for (var x:uint = 0; x < typeArray.length; ++x)
+			{
+				for (var y:uint = 0; y < typeArray[x].length; ++y)
+				{
+					if (flx_tiles.getTile(x,y) == Globals.SOIL_TYPE)
+					{
+						forceGoalTile(x,y);
+						
+						did_something = true;
+					}
+				}
+			}
+			
+			return did_something;
+			
+		}
+
 	}
 	
 	

@@ -339,6 +339,40 @@ package GameStates
 				return true;
 			}
 			
+			// Try variation type 1
+			if (FlxG.keys.justPressed("TWO")) {
+				reloadLevel();
+				RandomWalk.rebuild(this, 0.8);
+				this.resetLevel();
+				return true;
+			}
+			
+			// Try variation type 1
+			if (FlxG.keys.justPressed("THREE")) {
+				reloadLevel();
+				RandomWalk.rebuild(this, 0.6);
+				this.resetLevel();
+				return true;
+			}
+			
+			// Try variation type 1
+			if (FlxG.keys.justPressed("FOUR")) {
+				reloadLevel();
+				RandomWalk.rebuild(this, 0.4);
+				this.resetLevel();
+				return true;
+			}
+			
+			// Try variation type 1
+			if (FlxG.keys.justPressed("FIVE")) {
+				reloadLevel();
+				RandomWalk.rebuild(this, 0.2);
+				this.resetLevel();
+				return true;
+			}
+			
+
+			
 			return false;
 		}
 		
@@ -392,7 +426,7 @@ package GameStates
 					if (FlxG.keys.SPACE)
 					{
 						_walkDemo.repeatInputProbability = 0;
-						_advancingTurn = _walkDemo.walk(100, this);
+						_advancingTurn = _walkDemo.walk(1, this, 0);
 					}
 				}
 			}

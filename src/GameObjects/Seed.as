@@ -28,6 +28,19 @@ package GameObjects
 			this.play("idle");
 		}
 		
+		
+		public static function couldGrowAt(grid_x:uint, grid_y:uint):Boolean
+		{
+			// If we're on top of water
+			var tile:uint = PlayState.Instance.Tilemap.getTile(grid_x, grid_y);
+			if(tile >= Globals.WATER_TYPE && tile <= Globals.WATER_END)
+				return false;
+			else
+				return true;
+			
+		}
+
+		
 		public override function advanceTurn():void 
 		{
 			if(!_canHaveTurn) {
