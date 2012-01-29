@@ -23,6 +23,7 @@ package Procedural
 		public var repeatInputProbability:Number = 0.5;
 		public var LastInput:uint = FlxObject.UP;
 		public var PossibleGoalLocations:Vector.<FlxPoint> = new Vector.<FlxPoint>();
+		public var GoalsMade:int = 0;
 		
 		protected var _testDirections:Vector.<uint> = new Vector.<uint>();
 		
@@ -93,6 +94,35 @@ package Procedural
 			return did_something;
 		}
 		
+		
+		// Returns true if it did something
+		public function walkSkip(num_steps:int, playstate:PlayState, skip_count:int):void
+		{
+			var did_something:Boolean = false;
+			var current_skip:int = skip_count;
+			
+			for (var i:int = 0; i < num_steps; ++i)
+			{
+				// Should we keep doing what we did last time?
+				if (FlxG.random() > repeatInputProbability)
+					LastInput = getRandomInput();  //  No!  Randomize.
+				
+				if ( i < _testDirections.length)
+					LastInput = _testDirections[i];
+				
+				if (current_skip < 0)
+					current_skip = skip_count;
+				
+				var prev_num_goals:int = PossibleGoalLocations.length;
+				did_something = step(LastInput, playstate, 1-current_skip) || did_something;
+				
+				if (prev_num_goals < PossibleGoalLocations.length)
+					--current_skip;
+			}
+			
+	//		return did_something;
+		}
+		
 		public function step( direction_from_flx_object:uint, playstate:PlayState, probability_of_creating_goal:Number):Boolean
 		{
 			var print:Boolean = false;
@@ -129,13 +159,17 @@ package Procedural
 						{
 							PossibleGoalLocations.push( new FlxPoint( avatar.gridX, avatar.gridY ) );
 							if (print)
+							{
 								trace("     Found reachable seed location: " + toString(PossibleGoalLocations[ PossibleGoalLocations.length-1 ]));
+								trace("    goal P = " + probability_of_creating_goal);
+							}
 							
 							// Hack it up!
 							if (probability_of_creating_goal > FlxG.random())
 							{
 								playstate.Tilemap.setTile(avatar.gridX, avatar.gridY, Globals.SOIL_TYPE);
-								trace("Made a new goal!");
+								if (print)
+									trace("    Made a new goal!");
 							}
 						}
 					}
@@ -243,5 +277,34 @@ package Procedural
 			return false;
 			
 		}
+		
+		public static function rebuildWithSkip(playstate:PlayState, skip_between:int):Boolean
+		{
+			// Snag the Level object
+			var level:Level = playstate.currentLevel;
+			
+			removeAllGoals(playstate);
+			removeAllGoals(playstate);
+			
+			// Run the random walk.
+			var walk:RandomWalk = new RandomWalk();
+			walk.walkSkip(1000, playstate, skip_between);
+			
+			if (walk.PossibleGoalLocations.length >0)
+			{
+				var point:FlxPoint = walk.PossibleGoalLocations[ walk.PossibleGoalLocations.length-1 ];
+				
+				
+				level.forceGoalTile(uint(point.x), uint(point.y));
+				
+				level.copyGoalTiles( playstate.Tilemap );
+				
+				return true;
+			}
+			
+			return false;
+			
+		}
+
 	}
 }
