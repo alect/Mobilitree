@@ -17,6 +17,7 @@ package GameObjects
 			super(x, y, null);
 			this.loadGraphic(ResourceManager.seedArt, true, false, Globals.TILE_SIZE);
 			this.addAnimation("grow", [0, 1, 2, 3, 4], 3, false);
+			this.addAnimation("goldGrow", [5, 6, 7, 8, 9], 3, false);
 			this.addAnimation("idle", [0], 6, true);
 			
 			_type = Globals.SEED_TYPE;
@@ -53,7 +54,10 @@ package GameObjects
 				// The moment we begin growing, become a tree in essence
 				_type = Globals.TREE_TYPE;
 				PlayState.Instance.replaceCell(this, this);
-				this.play("grow");	
+				if(PlayState.Instance.Tilemap.getTile(gridX, gridY) == Globals.SOIL_TYPE)
+					this.play("goldGrow");
+				else
+					this.play("grow");	
 				_growing = true;
 			}
 		}
@@ -68,7 +72,7 @@ package GameObjects
 		{
 			// if we're done growing, replace ourselves with a tree and return true
 			if(_growing) {
-				if(this.frame == 4) {
+				if(this.frame == 4 || this.frame == 9) {
 					return true;
 				}
 				return false;
