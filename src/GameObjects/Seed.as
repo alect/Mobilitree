@@ -17,6 +17,7 @@ package GameObjects
 			super(x, y, null);
 			this.loadGraphic(ResourceManager.seedArt, true, false, Globals.TILE_SIZE);
 			this.addAnimation("grow", [0, 1, 2, 3, 4], 3, false);
+			this.addAnimation("goldGrow", [5, 6, 7, 8, 9], 3, false);
 			this.addAnimation("idle", [0], 6, true);
 			
 			_type = Globals.SEED_TYPE;
@@ -53,7 +54,10 @@ package GameObjects
 				// The moment we begin growing, become a tree in essence
 				_type = Globals.TREE_TYPE;
 				PlayState.Instance.replaceCell(this, this);
-				this.play("grow");	
+				if(PlayState.Instance.Tilemap.getTile(gridX, gridY) == Globals.SOIL_TYPE)
+					this.play("goldGrow");
+				else
+					this.play("grow");	
 				_growing = true;
 			}
 		}
@@ -68,7 +72,7 @@ package GameObjects
 		{
 			// if we're done growing, replace ourselves with a tree and return true
 			if(_growing) {
-				if(this.frame == 4) {
+				if(this.frame == 4 || this.frame == 9) {
 					return true;
 				}
 				return false;
@@ -84,12 +88,16 @@ package GameObjects
 		{
 			if(_growing) {
 				// See if we want to transform any neighboring water cells into dirt
-				maybeDrainWater(gridX-1, gridY);
-				maybeDrainWater(gridX+1, gridY);
-				maybeDrainWater(gridX, gridY-1);
-				maybeDrainWater(gridX, gridY+1);
+				// If we're on sand anyways
+				if(PlayState.Instance.Tilemap.getTile(gridX, gridY) == Globals.SAND_TYPE) {
 				
-				if(PlayState.Instance.Tilemap.getTile(gridX, gridY) == Globals.SOIL_TYPE)
+					maybeDrainWater(gridX-1, gridY);
+					maybeDrainWater(gridX+1, gridY);
+					maybeDrainWater(gridX, gridY-1);
+					maybeDrainWater(gridX, gridY+1);
+					PlayState.Instance.replaceCell(this, new Cactus(this.x, this.y, 3));
+				}
+				else if(PlayState.Instance.Tilemap.getTile(gridX, gridY) == Globals.SOIL_TYPE)
 					PlayState.Instance.replaceCell(this, new HappyTree(this.x, this.y));
 				else
 					PlayState.Instance.replaceCell(this, new Tree(this.x, this.y, 3));
@@ -100,8 +108,8 @@ package GameObjects
 		{
 			var tilemap:FlxTilemap = PlayState.Instance.Tilemap;
 			// First check if the given tile is even a water tile or on the tilemap
-			if (waterX <= 0 || waterX >= tilemap.widthInTiles ||
-				waterY <= 0 || waterY >= tilemap.heightInTiles )
+			if (waterX < 0 || waterX >= tilemap.widthInTiles ||
+				waterY < 0 || waterY >= tilemap.heightInTiles )
 				return;
 			var tile:uint = tilemap.getTile(waterX, waterY);
 			if(tile < Globals.WATER_TYPE || tile > Globals.WATER_END)

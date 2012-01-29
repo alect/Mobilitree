@@ -18,6 +18,9 @@ package Utils
 		[Embed(source="assets/art/placeholder-mud.png")]
 		public static var mudArt:Class;
 		
+		[Embed(source="assets/art/goldtree.png")]
+		public static var goldTreeArt:Class;
+		
 		[Embed(source="assets/art/tiles.png")]
 		public static var tileArt:Class;
 		
@@ -35,6 +38,9 @@ package Utils
 		
 		[Embed(source="assets/levels/testsoil.oel", mimeType="application/octet-stream")]
 		public static var testSoil:Class;
+		
+		[Embed(source="assets/levels/level2sand.oel", mimeType="application/octet-stream")]
+		public static var testSand:Class;
 		
 		
 		[Embed(source="assets/levels/level1.oel", mimeType="application/octet-stream")]
@@ -76,7 +82,6 @@ package Utils
 		[Embed(source="assets/levels/level13.oel", mimeType="application/octet-stream")]
 		public static var level13:Class;
 		
-		public static var levelList:Array = [level7, level8, level9, level13, level10, level11, level12, level1, level2, level3, level5, level4, level6];
-		
+		public static var levelList:Array = [level7, level8, level9, level13, level10, level11, level12, level1, level2, level3, level5, level4, level6];		
 	}
 }
