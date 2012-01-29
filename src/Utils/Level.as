@@ -28,12 +28,12 @@ package Utils
 		// Levels can be really simple, they basically only need to consist of a tilemap csv
 		// and a two dimensional array of objects to go above the tilemap (such as trees)
 		
-		private var _tilemapCSV:String;
+		//private var _tilemapCSV:String;
 		private var _typeArray:Array;
 		
 		public function get tilemapCSV():String
 		{
-			return _tilemapCSV;
+			return arrayToCSV(_typeArray);
 		}
 		
 		public function get typeArray():Array 
@@ -117,10 +117,6 @@ package Utils
 			}
 			
 			
-			// Finally, create the csv from the tilemap array
-			_tilemapCSV = arrayToCSV(tilemapArray);
-			
-			
 		}
 		private static function arrayToCSV(array:Array):String 
 		{
@@ -132,6 +128,24 @@ package Utils
 				}
 			}
 			return csv;
+		}
+		
+		public function forceGoalTile(x:int, y:int):void
+		{
+			_typeArray[x][y] = Globals.SOIL_TYPE;	
+		}
+		
+		public function removeAllGoals():void
+		{
+			// Remove all goal soils:
+			for (var x:uint = 0; x < typeArray.length; ++x)
+			{
+				for (var y:uint = 0; y < typeArray[x].length; ++y)
+				{
+					if (typeArray[x][y] == Globals.SOIL_TYPE)
+						typeArray[x][y] = Globals.EMPTY_TYPE;
+				}
+			}
 		}
 	}
 	
