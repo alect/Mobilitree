@@ -12,6 +12,7 @@ package GameStates
 	{
 		private var _levelSelectText:FlxText;
 		
+		
 		public override function create():void
 		{
 			FlxG.mouse.show();
@@ -23,6 +24,10 @@ package GameStates
 			
 			var _backButton:FlxButton = new FlxButton(5, FlxG.height-30, "Back", function():void {FlxG.switchState(new MainMenuState());});
 			this.add(_backButton);
+			
+			
+			var _procButton:FlxButton = new FlxButton(FlxG.width - 80 - 5, FlxG.height-30, "Procedural", gotoProceduralState);
+			this.add(_procButton);
 			
 			var currentX:int = FlxG.width/2-30;
 			var currentY:int = _levelSelectText.y+_levelSelectText.height+50;
@@ -49,6 +54,14 @@ package GameStates
 				
 			}
 		}
+		
+		private function gotoProceduralState():void
+		{
+			FlxG.switchState(new ProceduralInstructionsState());
+		}
+		
+		
+		
 		private function createButtonFunction(i:int):Function {
 			return function():void {FlxG.switchState(new PlayState(i));};
 		}

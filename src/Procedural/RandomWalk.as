@@ -23,7 +23,7 @@ package Procedural
 		public var repeatInputProbability:Number = 0.5;
 		public var LastInput:uint = FlxObject.UP;
 		public var PossibleGoalLocations:Vector.<FlxPoint> = new Vector.<FlxPoint>();
-		public var GoalsMade:int = 0;
+		public var SpacesWeWalkedThrough:Vector.<FlxPoint> = new Vector.<FlxPoint>();
 		
 		protected var _testDirections:Vector.<uint> = new Vector.<uint>();
 		
@@ -290,13 +290,15 @@ package Procedural
 			var walk:RandomWalk = new RandomWalk();
 			walk.walkSkip(1000, playstate, skip_between);
 			
+			// Did we find ANY goal locations?
 			if (walk.PossibleGoalLocations.length >0)
 			{
+				// Yes! Use the last one as a cap stone to our level.
 				var point:FlxPoint = walk.PossibleGoalLocations[ walk.PossibleGoalLocations.length-1 ];
-				
-				
 				level.forceGoalTile(uint(point.x), uint(point.y));
-				
+
+				// And then copy the goal tiles.
+				//  (We were creating some on the way) 
 				level.copyGoalTiles( playstate.Tilemap );
 				
 				return true;
