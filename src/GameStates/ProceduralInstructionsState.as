@@ -45,9 +45,9 @@ package GameStates
 			tryIt.size = 20;
 			add(tryIt);
 			
-			_seedInput = new FlxText(currentX, currentY, FlxG.width, "Random Seed");
-			add(_seedInput);
-			currentY = _seedInput.y + _seedInput.height + 40;
+		//	_seedInput = new FlxText(currentX, currentY, FlxG.width, "Random Seed");
+//			add(_seedInput);
+			//currentY = _seedInput.y + _seedInput.height + 40;
 			
 			this.add( new FlxButton(currentX, currentY, "GO!", fullProcedural) );
 		}
