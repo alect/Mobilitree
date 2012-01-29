@@ -13,6 +13,12 @@ package Utils
 		[Embed(source="assets/art/placeholder-soil.png")]
 		public static var soilArt:Class;
 		
+		[Embed(source="assets/art/cactus.png")]
+		public static var cactusArt:Class;
+		
+		[Embed(source="assets/art/deadcactus.png")]
+		public static var deadCactusArt:Class;
+		
 		[Embed(source="assets/art/placeholder-dirt.png")]
 		public static var dirtArt:Class;
 		[Embed(source="assets/art/placeholder-mud.png")]
@@ -78,7 +84,8 @@ package Utils
 		
 		[Embed(source="assets/levels/level12.oel", mimeType="application/octet-stream")]
 		public static var level12:Class;
-		
+
+
 		[Embed(source="assets/levels/level13.oel", mimeType="application/octet-stream")]
 		public static var level13:Class;
 		

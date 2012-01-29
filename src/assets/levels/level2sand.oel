@@ -2,7 +2,6 @@
   <width>270</width>
   <height>270</height>
   <grid set="Tiles">
-    <tile tx="90" ty="0" x="0" y="240"/>
     <tile tx="90" ty="30" x="240" y="0"/>
     <tile tx="30" ty="60" x="90" y="150"/>
     <tile tx="30" ty="60" x="90" y="180"/>
@@ -83,5 +82,6 @@
     <tile tx="90" ty="60" x="180" y="180"/>
     <tile tx="90" ty="60" x="150" y="180"/>
     <tile tx="90" ty="60" x="120" y="180"/>
+    <tile tx="90" ty="90" x="0" y="240"/>
   </grid>
 </level>

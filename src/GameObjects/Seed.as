@@ -18,6 +18,7 @@ package GameObjects
 			this.loadGraphic(ResourceManager.seedArt, true, false, Globals.TILE_SIZE);
 			this.addAnimation("grow", [0, 1, 2, 3, 4], 3, false);
 			this.addAnimation("goldGrow", [5, 6, 7, 8, 9], 3, false);
+			this.addAnimation("cactusGrow", [10, 11, 12, 13, 14], 3, false);
 			this.addAnimation("idle", [0], 6, true);
 			
 			_type = Globals.SEED_TYPE;
@@ -56,6 +57,8 @@ package GameObjects
 				PlayState.Instance.replaceCell(this, this);
 				if(PlayState.Instance.Tilemap.getTile(gridX, gridY) == Globals.SOIL_TYPE)
 					this.play("goldGrow");
+				else if(PlayState.Instance.Tilemap.getTile(gridX, gridY) == Globals.SAND_TYPE)
+					this.play("cactusGrow");
 				else
 					this.play("grow");	
 				_growing = true;
@@ -72,7 +75,7 @@ package GameObjects
 		{
 			// if we're done growing, replace ourselves with a tree and return true
 			if(_growing) {
-				if(this.frame == 4 || this.frame == 9) {
+				if(this.frame == 4 || this.frame == 9 || this.frame == 14)  {
 					return true;
 				}
 				return false;

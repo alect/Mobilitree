@@ -1,5 +1,6 @@
 package GameStates
 {
+	import GameObjects.Cactus;
 	import GameObjects.CellObject;
 	import GameObjects.Seed;
 	import GameObjects.Soil;
@@ -95,8 +96,14 @@ package GameStates
 			_controlCell = value;
 		}
 		
+		public function PlayState(levelIndex:int)
+		{
+			_currentLevelIndex = levelIndex;
+		}
+		
 		public override function create():void 
 		{
+			FlxG.mouse.hide();
 			_instance = this;
 			
 			var _uiGuideString:String = "Use Arrow Keys to *Context Dependent*\n" +
@@ -147,6 +154,12 @@ package GameStates
 						_cellObjects.add(tree);
 						trace(_tilemap.getTile(tree.gridX, tree.gridY));
 						_controlCell = tree;
+					}
+					else if(levelGrid[i][j] == Globals.CACTUS_TYPE) {
+						var cactus:Cactus = new Cactus(_tilemap.x+i*Globals.TILE_SIZE, _tilemap.y+j*Globals.TILE_SIZE, 3);
+						_cellObjects.add(cactus);
+						_controlCell = cactus;
+						column[column.length-1] = Globals.TREE_TYPE;
 					}
 					else if(levelGrid[i][j] == Globals.SOIL_TYPE) {
 						var soil:Soil = new Soil(_tilemap.x+i*Globals.TILE_SIZE, _tilemap.y+j*Globals.TILE_SIZE);
