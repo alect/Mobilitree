@@ -21,7 +21,7 @@ package GameStates
 			
 			this.add(_levelSelectText);
 			
-			var _backButton:FlxButton = new FlxButton(5, FlxG.height-50, "Back", function():void {FlxG.switchState(new MainMenuState());});
+			var _backButton:FlxButton = new FlxButton(5, FlxG.height-30, "Back", function():void {FlxG.switchState(new MainMenuState());});
 			this.add(_backButton);
 			
 			var currentX:int = FlxG.width/2-30;
