@@ -43,7 +43,7 @@ package GameStates
 			var allLevels:Array = [];
 			for(var i:int = 0; i < ResourceManager.levelList.length; i++)
 				allLevels.push(i);
-			createLevelGroup(FlxG.width/2-30, _levelSelectText.y + _levelSelectText.height+50, "All Levels", allLevels);
+			createLevelGroup(FlxG.width/2-30, _levelSelectText.y + _levelSelectText.height, "All Levels", allLevels);
 			
 			createLevelGroup(5, 25*1, "Tree", [0, 1, 2, 3, 4]);
 			createLevelGroup(5, 25*2 + 5*25, "DoubleTree", [5, 6, 7, 8, 9, 10, 11]);
