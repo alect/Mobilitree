@@ -282,8 +282,11 @@ package GameStates
 			var please_advance:Boolean = false;
 			
 			
-			for each(var cell:CellObject in _cellObjects.members) 
+			for each(var cell:CellObject in _cellObjects.members) {
+				if (cell == null)
+					continue;
 				please_advance = cell.timeToAdvanceTurn() || please_advance;  // call everyone's timeToAdvance turn.
+			}
 				
 			return please_advance;
 		}
@@ -291,14 +294,15 @@ package GameStates
 		public function advanceTurn():void
 		{
 			for each(var cell:CellObject in _cellObjects.members) 
-			cell.advanceTurn();
+				if(cell != null)
+					cell.advanceTurn();
 		}
 		
 		public function doneAdvancingTurn():Boolean
 		{
 			var done:Boolean = true;
 			for each(var cell:CellObject in _cellObjects.members) {
-				if(!cell.doneAdvancingTurn())
+				if(cell != null && !cell.doneAdvancingTurn())
 					done = false;
 			}
 			
@@ -309,12 +313,13 @@ package GameStates
 		{
 			// first, perform the postTurn
 			for each(var cell:CellObject in _cellObjects.members)
-			cell.postTurn();
+			if(cell != null)
+				cell.postTurn();
 			
 			// If we are actually done advancing the turn, see if we have won
 			_gameWon = true;
 			for each(cell in _cellObjects.members) {
-				if(!cell.gameWon())
+				if(cell != null && !cell.gameWon())
 					_gameWon = false;
 			}
 		}
@@ -420,7 +425,7 @@ package GameStates
 				var newUIText:String = "";
 				var stringArray:Array = []
 				for each (var cell:CellObject in _cellObjects.members) {
-					if(cell.getArrowContext() != "") 
+					if( cell!= null && cell.getArrowContext() != "") 
 						stringArray.push(cell.getArrowContext());
 				}
 				stringArray.sort();
@@ -467,7 +472,7 @@ package GameStates
 			}
 			
 			for each(var cell:CellObject in _cellsToRemove) {
-				this.remove(cell, true);
+				_cellObjects.remove(cell, true);
 			}
 		}
 		
@@ -476,7 +481,7 @@ package GameStates
 			// Find a tree or seed in the cell objects
 			for each (var guy:CellObject in _cellObjects.members)
 			{
-				if (guy.isAvatar())
+				if (guy != null && guy.isAvatar())
 					return guy;
 			}
 			
