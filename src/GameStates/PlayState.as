@@ -145,6 +145,7 @@ package GameStates
 					if(levelGrid[i][j] == Globals.TREE_TYPE) {
 						var tree:Tree = new Tree(_tilemap.x+i*Globals.TILE_SIZE, _tilemap.y+j*Globals.TILE_SIZE, 3);
 						_cellObjects.add(tree);
+						trace(_tilemap.getTile(tree.gridX, tree.gridY));
 						_controlCell = tree;
 					}
 					else if(levelGrid[i][j] == Globals.SOIL_TYPE) {
