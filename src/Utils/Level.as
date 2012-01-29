@@ -18,6 +18,7 @@ package Utils
 		private static const WATER_RIGHT_Y:uint = 30;
 		private static const WATER_DOWN_Y:uint = 60;
 		private static const WATER_LEFT_Y:uint = 90;
+		private static const DIRT_Y:uint = 120;
 		
 		private static const TREE_X:uint = 90;
 		private static const TREE_Y:uint = 0;
@@ -107,6 +108,10 @@ package Utils
 				if (dataElement.@tx == WATER_X && dataElement.@ty == WATER_LEFT_Y) {
 					_tilemapArray[tileX][tileY] = Globals.WATER_LEFT_TYPE;
 					_typeArray[tileX][tileY] = Globals.WATER_LEFT_TYPE;
+				}
+				if (dataElement.@tx == WATER_X && dataElement.@ty == DIRT_Y) {
+					_tilemapArray[tileX][tileY] = Globals.DIRT_TYPE;
+					_typeArray[tileX][tileY] = Globals.DIRT_TYPE;
 				}
 				if (dataElement.@tx == TREE_X && dataElement.@ty == SOIL_Y) {
 					_tilemapArray[tileX][tileY] = Globals.SOIL_TYPE;

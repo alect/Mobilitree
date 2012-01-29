@@ -2,6 +2,7 @@ package GameStates
 {
 	import GameObjects.Cactus;
 	import GameObjects.CellObject;
+	import GameObjects.Dirt;
 	import GameObjects.Seed;
 	import GameObjects.Soil;
 	import GameObjects.Tree;
@@ -24,11 +25,12 @@ package GameStates
 	
 		// The index into the level list of our current level
 		private var _currentLevelIndex:int = 0;
+		private var _currentGroupIndex:int = 0;
 		
 		// The currently loaded level
 		private var _currentLevel:Level;
 		
-		// The base level.
+		// The base level, when procedural
 		public var _baseLevel:Level;
 		
 		// A two dimensional array of cell object type values used by the advance turn functions for convenient access to what's on the board
@@ -107,8 +109,9 @@ package GameStates
 			_controlCell = value;
 		}
 		
-		public function PlayState(levelIndex:int)
+		public function PlayState(groupIndex:int, levelIndex:int)
 		{
+			_currentGroupIndex = groupIndex;
 			_currentLevelIndex = levelIndex;
 		}
 		
@@ -126,12 +129,23 @@ package GameStates
 			_uiGuideText.alignment = "center";
 			_uiGuideText.y = FlxG.height-_uiGuideText.height-30;
 			
-			if (!proceduralLevel)
+			if (proceduralLevel)
 			{
-				_baseLevel = new Level(ResourceManager.levelList[_currentLevelIndex]);
-				
+				_currentLevel = _baseLevel.copy();
 			}
-			_currentLevel = _baseLevel.copy();
+			else
+			{
+				var trueLevelIndex:int = LevelSelectState.getTrueLevelIndex(_currentGroupIndex, _currentLevelIndex);
+				if(trueLevelIndex != -1)
+					_currentLevel = new Level(ResourceManager.levelList[trueLevelIndex]);
+				else {
+				FlxG.switchState(new LevelSelectState());
+				return;
+				}
+			}
+	
+	
+	
 			loadFromLevel(_currentLevel);
 			
 			_gameWonText = new FlxText(0, 0, FlxG.width, "Level Complete!");
@@ -180,6 +194,10 @@ package GameStates
 					else if(levelGrid[i][j] == Globals.SOIL_TYPE) {
 						var soil:Soil = new Soil(_tilemap.x+i*Globals.TILE_SIZE, _tilemap.y+j*Globals.TILE_SIZE);
 						_cellObjects.add(soil);
+					}
+					else if(levelGrid[i][j] == Globals.DIRT_TYPE) {
+						var dirt:Dirt = new Dirt(_tilemap.x+i*Globals.TILE_SIZE, _tilemap.y+j*Globals.TILE_SIZE, FlxObject.UP);
+						_cellObjects.add(dirt);
 					}
 				}
 				_gridValues.push(column);
@@ -338,7 +356,10 @@ package GameStates
 		protected function checkForReset():Boolean
 		{
 			if(FlxG.keys.justPressed("ESCAPE")) {
-				FlxG.switchState(new LevelSelectState());
+				if (proceduralLevel)
+					FlxG.switchState(new ProceduralInstructionsState());
+				else
+					FlxG.switchState(new LevelSelectState());
 			}
 			
 			if(FlxG.keys.justPressed("R")) {
@@ -419,6 +440,7 @@ package GameStates
 			
 			
 			if(_gameWon && FlxG.keys.justPressed("ENTER")) {
+
 				if(_currentLevelIndex+1 < ResourceManager.levelList.length) {
 					_currentLevelIndex++;
 					if (proceduralLevel)
@@ -427,13 +449,20 @@ package GameStates
 					}
 					else
 					{
-						_currentLevel = new Level(ResourceManager.levelList[_currentLevelIndex]);
-						this.resetLevel();
+						_currentLevelIndex++;
+						var trueLevelIndex:int = LevelSelectState.getTrueLevelIndex(_currentGroupIndex, _currentLevelIndex);
+						if(trueLevelIndex != -1) {
+							_currentLevel = new Level(ResourceManager.levelList[trueLevelIndex]);
+							this.resetLevel();
+						}
 					}
+
 					return;
 				}
-				else
-					trace("OUT OF LEVELS!");
+				else {
+					FlxG.switchState(new LevelSelectState());
+					return;
+				}
 			}
 			
 			// did the user request a reset/reload/variant?

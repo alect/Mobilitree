@@ -62,13 +62,9 @@ package GameStates
 		
 		
 		
-		private function createButtonFunction(i:int):Function {
-			return function():void {FlxG.switchState(new PlayState(i));};
-		}
-		
 		public function fullProcedural():void
 		{
-			var playstate:PlayState = new PlayState(0);
+			var playstate:PlayState = new PlayState(0, 0);
 			
 			playstate._baseLevel = GenerateLevel.createLevel();
 			playstate.proceduralLevel = true;

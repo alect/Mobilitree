@@ -24,6 +24,13 @@ package Utils
 		[Embed(source="assets/art/tiles.png")]
 		public static var tileArt:Class;
 		
+		[Embed(source="assets/art/title.png")]
+		public static var titleArt:Class;
+		
+		[Embed(source="assets/art/button.png")]
+		public static var buttonArt:Class;
+		
+		
 		// Audio resources
 		
 		
@@ -98,6 +105,12 @@ package Utils
 		[Embed(source="assets/levels/level18.oel", mimeType="application/octet-stream")]
 		public static var level18:Class;
 		
-		public static var levelList:Array = [level1, level2, level3, level5, level4, level7, level8, level13, level10, level6, level11, level12, level14, level15, level16, level17, level18];		
+		[Embed(source="assets/levels/level19.oel", mimeType="application/octet-stream")]
+		public static var level19:Class;
+		
+		[Embed(source="assets/levels/level20.oel", mimeType="application/octet-stream")]
+		public static var level20:Class;
+		
+		public static var levelList:Array = [level1, level2, level3, level5, level4, level7, level8, level13, level10, level6, level11, level12, level14, level15, level16, level17, level18, level20, level19];		
 	}
 }
