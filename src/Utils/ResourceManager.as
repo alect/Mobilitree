@@ -73,7 +73,10 @@ package Utils
 		[Embed(source="assets/levels/level12.oel", mimeType="application/octet-stream")]
 		public static var level12:Class;
 		
-		public static var levelList:Array = [level11, level12, level1, level2, level3, level5, level4, level7, level8, level9, level10, level6];
+		[Embed(source="assets/levels/level13.oel", mimeType="application/octet-stream")]
+		public static var level13:Class;
+		
+		public static var levelList:Array = [level7, level8, level9, level13, level10, level11, level12, level1, level2, level3, level5, level4, level6];
 		
 	}
 }
