@@ -9,7 +9,7 @@ package GameStates
 		public override function create():void 
 		{
 			var text:FlxText = new FlxText(0, 0, FlxG.width, "Mobilitree!");
-			text.size = 16;
+			text.size = 64;
 			text.alignment = "center";
 			this.add(text);
 		}

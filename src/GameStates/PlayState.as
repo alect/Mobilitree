@@ -309,6 +309,10 @@ package GameStates
 		// returns true if a reset happened
 		protected function checkForReset():Boolean
 		{
+			if(FlxG.keys.justPressed("ESCAPE")) {
+				FlxG.switchState(new LevelSelectState());
+			}
+			
 			if(FlxG.keys.justPressed("R")) {
 				this.resetLevel();
 				return true;
