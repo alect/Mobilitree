@@ -12,9 +12,14 @@ package GameStates
 	{
 		private var _levelSelectText:FlxText;
 		
+		private static var _groupIndex:int = 0;
+		private static var _groupArrays:Array = [];
 		
 		public override function create():void
 		{
+			_groupIndex = 0;
+			_groupArrays = [];
+			
 			FlxG.mouse.show();
 			_levelSelectText = new FlxText(0, 0, FlxG.width, "Level Select");
 			_levelSelectText.alignment = "center";
@@ -29,36 +34,41 @@ package GameStates
 			var _procButton:FlxButton = new FlxButton(FlxG.width - 80 - 5, FlxG.height-30, "Procedural", gotoProceduralState);
 			this.add(_procButton);
 			
-			var currentX:int = FlxG.width/2-30;
-			var currentY:int = _levelSelectText.y+_levelSelectText.height+50;
+			var allLevels:Array = [];
+			for(var i:int = 0; i < ResourceManager.levelList.length; i++)
+				allLevels.push(i);
+			createLevelGroup(FlxG.width/2-30, _levelSelectText.y + _levelSelectText.height+50, "All Levels", allLevels);
 			
-			for(var i:int = 0; i < ResourceManager.levelList.length; i++) {
-				var buttonNormal:FlxSprite = new FlxSprite();
-				buttonNormal.makeGraphic(80, 20, 0xff000000);
-				
-				//var buttonSelect:FlxSprite = new FlxSprite();
-				//buttonSelect.makeGraphic(80, 20, 0xff0000ff);
-				
-				
-				
-				if(currentY+buttonNormal.height > FlxG.height) {
-					currentX += buttonNormal.width+5;
-					currentY = _levelSelectText.y+_levelSelectText.height+5;
-				}
-				var levelIndex:int = i;
-				var iButton:FlxButton = new FlxButton(currentX, currentY, "Level " + (i+1).toString(), createButtonFunction(i));
-				this.add(iButton);
-				
-				
-				currentY += buttonNormal.height+5;
-				
-			}
+			createLevelGroup(5, 25, "Test", [0, 1, 2, 10]);
 		}
 		
-		/*private function createLevelGroup(x:Number, y:Number, name:String, levels:Array) 
+		private function createLevelGroup(x:Number, y:Number, name:String, levels:Array):void
 		{
+			var groupLabel:FlxText = new FlxText(x, y, FlxG.width, name);
+			groupLabel.size = 16;
+			this.add(groupLabel);
+			var currentY:Number = groupLabel.y+groupLabel.height;
+			trace(levels);
+			var n:int = 0;
+			for each(var i:int in levels) {
+				var iButton:FlxButton = new FlxButton(x+5, currentY, "Level " + (i+1).toString(), createButtonFunction(_groupIndex, n));
+				this.add(iButton);
+				currentY+=iButton.height+5;
+				n++;
+			}
 			
-		}*/
+			_groupIndex++;
+			_groupArrays.push(levels);
+		}
+		
+		public static function getTrueLevelIndex(groupIndex:int, levelIndex:int):int
+		{
+			var group:Array = _groupArrays[groupIndex] as Array;
+			if (levelIndex >= group.length)
+				return -1;
+			else
+				return group[levelIndex];
+		}
 		
 		private function gotoProceduralState():void
 		{
@@ -67,8 +77,8 @@ package GameStates
 		
 		
 		
-		private function createButtonFunction(i:int):Function {
-			return function():void {FlxG.switchState(new PlayState(i));};
+		private function createButtonFunction(groupIndex:int,  levelIndex:int):Function {
+			return function():void {FlxG.switchState(new PlayState(groupIndex, levelIndex));};
 		}
 	}
 	
