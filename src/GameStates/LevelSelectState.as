@@ -28,7 +28,12 @@ package GameStates
 			
 			this.add(_levelSelectText);
 			
-			var _backButton:FlxButton = new FlxButton(5, FlxG.height-30, "Back", function():void {FlxG.switchState(new MainMenuState());});
+			var _backButton:FlxButton = new FlxButton(5, FlxG.height-40, "Back", function():void {FlxG.switchState(new MainMenuState());});
+			_backButton.loadGraphic(ResourceManager.buttonArt, true, false, 96, 32);
+			var label:FlxText = new FlxText(0, 0, FlxG.width, "Back");
+			label.size = 16;
+			_backButton.label = label;
+			_backButton.labelOffset = new FlxPoint(32, _backButton.height/2-label.height/2);
 			this.add(_backButton);
 			
 			
@@ -52,12 +57,12 @@ package GameStates
 			trace(levels);
 			var n:int = 0;
 			for each(var i:int in levels) {
-				var iButton:FlxButton = new FlxButton(x+5, currentY, "Level " + (i+1).toString(), createButtonFunction(_groupIndex, n));
-				iButton.loadGraphic(ResourceManager.buttonArt, true, false, 32, 32);
+				var iButton:FlxButton = new FlxButton(x, currentY, "Level " + (i+1).toString(), createButtonFunction(_groupIndex, n));
+				iButton.loadGraphic(ResourceManager.buttonArt, true, false, 96, 32);
 				var label:FlxText = new FlxText(0, 0, FlxG.width, "Level " + (i+1).toString());
 				label.size = 16;
 				iButton.label = label;
-				iButton.labelOffset = new FlxPoint(iButton.width, iButton.height/2-label.height/2);
+				iButton.labelOffset = new FlxPoint(32, iButton.height/2-label.height/2);
 				this.add(iButton);
 				currentY+=iButton.height+5;
 				n++;
