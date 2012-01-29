@@ -13,6 +13,7 @@ package GameObjects
 		
 		protected override function killSelf():void
 		{
+			_treeDyingSound.play();
 			var deadSelf:DeadCactus = new DeadCactus(this.x, this.y,  _id, _moveDirection);
 			PlayState.Instance.replaceCell(this, deadSelf);
 		}

@@ -4,6 +4,7 @@ package GameObjects
 	
 	import Utils.*;
 	
+	import org.flixel.FlxSound;
 	import org.flixel.FlxTilemap;
 
 	public class Seed extends CellObject
@@ -12,6 +13,12 @@ package GameObjects
 		private var _canHaveTurn:Boolean;
 		private var _growing:Boolean;
 		private var _id:uint;
+		
+		protected static var _seedGrowthSound:FlxSound = new FlxSound();
+		_seedGrowthSound.loadEmbedded(ResourceManager.seedGrowingSound);
+		
+		protected static var _happyTreeGrowSound:FlxSound = new FlxSound();
+		_happyTreeGrowSound.loadEmbedded(ResourceManager.happyTreeGrowingSound);
 		
 		public function Seed(x:Number, y:Number, id:uint)
 		{
@@ -69,12 +76,19 @@ package GameObjects
 				// The moment we begin growing, become a tree in essence
 				_type = Globals.TREE_TYPE;
 				PlayState.Instance.replaceCell(this, this);
-				if(PlayState.Instance.Tilemap.getTile(gridX, gridY) == Globals.SOIL_TYPE)
+				if(PlayState.Instance.Tilemap.getTile(gridX, gridY) == Globals.SOIL_TYPE) {
 					this.play("goldGrow");
-				else if(PlayState.Instance.Tilemap.getTile(gridX, gridY) == Globals.SAND_TYPE)
+					_happyTreeGrowSound.play();
+				}
+				else if(PlayState.Instance.Tilemap.getTile(gridX, gridY) == Globals.SAND_TYPE) {
 					this.play("cactusGrow");
-				else
-					this.play("grow");	
+					_seedGrowthSound.play();
+				}
+				else {
+					this.play("grow");
+					_seedGrowthSound.play();
+				}
+				
 				_growing = true;
 			}
 		}
