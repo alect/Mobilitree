@@ -67,7 +67,20 @@ package GameObjects
 		
 		public override function timeToAdvanceTurn():Boolean
 		{
-			// seeds advance the turn automatically
+			// seeds advance the turn automatically if they can move
+			var tile:uint = PlayState.Instance.Tilemap.getTile(gridX, gridY);
+			if(tile >= Globals.WATER_TYPE && tile <= Globals.WATER_END)
+			{
+				if(tile == Globals.WATER_UP_TYPE && !cellSuitableForSeed(PlayState.Instance.getGridCellType(gridX, gridY-1)))
+					return false;
+				else if(tile == Globals.WATER_RIGHT_TYPE && !cellSuitableForSeed(PlayState.Instance.getGridCellType(gridX+1, gridY)))
+					return false;
+				else if(tile == Globals.WATER_DOWN_TYPE && !cellSuitableForSeed(PlayState.Instance.getGridCellType(gridX, gridY+1)))
+					return false;
+				else if(tile == Globals.WATER_LEFT_TYPE && !cellSuitableForSeed(PlayState.Instance.getGridCellType(gridX-1, gridY)))
+					return false;
+			}
+			
 			return true;
 		}
 		
