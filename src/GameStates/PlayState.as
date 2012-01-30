@@ -446,12 +446,11 @@ package GameStates
 			
 			
 			if(_gameWon && FlxG.keys.justPressed("ENTER")) {
-
-				if(_currentLevelIndex+1 < ResourceManager.levelList.length) {
-					_currentLevelIndex++;
 					if (proceduralLevel)
 					{
+						_currentLevelIndex++;
 						FlxG.switchState( new ProceduralInstructionsState() );
+						return;
 					}
 					else
 					{
@@ -461,14 +460,12 @@ package GameStates
 							_currentLevel = new Level(ResourceManager.levelList[trueLevelIndex]);
 							this.resetLevel();
 						}
+						else {
+							FlxG.switchState(new LevelSelectState());
+							return;
+						}
 					}
 
-					return;
-				}
-				else {
-					FlxG.switchState(new LevelSelectState());
-					return;
-				}
 			}
 			
 			// did the user request a reset/reload/variant?
